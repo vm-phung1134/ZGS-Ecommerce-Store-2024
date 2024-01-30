@@ -16,7 +16,8 @@
     "jsx": "preserve",
     "paths": {
       "@/*": ["*"],
-      "@components/*": ["components/*"]
+      "@components/*": ["components/*"],
+      "@pages/*": ["pages/*"],
     },
 
     /* Linting */
