@@ -38,12 +38,12 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
-    className: {
-        type: String,
-        required: true,
-    }
-})
+    const props = defineProps({
+        className: {
+            type: String,
+            required: true,
+        }
+    })
 </script>
 
 <style scoped></style>
