@@ -11,17 +11,13 @@
                     </p>
                 </div>
                 <!-- Email input -->
-                <InputField :modelField="emailField" id="email" placeHolder="Email address" label="Email address"
-                    type="text" />
+                <InputField v-model="emailModal" :component-data="emailComponent" />
                 <!-- Password input -->
-                <InputField :modelField="passwordField" id="current-password" placeHolder="Password" label="Password"
-                    type="password" />
+                <InputField v-model="passwordModal" :component-data="passwordComponent" />
 
                 <div class="mb-6 flex items-center justify-between text-sm">
                     <div class="mb-[0.125rem] min-h-[1.5rem] pl-[0.5rem] items-center flex gap-2">
-                        <input
-                            class=""
-                            type="checkbox" value="" id="exampleCheck2" />
+                        <input class="" type="checkbox" value="" id="exampleCheck2" />
                         <label class="inline-block pl-[0.15rem] hover:cursor-pointer" for="exampleCheck2">
                             Remember me
                         </label>
@@ -39,12 +35,10 @@
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                             <g id="SVGRepo_iconCarrier">
-                                <path
-                                    d="M9.71069 18.2929C10.1012 18.6834 10.7344 18.6834 11.1249 18.2929L16.0123 13.4006C16.7927 12.6195 16.7924 
+                                <path d="M9.71069 18.2929C10.1012 18.6834 10.7344 18.6834 11.1249 18.2929L16.0123 13.4006C16.7927 12.6195 16.7924 
                                     11.3537 16.0117 10.5729L11.1213 5.68254C10.7308 5.29202 10.0976 5.29202 9.70708 5.68254C9.31655 6.07307 9.31655
                                      6.70623 9.70708 7.09676L13.8927 11.2824C14.2833 11.6729 14.2833 12.3061 13.8927 12.6966L9.71069 16.8787C9.32016
-                                      17.2692 9.32016 17.9023 9.71069 18.2929Z"
-                                    fill="#fafafa">
+                                      17.2692 9.32016 17.9023 9.71069 18.2929Z" fill="#fafafa">
                                 </path>
                             </g>
                         </svg>
@@ -65,33 +59,29 @@
 </template>
 
 <script setup lang="ts">
-    import GroupSocialLogin from '@components/Elements/GroupSocialLogin.vue';
-    import InputField from './InputField.vue';
-    import { ref } from 'vue';
-    // Define props recieved from parent
-    const props = defineProps({
-        className: {
-            type: String,
-            required: true,
-        }
-    });
+import GroupSocialLogin from '@components/Elements/GroupSocialLogin.vue';
+import InputField from './InputField.vue';
+import { emailModal, passwordModal, emailComponent, passwordComponent } from '@components/Validate/SignInValid';
 
-    // Define two field input email and password
-    const emailField = ref({ value: "" });
-    const passwordField = ref({ value: "" });
-    
+// Define props recieved from parent
+const props = defineProps({
+    className: {
+        type: String,
+        required: true,
+    }
+});
 
-    const submitForm = (event: Event) => {
-        event.preventDefault();
-        // Submit and print out object
-        const formData = {
-            email: emailField.value.value,
-            password: passwordField.value.value,
-        };
-        console.log(formData);
-        // Clear form data
-        emailField.value.value = "";
-        passwordField.value.value = "";
+const submitForm = (event: Event) => {
+    event.preventDefault();
+    // Submit and print out object
+    const formData = {
+        email: emailModal.value,
+        password: passwordModal.value,
     };
+    console.log(formData);
+    // Clear form data
+    emailModal.value = "";
+    passwordModal.value = "";
+};
 
 </script>
