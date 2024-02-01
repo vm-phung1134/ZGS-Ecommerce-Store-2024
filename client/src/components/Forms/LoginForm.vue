@@ -11,9 +11,9 @@
                     </p>
                 </div>
                 <!-- Email input -->
-                <InputField v-model="emailModal" :component-data="emailComponent" />
+                <InputField @form-validate="validateForm" v-model="formData.email" :component-data="emailComponent" />
                 <!-- Password input -->
-                <InputField v-model="passwordModal" :component-data="passwordComponent" />
+                <InputField @form-validate="validateForm" v-model="formData.password" :component-data="passwordComponent" />
 
                 <div class="mb-6 flex items-center justify-between text-sm">
                     <div class="mb-[0.125rem] min-h-[1.5rem] pl-[0.5rem] items-center flex gap-2">
@@ -27,7 +27,7 @@
 
                 <!-- Login action -->
                 <div class="text-center lg:text-left">
-                    <button type="submit"
+                    <button :disabled="!checkFormValid" type="submit"
                         class="px-5 flex justify-between items-center py-3 w-60 rounded-sm bg-red-600 text-gray-100">
                         <p>Sign In</p>
                         <svg class="w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +61,8 @@
 <script setup lang="ts">
 import GroupSocialLogin from '@components/Elements/GroupSocialLogin.vue';
 import InputField from './InputField.vue';
-import { emailModal, passwordModal, emailComponent, passwordComponent } from '@components/Validate/SignInValid';
+import { formData, emailComponent, passwordComponent } from '@components/Validate/SignInValid';
+import { ref } from 'vue';
 
 // Define props recieved from parent
 const props = defineProps({
@@ -71,17 +72,16 @@ const props = defineProps({
     }
 });
 
+const checkFormValid = ref(false);
+
+const validateForm = (isValid: boolean) => {
+    return checkFormValid.value = isValid;
+}
+
 const submitForm = (event: Event) => {
     event.preventDefault();
     // Submit and print out object
-    const formData = {
-        email: emailModal.value,
-        password: passwordModal.value,
-    };
-    console.log(formData);
-    // Clear form data
-    emailModal.value = "";
-    passwordModal.value = "";
+    console.log(formData.value);
 };
 
 </script>

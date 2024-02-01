@@ -1,15 +1,17 @@
 import { ref } from 'vue';
 
-export let emailModal = ref("");
-export let passwordModal = ref("");
+export let formData = ref({
+    email: '',
+    password: ''
+})
 
 export const emailComponent = ref({
     type: 'text',
     id: 'email',
     placeholder: 'Email address',
     label: 'Email address',
-    errMsg: null,
-    pattern: "",
+    errMsg: "Email is invalid!",
+    pattern: "^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$",
     minLength: 5,
     maxLength: 100,
 });
@@ -19,8 +21,8 @@ export const passwordComponent = ref({
     id: 'current-password',
     placeholder: 'Password',
     label: 'Password',
-    errMsg: null,
+    errMsg: "Password is invalid!",
     pattern: "",
-    minLength: 8,
+    minLength: 3,
     maxLength: 50,
 });
