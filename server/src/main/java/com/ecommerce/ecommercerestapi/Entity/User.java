@@ -1,4 +1,6 @@
-package com.ecommerce.ecommercerestapi.model;
+package com.ecommerce.ecommercerestapi.Entity;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,8 +18,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
+    
+    @JsonProperty("first_name")
+    private String firstName;
+
+    @JsonProperty("last_name")
+    private String lastName;
+
     private String email;
+
     private String password;
+
     private String role;
 }

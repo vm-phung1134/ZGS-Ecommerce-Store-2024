@@ -9,15 +9,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.ecommerce.ecommercerestapi.model.User;
+import com.ecommerce.ecommercerestapi.Entity.User;
 
 public class UserInfoUserDetails implements UserDetails {
-    private String name;
+    private String email;
     private String password;
     private List<GrantedAuthority> authorities;
 
     public UserInfoUserDetails(User user) {
-        name = user.getName();
+        email = user.getEmail();
         password = user.getPassword();
         authorities = Arrays.stream(user.getRole().split(","))
                 .map(SimpleGrantedAuthority::new)
@@ -36,7 +36,7 @@ public class UserInfoUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override

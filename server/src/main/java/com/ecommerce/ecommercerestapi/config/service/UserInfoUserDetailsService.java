@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.ecommerce.ecommercerestapi.model.User;
+import com.ecommerce.ecommercerestapi.Entity.User;
 import com.ecommerce.ecommercerestapi.repository.UserRepository;
 
 @Component
@@ -17,10 +17,10 @@ public class UserInfoUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> userInfo = userRepository.findByName(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<User> userInfo = userRepository.findByEmail(email);
         return userInfo.map(UserInfoUserDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("user not found " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("user not found " + email));
 
     }
 }

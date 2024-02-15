@@ -1,5 +1,4 @@
-package com.ecommerce.ecommercerestapi.request;
-
+package com.ecommerce.ecommercerestapi.model.request;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +7,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthRequest {
-    private String username;
+    private String email;
     private String password;
 }
