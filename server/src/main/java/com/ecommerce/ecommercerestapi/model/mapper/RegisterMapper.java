@@ -1,6 +1,6 @@
 package com.ecommerce.ecommercerestapi.model.mapper;
 
-import com.ecommerce.ecommercerestapi.Entity.User;
+import com.ecommerce.ecommercerestapi.entity.User;
 import com.ecommerce.ecommercerestapi.model.dto.RegisterDto;
 
 public class RegisterMapper {

@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.ecommerce.ecommercerestapi.Entity.User;
 import com.ecommerce.ecommercerestapi.config.jwt.JwtUtils;
 import com.ecommerce.ecommercerestapi.core.ConstantMsg;
+import com.ecommerce.ecommercerestapi.entity.User;
 import com.ecommerce.ecommercerestapi.model.dto.RegisterDto;
 import com.ecommerce.ecommercerestapi.model.mapper.RegisterMapper;
 import com.ecommerce.ecommercerestapi.model.request.AuthRequest;

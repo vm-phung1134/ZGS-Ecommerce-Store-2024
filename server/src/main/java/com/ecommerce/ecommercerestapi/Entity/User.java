@@ -1,4 +1,4 @@
-package com.ecommerce.ecommercerestapi.Entity;
+package com.ecommerce.ecommercerestapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

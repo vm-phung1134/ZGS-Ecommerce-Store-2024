@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ecommerce.ecommercerestapi.Entity.User;
+import com.ecommerce.ecommercerestapi.entity.User;
 import com.ecommerce.ecommercerestapi.exception.EmailExistException;
 import com.ecommerce.ecommercerestapi.model.request.RegisterRequest;
 import com.ecommerce.ecommercerestapi.repository.UserRepository;

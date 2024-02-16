@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.ecommerce.ecommercerestapi.Entity.User;
+import com.ecommerce.ecommercerestapi.entity.User;
 import com.ecommerce.ecommercerestapi.exception.NotFoundException;
 import com.ecommerce.ecommercerestapi.repository.UserRepository;
 
