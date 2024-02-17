@@ -1,5 +1,5 @@
 <template>
-    <div class="relative mb-6">
+    <div class="relative mb-6 w-full">
         <input @input="onInput" @blur="validate" :type="props.componentData.type" class="peer block min-h-[auto] w-full rounded 
             border-0 bg-gray-100 px-3 py-[0.6rem] leading-[2.15] outline-none transition-all duration-200 
             ease-linear focus:placeholder:opacity-100 motion-reduce:transition-none" :id="props.componentData.id"

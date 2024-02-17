@@ -17,7 +17,7 @@
 
                 <div class="mb-6 flex items-center justify-between text-sm">
                     <div class="mb-[0.125rem] min-h-[1.5rem] pl-[0.5rem] items-center flex gap-2">
-                        <input class="" type="checkbox" value="" id="exampleCheck2" />
+                        <input type="checkbox" value="true" id="exampleCheck2" />
                         <label class="inline-block pl-[0.15rem] hover:cursor-pointer" for="exampleCheck2">
                             Remember me
                         </label>
@@ -27,9 +27,9 @@
 
                 <!-- Login action -->
                 <div class="text-center lg:text-left">
-                    <button :disabled="!checkFormValid" type="submit"
+                    <button type="submit"
                         class="px-5 flex justify-between items-center py-3 w-60 rounded-sm bg-red-600 text-gray-100">
-                        <p>Sign In</p>
+                        <p>Sign in</p>
                         <svg class="w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                             stroke="#ffffff">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import GroupSocialLogin from '@components/Elements/GroupSocialLogin.vue';
+import GroupSocialLogin from '@components/Element/GroupSocialLogin.vue';
 import InputField from './InputField.vue';
 import { formData, emailComponent, passwordComponent } from '@components/Validate/SignInValid';
 import { ref } from 'vue';
@@ -75,13 +75,20 @@ const props = defineProps({
 const checkFormValid = ref(false);
 
 const validateForm = (isValid: boolean) => {
-    return checkFormValid.value = isValid;
-}
+  return checkFormValid.value = isValid;
+};
 
 const submitForm = (event: Event) => {
     event.preventDefault();
+    const formValue = Object.values(formData.value);
+    const hasEmptyValue = formValue.some((value) => value === "");
+    if(checkFormValid && !hasEmptyValue){
+        console.log(formData.value);
+    }else{
+        console.log("Vui lòng nhập vào");
+    }
     // Submit and print out object
-    console.log(formData.value);
+    
 };
 
 </script>

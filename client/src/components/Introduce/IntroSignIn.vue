@@ -2,7 +2,8 @@
     <div :class="props.className">
         <h2 class="font-bold">Not a ZGS Member Yet?</h2>
         <p>Become ZGS member to follow latest promotions and support updates.</p>
-        <button class="px-5 flex justify-between items-center py-3 w-60 rounded-sm bg-red-600 text-gray-100">
+        <button @click="toggleRegisterModal"
+            class="px-5 flex justify-between items-center py-3 w-60 rounded-sm bg-red-600 text-gray-100">
             <p>Create an account</p>
             <svg class="w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -14,6 +15,7 @@
                 </g>
             </svg>
         </button>
+        <RegisterModal :isOpenModal="isOpenRegisterModal" :toggleModal="toggleRegisterModal" />
         <div>
             <h3 class="mb-2 font-bold">Membership benefits</h3>
             <ul class="text-sm list-disc ml-10 flex flex-col gap-1">
@@ -38,12 +40,18 @@
 </template>
 
 <script setup lang="ts">
-    const props = defineProps({
-        className: {
-            type: String,
-            required: true,
-        }
-    })
+import { ref } from 'vue'
+import RegisterModal from '../Modal/RegisterModal.vue';
+
+const isOpenRegisterModal = ref(false);
+const toggleRegisterModal = () => isOpenRegisterModal.value = !isOpenRegisterModal.value;
+
+const props = defineProps({
+    className: {
+        type: String,
+        required: true,
+    }
+})
 </script>
 
 <style scoped></style>

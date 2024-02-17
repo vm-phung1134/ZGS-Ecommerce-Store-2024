@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import LoginFrom from "@components/Forms/LoginForm.vue";
+import LoginFrom from "@components/Form/LoginForm.vue";
 import IntroSignIn from "@components/Introduce/IntroSignIn.vue";
 
 
