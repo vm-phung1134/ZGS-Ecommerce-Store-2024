@@ -25,7 +25,7 @@
         <div class="hidden sm:block flex-shrink flex-grow-0 justify-start px-2">
             <div class="inline-block">
                 <div class="inline-flex items-center max-w-full">
-                    <ul class="flex gap-8 capitalize cursor-pointer">
+                    <ul class="flex gap-8 cursor-pointer uppercase">
                         <li>Store</li>
                         <li>New in </li>
                         <li>Collaborations</li>
