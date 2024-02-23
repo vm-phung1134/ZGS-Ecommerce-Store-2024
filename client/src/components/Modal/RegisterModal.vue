@@ -36,7 +36,7 @@ import {
     Dialog,
     DialogPanel,
     DialogTitle,
-} from '@headlessui/vue'
+} from '@headlessui/vue';
 import RegisterForm from '../Form/RegisterForm.vue';
 
 const props = defineProps({

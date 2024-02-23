@@ -3,8 +3,13 @@
 @tailwind utilities;
 
 :root {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   line-height: 1.6;
   font-weight: 400;
   font-size: 15px;
+}
+.hexagon-shape {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  padding: 1.25rem 1.75rem ;
+  color: white;
 }
