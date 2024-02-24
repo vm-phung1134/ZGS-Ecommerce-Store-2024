@@ -72,7 +72,8 @@
 
                 <div class="flex items-center">
                     <div class="block relative">
-                        <button type="button" class="inline-block p-2 hover:bg-gray-200 rounded-full relative ">
+                        <button @click="toggleSearchBar" type="button"
+                            class="inline-block p-2 hover:bg-gray-200 rounded-full relative">
                             <div class="flex items-center">
                                 <svg class="w-7 h-7" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -123,9 +124,16 @@
             </div>
         </div>
     </nav>
+    <SearchScreen :toggleSearchBar="toggleSearchBar" :isOpenSearchBar="isOpenSearchBar" />
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+import SearchScreen from '../pages/SearchScreen.vue';
+
+const isOpenSearchBar = ref(false);
+const toggleSearchBar = () => isOpenSearchBar.value = !isOpenSearchBar.value;
+
 
 </script>
 
