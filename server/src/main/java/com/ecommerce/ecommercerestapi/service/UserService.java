@@ -25,10 +25,10 @@ public class UserService {
     String email = registerRequest.getEmail();
     // Check exists email
     Optional<Boolean> userOptional = userRepository.findByEmail(email);
-    System.out.println(userOptional.isEmpty());
     if (userOptional.isPresent()) {
         throw new EmailExistException();
     }
+    
     // Save new user 
     return userRepository.save(
         new User(
