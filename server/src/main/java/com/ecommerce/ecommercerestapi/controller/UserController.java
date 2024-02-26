@@ -3,6 +3,7 @@ package com.ecommerce.ecommercerestapi.controller;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,14 +19,17 @@ import com.ecommerce.ecommercerestapi.config.jwt.JwtUtils;
 import com.ecommerce.ecommercerestapi.config.jwt.Login;
 import com.ecommerce.ecommercerestapi.core.ConstantMsg;
 import com.ecommerce.ecommercerestapi.entity.User;
+import com.ecommerce.ecommercerestapi.exception.EmailOrPasswordInvalidException;
 import com.ecommerce.ecommercerestapi.model.dto.RegisterDto;
 import com.ecommerce.ecommercerestapi.model.mapper.RegisterMapper;
 import com.ecommerce.ecommercerestapi.model.request.AuthRequest;
 import com.ecommerce.ecommercerestapi.model.request.RegisterRequest;
+import com.ecommerce.ecommercerestapi.model.request.ResetPasswordRequest;
 import com.ecommerce.ecommercerestapi.model.response.ApiResponse;
 import com.ecommerce.ecommercerestapi.service.UserService;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
@@ -42,6 +46,10 @@ public class UserController {
 
     @PostMapping(value = "/authenticated")
     public ApiResponse<String> authenticatedAuth(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
+        Boolean checkAccountUser = userService.checkEmailAndPasswordUser(authRequest);
+        if (!checkAccountUser) {
+            throw new EmailOrPasswordInvalidException();
+        }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
         if (authentication.isAuthenticated()) {
@@ -57,6 +65,7 @@ public class UserController {
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "UnAuthenticated!");
         }
+
     }
 
     @PostMapping(value = "/refresh")
@@ -79,6 +88,40 @@ public class UserController {
                 HttpStatus.CREATED.value(),
                 ConstantMsg.CREATED_MSG,
                 RegisterMapper.convertUserResponse(user));
+    }
+
+    @PostMapping("/logout")
+    public ApiResponse<String> logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("refresh_token", null);
+        cookie.setMaxAge(0);
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
+        return new ApiResponse<String>(
+                HttpStatus.OK.value(),
+                ConstantMsg.CREATED_MSG,
+                "Logged out successfully");
+    }
+
+    @PostMapping(value = "/forgot")
+    public ApiResponse<String> forgot(@RequestBody String email, HttpServletRequest request) {
+        var originUrl = request.getHeader(HttpHeaders.ORIGIN);
+        userService.forgot(email, originUrl);
+        return new ApiResponse<String>(
+                HttpStatus.OK.value(),
+                ConstantMsg.CREATED_MSG,
+                "Successfully");
+    }
+
+    @PostMapping(value = "/reset-password")
+    public ApiResponse<String> resetPassword(@RequestBody ResetPasswordRequest resetPasswordRequest) {
+        if (!Objects.equals(resetPasswordRequest.getPassword(), resetPasswordRequest.getPasswordConfirm()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password do not match!");
+
+        userService.resetPassword(resetPasswordRequest);
+        return new ApiResponse<String>(
+                HttpStatus.OK.value(),
+                ConstantMsg.CREATED_MSG,
+                "Successfully");
     }
 
 }
