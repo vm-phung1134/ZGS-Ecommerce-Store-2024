@@ -1,6 +1,6 @@
-import { ref } from "vue";
+import { reactive } from "vue";
 
-export let formData = ref({
+export let formData = reactive({
   firstName: "",
   lastName: "",
   email: "",
@@ -8,7 +8,7 @@ export let formData = ref({
   passwordConfirm: "",
 });
 
-export const emailComponent = ref({
+export const emailComponent = reactive({
   type: "text",
   id: "email",
   placeholder: "Email address",
@@ -19,7 +19,7 @@ export const emailComponent = ref({
   maxLength: 100,
 });
 
-export const lastNameComponent = ref({
+export const lastNameComponent = reactive({
   type: "text",
   id: "last-name",
   placeholder: "Last Name",
@@ -30,7 +30,7 @@ export const lastNameComponent = ref({
   maxLength: 100,
 });
 
-export const firstNameComponent = ref({
+export const firstNameComponent = reactive({
   type: "text",
   id: "first-name",
   placeholder: "First Name",
@@ -41,7 +41,7 @@ export const firstNameComponent = ref({
   maxLength: 100,
 });
 
-export const passwordConfirmComponent = ref({
+export const passwordConfirmComponent = reactive({
   type: "password",
   id: "confirm-password",
   placeholder: "Confirm Password",
@@ -52,7 +52,7 @@ export const passwordConfirmComponent = ref({
   maxLength: 50,
 });
 
-export const passwordComponent = ref({
+export const passwordComponent = reactive({
   type: "password",
   id: "current-password",
   placeholder: "Password",

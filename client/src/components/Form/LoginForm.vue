@@ -63,6 +63,11 @@ import GroupSocialLogin from '@components/Element/GroupSocialLogin.vue';
 import InputField from './InputField.vue';
 import { formData, emailComponent, passwordComponent } from '@components/Validate/SignInValid';
 import { ref } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router'
+
+const store = useStore();
+const router = useRouter();
 
 // Define props recieved from parent
 const props = defineProps({
@@ -80,15 +85,20 @@ const validateForm = (isValid: boolean) => {
 
 const submitForm = (event: Event) => {
     event.preventDefault();
-    const formValue = Object.values(formData.value);
+    const formValue = Object.values(formData);
     const hasEmptyValue = formValue.some((value) => value === "");
     if(checkFormValid && !hasEmptyValue){
-        console.log(formData.value);
+        console.log(formData);
+        store.dispatch('auth/login', formData)
+          .then(() => {
+            router.push("/homepage-store");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     }else{
-        console.log("Vui lòng nhập vào");
+        alert("Email & password is not empty");
     }
-    // Submit and print out object
-    
 };
 
 </script>

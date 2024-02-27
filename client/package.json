@@ -11,7 +11,9 @@
   "dependencies": {
     "@headlessui/vue": "^1.7.19",
     "@types/node": "^20.11.9",
+    "axios": "^1.6.7",
     "vue": "^3.3.11",
+    "vue-cookies": "^1.8.3",
     "vue-router": "^4.2.5",
     "vuex": "^4.0.2"
   },

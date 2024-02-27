@@ -63,7 +63,7 @@ const validateForm = (isValid: boolean) => {
 const submitForm = (event: Event) => {
     event.preventDefault();
     // Submit and print out object
-    console.log(formData.value);
+    console.log(formData);
 };
 
 </script>

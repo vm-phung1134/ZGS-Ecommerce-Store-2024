@@ -1,11 +1,11 @@
-import { ref } from 'vue';
+import { reactive } from 'vue';
 
-export let formData = ref({
+export let formData = reactive({
     email: '',
     password: ''
 })
 
-export const emailComponent = ref({
+export const emailComponent = reactive({
     type: 'text',
     id: 'email',
     placeholder: 'Email address',
@@ -16,7 +16,7 @@ export const emailComponent = ref({
     maxLength: 100,
 });
 
-export const passwordComponent = ref({
+export const passwordComponent = reactive({
     type: 'password',
     id: 'current-password',
     placeholder: 'Password',
