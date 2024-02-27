@@ -29,9 +29,7 @@ public class SecurityConfig {
     private JwtAuthFilter authFilter;
 
     @Bean
-    // authentication
     public UserDetailsService userDetailsService() {
-
         return new UserInfoUserDetailsService();
     }
 

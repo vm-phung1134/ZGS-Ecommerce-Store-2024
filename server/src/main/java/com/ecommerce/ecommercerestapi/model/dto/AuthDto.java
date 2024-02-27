@@ -1,0 +1,23 @@
+package com.ecommerce.ecommercerestapi.model.dto;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+
+public class AuthDto extends UserDto {
+    private String token;
+    
+    public AuthDto(
+            String firstName,
+            String lastName,
+            String email,
+            String role,
+            String token) {
+        super(firstName, lastName, email, role);
+        this.token = token;
+    }
+}

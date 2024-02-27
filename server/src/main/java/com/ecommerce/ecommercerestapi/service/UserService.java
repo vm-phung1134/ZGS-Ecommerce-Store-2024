@@ -26,17 +26,17 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public Boolean checkEmailAndPasswordUser(AuthRequest authRequest) {
+    public User checkEmailAndPasswordUser(AuthRequest authRequest) {
         Optional<User> user = userRepository.findByEmail(authRequest.getEmail());
         if (user.isPresent()) {
             User existingUser = user.get();
             Boolean emailCheck = existingUser.getEmail().equals(authRequest.getEmail());
             Boolean passwordCheck = passwordEncoder.matches(authRequest.getPassword(), existingUser.getPassword());
             if (emailCheck && passwordCheck) {
-                return true;
+                return existingUser;
             }
         }
-        return false;
+        return null;
     }
 
     public User registerAuth(RegisterRequest registerRequest) {

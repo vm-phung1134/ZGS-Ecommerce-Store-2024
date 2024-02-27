@@ -20,8 +20,10 @@ import com.ecommerce.ecommercerestapi.config.jwt.Login;
 import com.ecommerce.ecommercerestapi.core.ConstantMsg;
 import com.ecommerce.ecommercerestapi.entity.User;
 import com.ecommerce.ecommercerestapi.exception.EmailOrPasswordInvalidException;
-import com.ecommerce.ecommercerestapi.model.dto.RegisterDto;
-import com.ecommerce.ecommercerestapi.model.mapper.RegisterMapper;
+import com.ecommerce.ecommercerestapi.model.dto.AuthDto;
+import com.ecommerce.ecommercerestapi.model.dto.UserDto;
+import com.ecommerce.ecommercerestapi.model.mapper.AuthMapper;
+import com.ecommerce.ecommercerestapi.model.mapper.UserMapper;
 import com.ecommerce.ecommercerestapi.model.request.AuthRequest;
 import com.ecommerce.ecommercerestapi.model.request.RegisterRequest;
 import com.ecommerce.ecommercerestapi.model.request.ResetPasswordRequest;
@@ -45,9 +47,9 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping(value = "/authenticated")
-    public ApiResponse<String> authenticatedAuth(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
-        Boolean checkAccountUser = userService.checkEmailAndPasswordUser(authRequest);
-        if (!checkAccountUser) {
+    public ApiResponse<AuthDto> authenticatedAuth(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
+        User checkAccountUser = userService.checkEmailAndPasswordUser(authRequest);
+        if (checkAccountUser.getEmail().equals(null)) {
             throw new EmailOrPasswordInvalidException();
         }
         Authentication authentication = authenticationManager.authenticate(
@@ -58,10 +60,11 @@ public class UserController {
             cookie.setMaxAge(7 * 24 * 60 * 60);
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
-            return new ApiResponse<String>(
+            AuthDto authDto = AuthMapper.convertAuthDto(checkAccountUser, token);
+            return new ApiResponse<AuthDto>(
                     HttpStatus.CREATED.value(),
                     ConstantMsg.CREATED_MSG,
-                    token.getAccessToken());
+                    authDto);
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "UnAuthenticated!");
         }
@@ -79,15 +82,15 @@ public class UserController {
     }
 
     @PostMapping(value = "/register")
-    public ApiResponse<RegisterDto> registerAuth(@RequestBody RegisterRequest registerRequest) {
+    public ApiResponse<UserDto> registerAuth(@RequestBody RegisterRequest registerRequest) {
         if (!Objects.equals(registerRequest.getPassword(), registerRequest.getPasswordConfirm()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password do not match!");
 
         User user = userService.registerAuth(registerRequest);
-        return new ApiResponse<RegisterDto>(
+        return new ApiResponse<UserDto>(
                 HttpStatus.CREATED.value(),
                 ConstantMsg.CREATED_MSG,
-                RegisterMapper.convertUserResponse(user));
+                UserMapper.convertUserResponse(user));
     }
 
     @PostMapping("/logout")
