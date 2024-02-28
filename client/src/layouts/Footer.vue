@@ -29,17 +29,17 @@
                                     class="w-full outline-none border-none focus:border-transparent focus:ring-transparent sm:text-sm" />
 
                                 <button
-                                    class="mt-1 w-full bg-red-600 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-none hover:bg-red-600 sm:mt-0 sm:w-auto sm:shrink-0">
-                                    Sign In
+                                    class="mt-1 w-full bg-red-600 px-6 py-3 text-sm tracking-wide text-white transition-none hover:bg-red-600 sm:mt-0 sm:w-auto sm:shrink-0">
+                                    Send
                                 </button>
                             </div>
                         </form>
                     </div>
 
                     <div class="col-span-2 sm:col-span-1">
-                        <p class="font-medium text-gray-900">Services</p>
+                        <p class="text-sm font-bold text-gray-900">Services</p>
 
-                        <ul class="mt-6 space-y-4 text-sm">
+                        <ul class="mt-5 space-y-4 text-sm">
                             <li>
                                 <a href="#" class="text-gray-700 transition hover:opacity-75"> Latest Production </a>
                             </li>
@@ -63,9 +63,9 @@
                     </div>
 
                     <div class="col-span-2 sm:col-span-1">
-                        <p class="font-medium text-gray-900">Company</p>
+                        <p class="text-sm font-bold text-gray-900">Company</p>
 
-                        <ul class="mt-6 space-y-4 text-sm">
+                        <ul class="mt-5 space-y-4 text-sm">
                             <li>
                                 <a href="#" class="text-gray-700 transition hover:opacity-75"> About </a>
                             </li>
@@ -81,9 +81,9 @@
                     </div>
 
                     <div class="col-span-2 sm:col-span-1">
-                        <p class="font-medium text-gray-900">Helpful Links</p>
+                        <p class="text-sm font-bold text-gray-900">Helpful Links</p>
 
-                        <ul class="mt-6 space-y-4 text-sm">
+                        <ul class="mt-5 space-y-4 text-sm">
                             <li>
                                 <a href="#" class="text-gray-700 transition hover:opacity-75"> Contact </a>
                             </li>
@@ -99,9 +99,9 @@
                     </div>
 
                     <div class="col-span-2 sm:col-span-1">
-                        <p class="font-medium text-gray-900">Legal</p>
+                        <p class="text-sm font-bold text-gray-900">Legal</p>
 
-                        <ul class="mt-6 space-y-4 text-sm">
+                        <ul class="mt-5 space-y-4 text-sm">
                             <li>
                                 <a href="#" class="text-gray-700 transition hover:opacity-75"> Accessibility </a>
                             </li>
@@ -121,9 +121,9 @@
                     </div>
 
                     <div class="col-span-2 sm:col-span-1">
-                        <p class="font-medium text-gray-900">Downloads</p>
+                        <p class="text-sm font-bold text-gray-900">Downloads</p>
 
-                        <ul class="mt-6 space-y-4 text-sm">
+                        <ul class="mt-5 space-y-4 text-sm">
                             <li>
                                 <a href="#" class="text-gray-700 transition hover:opacity-75"> Marketing Calendar </a>
                             </li>

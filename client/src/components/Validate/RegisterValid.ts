@@ -19,26 +19,26 @@ export const emailComponent = reactive({
   maxLength: 100,
 });
 
-export const lastNameComponent = reactive({
-  type: "text",
-  id: "last-name",
-  placeholder: "Last Name",
-  label: "Last name",
-  errMsg: "Last name is invalid!",
-  pattern: "",
-  minLength: 5,
-  maxLength: 100,
-});
-
 export const firstNameComponent = reactive({
   type: "text",
   id: "first-name",
-  placeholder: "First Name",
+  placeholder: "First name",
   label: "First name",
   errMsg: "First name is invalid!",
   pattern: "",
-  minLength: 5,
-  maxLength: 100,
+  minLength: 3,
+  maxLength: 50,
+});
+
+export const lastNameComponent = reactive({
+  type: "text",
+  id: "last-name",
+  placeholder: "Last name",
+  label: "Last name",
+  errMsg: "Last name is invalid!",
+  pattern: "",
+  minLength: 3,
+  maxLength: 50,
 });
 
 export const passwordConfirmComponent = reactive({

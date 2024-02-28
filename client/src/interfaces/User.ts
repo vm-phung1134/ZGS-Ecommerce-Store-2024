@@ -5,3 +5,10 @@ export interface User{
     lastName: string,
     role: string
 }
+export interface UserReq{
+    email: string,
+    firstName: string,
+    lastName: string,
+    password: string,
+    passwordConfirm: string,
+}

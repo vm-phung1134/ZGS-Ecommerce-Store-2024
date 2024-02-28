@@ -26,7 +26,7 @@
             <div class="inline-block">
                 <div class="inline-flex items-center max-w-full">
                     <ul class="flex gap-8 cursor-pointer uppercase">
-                        <li>Store</li>
+                        <li><a href="/">Store</a></li>
                         <li>New in </li>
                         <li>Collaborations</li>
                         <li>Gaming world</li>
@@ -95,7 +95,8 @@
 
                 <div class="block ml-2">
                     <div class="inline relative">
-                        <button type="button"
+                        <button v-if="isAuthenticated = false" @click="handleDirection" class="bg-red-600 py-3 px-6 text-sm tracking-wider text-white">Sign In</button>
+                        <button v-else type="button"
                             class="inline-flex items-center relative px-2 border rounded-full hover:shadow-lg">
                             <div class="pl-1">
                                 <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
@@ -130,11 +131,19 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import SearchScreen from '../pages/SearchScreen.vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 const isOpenSearchBar = ref(false);
 const toggleSearchBar = () => isOpenSearchBar.value = !isOpenSearchBar.value;
 
+const store = useStore();
+const router = useRouter();
+const isAuthenticated = store.getters['auth/isAuthenticated'];
 
+const handleDirection = () => {
+    router.push("/sign-in");
+}
 </script>
 
 <style scoped></style>
