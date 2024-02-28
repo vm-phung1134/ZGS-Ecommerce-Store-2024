@@ -33,6 +33,7 @@ import com.ecommerce.ecommercerestapi.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -45,6 +46,11 @@ public class UserController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @GetMapping(value = "/welcome")
+    public String getMethodName() {
+        return new String("Welcome to website sevices");
+    }
 
     @PostMapping(value = "/authenticated")
     public ApiResponse<AuthDto> authenticatedAuth(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
@@ -93,7 +99,7 @@ public class UserController {
                 UserMapper.convertUserResponse(user));
     }
 
-    @PostMapping("/logout")
+    @PostMapping(value = "/logout")
     public ApiResponse<String> logout(HttpServletResponse response) {
         Cookie cookie = new Cookie("refresh_token", null);
         cookie.setMaxAge(0);
@@ -112,7 +118,7 @@ public class UserController {
         return new ApiResponse<String>(
                 HttpStatus.OK.value(),
                 ConstantMsg.CREATED_MSG,
-                "Successfully");
+                "Execute Successfully");
     }
 
     @PostMapping(value = "/reset-password")
@@ -124,7 +130,7 @@ public class UserController {
         return new ApiResponse<String>(
                 HttpStatus.OK.value(),
                 ConstantMsg.CREATED_MSG,
-                "Successfully");
+                "Execute Successfully");
     }
 
 }
