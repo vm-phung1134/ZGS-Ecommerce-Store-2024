@@ -10,6 +10,9 @@
                         Or
                     </p>
                 </div>
+                <div class="w-full text-center my-2 text-[13px]" v-show="errorApi.length > 0">
+                    <span class="text-red-700">Ops! {{ errorApi }}</span>
+                </div>
                 <!-- Email input -->
                 <InputField @form-validate="validateForm" v-model="formData.email" :component-data="emailComponent" />
                 <!-- Password input -->
@@ -66,10 +69,7 @@ import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router'
 
-const store = useStore();
-const router = useRouter();
-
-// Define props recieved from parent
+// -----------------DEFINE PROPS------------------
 const props = defineProps({
     className: {
         type: String,
@@ -77,27 +77,33 @@ const props = defineProps({
     }
 });
 
-const checkFormValid = ref(false);
+// -----------------DEFINE CONSTANTS------------------
+const store = useStore();
+const router = useRouter();
 
+const checkFormValid = ref(false);
+const errorApi = ref('');
+
+// -----------------DEFINE METHODS------------------
 const validateForm = (isValid: boolean) => {
-  return checkFormValid.value = isValid;
+    return checkFormValid.value = isValid;
 };
 
 const submitForm = (event: Event) => {
     event.preventDefault();
     const formValue = Object.values(formData);
     const hasEmptyValue = formValue.some((value) => value === "");
-    if(checkFormValid && !hasEmptyValue){
-        console.log(formData);
-        store.dispatch('auth/login', formData)
-          .then(() => {
-            router.push("/homepage-store");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-    }else{
-        alert("Email & password is not empty");
+    if (checkFormValid && !hasEmptyValue) {
+        store.dispatch("auth/login", formData)
+            .then(() => {
+                router.push("/");
+            })
+            .catch((error) => {
+                console.log(error);
+                errorApi.value = "Email or password invalid";
+            });
+    } else {
+        errorApi.value = "Email or password invalid";
     }
 };
 

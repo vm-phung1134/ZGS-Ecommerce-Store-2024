@@ -9,7 +9,7 @@ const _routes: Array<vR.RouteRecordRaw> = [
     name: "auth.login",
   },
   {
-    path: "/homepage-store",
+    path: "/",
     component: HomepageVue,
     name: "homepage.store",
   },

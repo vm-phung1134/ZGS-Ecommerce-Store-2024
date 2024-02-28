@@ -4,9 +4,11 @@ import Footer from './layouts/Footer.vue';
 </script>
 
 <template>
-  <Header></Header>
-  <router-view></router-view>
-  <Footer></Footer>
+  <div class="relative">
+    <Header></Header>
+    <router-view></router-view>
+    <Footer></Footer>
+  </div>
 </template>
 
 <style scoped></style>

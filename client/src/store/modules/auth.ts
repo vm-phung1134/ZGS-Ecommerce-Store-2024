@@ -46,6 +46,7 @@ const mutations: MutationTree<authState> = {
   login_success(state: authState, payload: any) {
     state.isAuthenticated = true;
     state.authRes = payload.data;
+    localStorage.setItem("token", payload.data.token);
   },
 };
 
