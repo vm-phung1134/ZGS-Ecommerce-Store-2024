@@ -7,7 +7,7 @@ public class NotFoundException extends ResponseStatusException {
     public NotFoundException() {
         super(
             HttpStatus.NOT_FOUND, 
-            "User not found!"
+            "Object not found in database!"
         );
     }
 }

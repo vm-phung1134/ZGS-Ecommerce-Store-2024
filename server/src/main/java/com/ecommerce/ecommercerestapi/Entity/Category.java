@@ -12,18 +12,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    private String firstName;
-
-    private String lastName;
-
-    private String email;
-
-    private String password;
-
-    private String role;
+    private String name;
+    private String desc;
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,18 +13,23 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    private String firstName;
+    private String name;
+    private String image;
+    private Double price;
 
-    private String lastName;
+    // @OneToMany
+    @JoinColumn(name = "category_id")
+    private Integer categoryId;
 
-    private String email;
+    // @OneToOne
+    @JoinColumn(name = "inventory_id")
+    private Integer inventoryId;
 
-    private String password;
-
-    private String role;
+    // @OneToOne
+    @JoinColumn(name = "discount_id")
+    private Integer discountId;
 }

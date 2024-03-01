@@ -12,18 +12,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Discount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    private String name;
+
+    private Double discountPercent;
     
-    private String firstName;
-
-    private String lastName;
-
-    private String email;
-
-    private String password;
-
-    private String role;
+    private boolean active;
 }
