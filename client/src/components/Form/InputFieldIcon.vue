@@ -14,7 +14,7 @@
                 </g>
             </svg>
 
-            <input @input="onInput" @blur="validate" :type="props.componentData.type" class="peer block min-h-[auto] w-full 
+            <input v-model="valueInput" @blur="validate" :type="props.componentData.type" class="peer block min-h-[auto] w-full 
             border-b-2 px-3 py-[0.6rem] leading-[2.15] outline-none transition-all duration-200 placeholder:text-sm
             ease-linear focus:placeholder:opacity-100 motion-reduce:transition-none"
                 :placeholder="props.componentData.placeholder" :id="props.componentData.id"
@@ -39,10 +39,6 @@
 import { defineEmits, defineProps, ref } from 'vue';
 // Define props are recieved from parent component
 const props = defineProps({
-    modelValue: {
-        type: String,
-        required: true
-    },
     componentData: {
         type: Object,
         default: () => {
@@ -59,16 +55,11 @@ const props = defineProps({
         }
     }
 });
-// Define 2 events
-const emits = defineEmits(['update:modelValue', 'form-validate']);
+const valueInput = defineModel('valueInput');
+// Define 1 events
+const emits = defineEmits(['form-validate']);
 // Define a constant to take error massage
 const localError = ref("");
-// Event on input form field to update value for v-model
-const onInput = (e: Event) => {
-    const target = e.target as HTMLInputElement;
-    emits('update:modelValue', target.value);
-    localError.value = '';
-};
 // Event handle validate form field
 const validate = (e: Event) => {
     const target = e.target as HTMLInputElement;
@@ -77,7 +68,7 @@ const validate = (e: Event) => {
     const isLengthValid =
         target.value.length >= props.componentData.minLength &&
         target.value.length <= props.componentData.maxLength
-    if (props.modelValue == '') {
+    if (valueInput.length < 0) {
         localError.value = 'Please enter a valid value';
     } else if (!isPatternValue || !isLengthValid) {
         localError.value = props.componentData.errMsg;

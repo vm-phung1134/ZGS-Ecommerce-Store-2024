@@ -14,9 +14,11 @@
                     <span class="text-red-700">Ops! {{ errorApi }}</span>
                 </div>
                 <!-- Email input -->
-                <InputField @form-validate="validateForm" v-model="formData.email" :component-data="emailComponent" />
+                <InputField @form-validate="validateForm" v-model:valueInput="formData.email"
+                    :component-data="emailComponent" />
                 <!-- Password input -->
-                <InputField @form-validate="validateForm" v-model="formData.password" :component-data="passwordComponent" />
+                <InputField @form-validate="validateForm" v-model:valueInput="formData.password"
+                    :component-data="passwordComponent" />
 
                 <div class="mb-6 flex items-center justify-between text-sm">
                     <div class="mb-[0.125rem] min-h-[1.5rem] pl-[0.5rem] items-center flex gap-2">
