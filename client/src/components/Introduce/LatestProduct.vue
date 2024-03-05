@@ -10,7 +10,7 @@
         </div>
         <h3 class="uppercase text-gray-100 text-[2.5rem] font-bold my-10">Discover the Latest MSI Innovations</h3>
         <div class="grid grid-cols-3 gap-5 cursor-pointer">
-            <div v-for="product in productLists" :key="product.id">
+            <div v-for="product in productLists" :key="product.id" @click="handleDirection">
                 <img class="hover:scale-95 hover:transform hover:duration-500 hover:ease-in" :src="product.img" alt="image-product-item">
                 <div class="flex text-white my-5 flex-col justify-center items-center gap-2">
                     <p class="font-bold uppercase text-lg">{{ product.name }}</p>
@@ -22,6 +22,13 @@
 </template>
 
 <script setup lang="ts">
+    import { useRouter } from 'vue-router';
+
+    const router = useRouter();
+
+    const handleDirection = () => {
+        router.push("/product-list/product-detail/1");
+    }
     const productLists = [
         {
             id: "1",

@@ -1,8 +1,15 @@
 <template>
     <div>
         <div
-            class="h-[120vh] bg-cover bg-[url('https://storage-asset.msi.com/global/picture/image/feature/monitor/MEG-342C-QD-OLED/kv-bg.jpg')] w-full">
-            <!-- component -->
+            class="h-[120vh] relative bg-cover bg-[url('https://storage-asset.msi.com/global/picture/image/feature/monitor/MEG-342C-QD-OLED/kv-bg.jpg')] w-full">
+            <div class="absolute top-14 -left-5 bg-white rounded-none outline-none -skew-x-[35deg]">
+                <div className="text-sm breadcrumbs px-10 skew-x-[30deg]">
+                    <ul class="uppercase">
+                        <li><a>Home</a></li>
+                        <li><a class="font-bold" href="">Product detail page</a></li>
+                    </ul>
+                </div>
+            </div>
             <section class="text-gray-700 body-font overflow-hidden">
                 <div class="container px-5 py-24 mx-auto">
                     <div class="flex gap-10 mx-20">
@@ -12,6 +19,10 @@
                             <div>
                                 <h2 class="text-sm title-font text-gray-500 tracking-widest">BRAND NAME</h2>
                                 <h1 class="text-3xl title-font font-bold">GeForce RTX™ 4090 VENTUS 3X 24G</h1>
+                            </div>
+                            <div class="flex gap-2">
+                                <h2 class="text-sm title-font text-gray-500 tracking-wider">CATEGORY | </h2>
+                                <h1 class="text-sm title-font font-bold">MSI GAMING</h1>
                             </div>
                             <div class="flex mb-4">
                                 <span class="flex items-center">
@@ -85,10 +96,15 @@
                             <img class="w-1/2"
                                 src="https://storage-asset.msi.com/global/picture/image/feature/monitor/MEG-342C-QD-OLED/kv-icons.png"
                                 alt="image-detail-product">
-                            <div class="flex h-fit mt-auto items-center justify-between">
+                            <div class="flex h-fit mt-auto items-end justify-between">
                                 <span class="title-font font-bold text-2xl">$146.00</span>
-                                <button class="bg-red-600 uppercase text-sm font-bold text-white py-3 px-10">Place an
-                                    order</button>
+                                <div class="flex flex-col gap-3 text-sm w-72">
+                                    <button class="border px-5 py-2 uppercase">Add to cart</button>
+                                    <button class="bg-red-600 text-sm uppercase font-bold text-white py-3 px-10">
+                                        Place an order
+                                    </button>
+                                </div>
+
                             </div>
                         </div>
                     </div>
