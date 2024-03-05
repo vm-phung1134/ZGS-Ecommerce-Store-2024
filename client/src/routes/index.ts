@@ -3,7 +3,8 @@ import AuthVue from "@pages/Auth.vue";
 import HomepageVue from "@pages/Homepage.vue";
 import ProductDetailVue from "@pages/ProductDetail.vue";
 import ProductListVue from "@pages/ProductList.vue";
-import checkoutVue from "@pages/checkout.vue";
+import checkoutVue from "@pages/Checkout.vue";
+import OrderSuccessVue from "@pages/OrderSuccess.vue";
 
 const _routes: Array<vR.RouteRecordRaw> = [
   {
@@ -31,6 +32,11 @@ const _routes: Array<vR.RouteRecordRaw> = [
     component: ProductDetailVue,
     name: "product.detail",
   },
+  {
+    path: "/payment-success",
+    component: OrderSuccessVue,
+    name: "order.success"
+  }
 
 ];
 
