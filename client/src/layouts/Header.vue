@@ -27,7 +27,7 @@
                 <div class="inline-flex items-center max-w-full">
                     <ul class="flex gap-8 cursor-pointer uppercase">
                         <li><a href="/">Store</a></li>
-                        <li>Gaming world</li>
+                        <li><a href="/product-list">Gaming world</a></li>
                         <li>Collaborations</li>
                         <li>New in </li>
                         <li>Support</li>
