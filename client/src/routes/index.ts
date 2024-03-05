@@ -3,6 +3,7 @@ import AuthVue from "@pages/Auth.vue";
 import HomepageVue from "@pages/Homepage.vue";
 import ProductDetailVue from "@pages/ProductDetail.vue";
 import ProductListVue from "@pages/ProductList.vue";
+import checkoutVue from "@pages/checkout.vue";
 
 const _routes: Array<vR.RouteRecordRaw> = [
   {
@@ -19,6 +20,11 @@ const _routes: Array<vR.RouteRecordRaw> = [
     path: "/product-list",
     component: ProductListVue,
     name: "product.list",
+  },
+  {
+    path: "/checkout-order",
+    component: checkoutVue,
+    name: "checkout.order",
   },
   {
     path: "/product-list/product-detail/1",
