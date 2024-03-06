@@ -14,16 +14,16 @@
                 <div class="container px-5 py-24 mx-auto">
                     <div class="flex gap-10 mx-20">
                         <div class="w-1/2 flex flex-col justify-center">
-                            <img alt="ecommerce" class="w-full h-auto" :src=product.image>
+                            <img alt="ecommerce" class="w-full h-auto" :src=product?.image>
                         </div>
                         <div class="w-1/2 flex flex-col gap-5 p-8 bg-black/80 text-white">
                             <div>
                                 <h2 class="text-sm title-font text-gray-500 tracking-widest">BRAND NAME</h2>
-                                <h1 class="text-3xl title-font font-bold">{{ product.name }}</h1>
+                                <h1 class="text-3xl title-font font-bold">{{ product?.name }}</h1>
                             </div>
                             <div class="flex gap-2">
                                 <h2 class="text-sm title-font text-gray-500 tracking-wider">CATEGORY | </h2>
-                                <h1 class="text-sm title-font font-bold uppercase">{{ product.category.name }}</h1>
+                                <h1 class="text-sm title-font font-bold uppercase">{{ product?.category?.name }}</h1>
                             </div>
                             <div class="flex mb-4">
                                 <span class="flex items-center">
@@ -103,7 +103,7 @@
                             <div class="flex h-fit mt-auto items-end justify-between">
                                 <div class="flex flex-col justify-between gap-2">
                                     <div>
-                                        <span class="title-font font-bold text-2xl text-orange-600">${{ product.price }}.00</span>
+                                        <span class="title-font font-bold text-2xl text-orange-600">${{ product?.price }}.00</span>
                                         <span class="px-3 tracking-wide text-gray-500">$200.00</span>
                                     </div>
                                     <p class="text-sm">Online Exclusive</p>
@@ -146,9 +146,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <butto @click="addProductToCart" class="bg-red-600 text-sm uppercase font-bold text-white py-3 px-10">
+                                    <button @click="addProductToCart" class="bg-red-600 text-sm uppercase font-bold text-white py-3 px-10">
                                         Add to cart
-                                    </butto>
+                                    </button>
                                 </div>
 
                             </div>
@@ -225,21 +225,37 @@ import { useStore } from 'vuex';
 import { useRoute } from 'vue-router'
 import { Product } from '../interfaces/Product';
 import { ComputedRef, computed, ref } from 'vue';
+import { AuthRes } from '../interfaces/Auth';
+import { ShoppingCartReq } from '../interfaces/ShoppingCart';
 
-const quantity = ref(0);
+// DEFINE LOGIC
+const quantity = ref(1);
 const store = useStore();
 const route = useRoute();
-
+// GET ID PARAMS
 store.dispatch("product/getOneProduct", route.params.id);
 
+// GET STATE FROM STORE
 const product: ComputedRef<Product> = computed(() => store.state.product.product);
+const isAddToCart: ComputedRef<boolean> = computed(() => store.state.cart.isAddToCart);
+const authData = localStorage.getItem("auth");
+const authRes = JSON.parse(authData);
 
 // ADD TO CART
 const addProductToCart = () => {
-    
-    store.dispatch('cart/addProductToCart', product)
+    const cartBuild: ShoppingCartReq = {
+        user: {
+            id: authRes.id
+        },
+        product: {
+            id: product.value.id
+        },
+        quantity: quantity.value
+    }
+    store.dispatch('cart/addProductToCart', cartBuild)
 }
 
+// HANDLE NUMBER INPUT QUANTITY
 const increaseQuantity = () => {
     quantity.value++;
 };

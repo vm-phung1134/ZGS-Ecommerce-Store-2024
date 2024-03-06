@@ -33,6 +33,9 @@ export default {
   register(auth: UserReq): Promise<AxiosResponse<Object>> {
     return axiosApiDefault.post(`register`, auth);
   },
+  logout(): Promise<AxiosResponse<Object>> {
+    return axiosApiDefault.post(`logout`);
+  },
 
   // USER INFO
   getOneUser(userId: string): Promise<AxiosResponse<Object>> {
@@ -48,7 +51,10 @@ export default {
   },
 
   // CART
-  addToCart(cart: ShoppingCartReq):  Promise<AxiosResponse<Object>>{
-    return axios.post(`shopping-cart`, cart);
+  addToCart(cart: ShoppingCartReq): Promise<AxiosResponse<Object>>{
+    return axiosApi.post(`shopping-cart`, cart);
+  },
+  getUserCart(userId: string): Promise<AxiosResponse<Object>>{
+    return axiosApi.post(`shopping-cart/${userId}`);
   }
 };

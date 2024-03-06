@@ -3,12 +3,14 @@ import api from "../../api";
 import { ShoppingCartRes, ShoppingCartReq } from "@/interfaces/ShoppingCart";
 
 export type shoppingCartState = {
-  userCart: ShoppingCartRes | null
+  userCart: ShoppingCartRes | null;
+  isAddToCart: boolean;
 };
 
 // auth state
 const state: shoppingCartState = {
   userCart: null,
+  isAddToCart: false,
 };
 
 // getters
@@ -16,7 +18,30 @@ const getters = {};
 
 // actions
 const actions: ActionTree<shoppingCartState, any> = {
-  getUserCart({ commit }: ActionContext<shoppingCartState, any>, cart: ShoppingCartReq) {
+  getUserCart(
+    { commit }: ActionContext<shoppingCartState, any>,
+    userId: string
+  ) {
+    return new Promise((resolve, reject) => {
+      console.log("Accessing backend with successfully");
+      api
+        .getUserCart(userId)
+        .then((response) => {
+          if (response.status == 200) {
+            commit("getUserCart_success");
+          }
+          resolve(response);
+        })
+        .catch((error) => {
+          console.log("Error: " + error);
+          reject("Invalid credentials!");
+        });
+    });
+  },
+  addProductToCart(
+    { commit }: ActionContext<shoppingCartState, any>,
+    cart: ShoppingCartReq
+  ) {
     return new Promise((resolve, reject) => {
       console.log("Accessing backend with successfully");
       api
@@ -37,7 +62,10 @@ const actions: ActionTree<shoppingCartState, any> = {
 
 // mutations
 const mutations: MutationTree<shoppingCartState> = {
-    addToCart_success(state: shoppingCartState, payload: any) {
+  addToCart_success(state: shoppingCartState) {
+    state.isAddToCart = true;
+  },
+  getUserCart_success(state: shoppingCartState, payload: any) {
     state.userCart = payload.data;
   },
 };

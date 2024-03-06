@@ -140,7 +140,7 @@
 
                 <div class="block ml-2">
                     <div class="inline relative">
-                        <button v-if="!isAuthenticated" @click="handleDirection"
+                        <button v-if="!checkAuthenticated()" @click="handleDirection"
                             class="bg-red-600 py-3 px-6 text-sm tracking-wider text-white">Sign In</button>
                         <div v-else className="dropdown dropdown-end">
                             <button type="button" tabIndex={0} role="button"
@@ -173,7 +173,7 @@
                                 <li><a>Payment method</a></li>
                                 <li><a>Your orders</a></li>
                                 <li><a>Feedback</a></li>
-                                <li class="text-red-600"><a href="/sign-out">Log out</a></li>
+                                <li @click="handleLogout()" class="text-red-600"><a>Log out</a></li>
                             </ul>
                         </div>
                     </div>
@@ -185,18 +185,39 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ComputedRef, computed, ref } from 'vue';
 import SearchScreen from '../pages/SearchScreen.vue';
-import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import ShoppingCart from '@pages/shoppingCart.vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+
+const isLogout: ComputedRef<boolean> = computed(() => store.state.auth.isLogout);
+
 
 const isOpenSearchBar = ref(false);
 const toggleSearchBar = () => isOpenSearchBar.value = !isOpenSearchBar.value;
 
-const store = useStore();
 const router = useRouter();
-const isAuthenticated = store.getters['auth/isAuthenticated'];
+
+const checkAuthenticated = () => {
+    const token = localStorage.getItem("token");
+    if(token){
+        return true;
+    }
+    return false;
+}
+
+checkAuthenticated();
+
+const handleLogout = async () => {
+    await store.dispatch('auth/logout');
+    checkAuthenticated();
+    if(isLogout){
+        alert('Log out successfully');
+    }
+}
 
 const handleDirection = () => {
     router.push("/sign-in");

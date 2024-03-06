@@ -7,6 +7,7 @@ export type authState = {
   isAuthenticated: boolean;
   authRes: AuthRes | null;
   isRegister: boolean;
+  isLogout: boolean;
 };
 
 // auth state
@@ -14,6 +15,7 @@ const state: authState = {
   isAuthenticated: false,
   authRes: null,
   isRegister: false,
+  isLogout: false,
 };
 
 // getters
@@ -59,6 +61,23 @@ const actions: ActionTree<authState, any> = {
         });
     });
   },
+  logout({ commit }: ActionContext<authState, any>) {
+    return new Promise((resolve, reject) => {
+      console.log("Accessing backend");
+      api
+        .logout()
+        .then((response) => {
+          if (response.status == 200) {
+            commit("logout_success");
+          }
+          resolve(response);
+        })
+        .catch((error) => {
+          console.log("Error: " + error);
+          reject("Invalid credentials!");
+        });
+    });
+  },
 };
 
 // mutations
@@ -67,9 +86,15 @@ const mutations: MutationTree<authState> = {
     state.isAuthenticated = true;
     state.authRes = payload.data;
     localStorage.setItem("token", payload.data.token);
+    localStorage.setItem("auth", JSON.stringify(payload.data));
   },
   register_success(state: authState) {
     state.isRegister = true;
+  },
+  logout_success(state: authState) {
+    state.isLogout = true;
+    localStorage.removeItem("token");
+    localStorage.removeItem("auth");
   },
 };
 
