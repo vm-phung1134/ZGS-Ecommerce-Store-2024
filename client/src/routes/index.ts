@@ -28,7 +28,7 @@ const _routes: Array<vR.RouteRecordRaw> = [
     name: "checkout.order",
   },
   {
-    path: "/product-list/product-detail/1",
+    path: "/product-list/product-detail/:id",
     component: ProductDetailVue,
     name: "product.detail",
   },

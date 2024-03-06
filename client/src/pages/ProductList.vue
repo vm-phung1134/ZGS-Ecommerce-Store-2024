@@ -125,19 +125,20 @@
                     <div class="grid grid-cols-3 gap-5">
                         <!-- PRODUCT LIST -->
                         <div v-for="product in products" :key="product.id" class="border border-gray-500">
-                            <div>
-                                <img :src=product.image
-                                    alt="img-product-item">
+                            <div class="p-3 min-h-72 max-h-fit">
+                                <img class="w-full" :src=product.image alt="img-product-item">
                             </div>
                             <div class="flex justify-center items-center my-3">
 
                             </div>
                             <div class="h-[1px] mx-20 bg-gray-200"></div>
                             <div class="flex justify-center items-center">
-                                <button class="text-sm w-40 bg-red-700 text-white py-3 my-5">View Detail</button>
+                                <RouterLink :to="{ name: 'product.detail', params: { id: product.id } }">
+                                    <button class="text-sm w-40 bg-red-700 text-white py-3 my-5">View Detail</button>
+                                </RouterLink>
                             </div>
                             <div class="p-5 text-center">
-                                <h4 class="font-bold text-lg my-2">{{product.name}}</h4>
+                                <h4 class="font-bold text-lg my-2">{{ product.name }}</h4>
                                 <p class="text-sm">Vi xử lý Intel Core Thế hệ 13 / card đồ họa GeForce RTX 40 series</p>
                             </div>
                         </div>
@@ -151,6 +152,7 @@
 <script setup lang="ts">
 import { Product } from '../interfaces/Product';
 import { ComputedRef, computed } from 'vue';
+import { RouterLink } from 'vue-router';
 import { useStore } from 'vuex';
 
 const store = useStore();

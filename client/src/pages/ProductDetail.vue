@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="h-[120vh] relative bg-cover bg-[url('https://storage-asset.msi.com/global/picture/image/feature/monitor/MEG-342C-QD-OLED/kv-bg.jpg')] w-full">
+            class="h-[130vh] relative bg-cover bg-[url('https://storage-asset.msi.com/global/picture/image/feature/monitor/MEG-342C-QD-OLED/kv-bg.jpg')] w-full">
             <div class="absolute top-14 -left-5 bg-white rounded-none outline-none -skew-x-[35deg]">
                 <div className="text-sm breadcrumbs px-10 skew-x-[30deg]">
                     <ul class="uppercase">
@@ -13,16 +13,17 @@
             <section class="text-gray-700 body-font overflow-hidden">
                 <div class="container px-5 py-24 mx-auto">
                     <div class="flex gap-10 mx-20">
-                        <img alt="ecommerce" class="w-1/2 object-cover object-center rounded"
-                            src="https://storage-asset.msi.com/global/picture/image/feature/monitor/MEG-342C-QD-OLED/story-pd.png">
+                        <div class="w-1/2 flex flex-col justify-center">
+                            <img alt="ecommerce" class="w-full h-auto" :src=product.image>
+                        </div>
                         <div class="w-1/2 flex flex-col gap-5 p-8 bg-black/80 text-white">
                             <div>
                                 <h2 class="text-sm title-font text-gray-500 tracking-widest">BRAND NAME</h2>
-                                <h1 class="text-3xl title-font font-bold">GeForce RTX™ 4090 VENTUS 3X 24G</h1>
+                                <h1 class="text-3xl title-font font-bold">{{ product.name }}</h1>
                             </div>
                             <div class="flex gap-2">
                                 <h2 class="text-sm title-font text-gray-500 tracking-wider">CATEGORY | </h2>
-                                <h1 class="text-sm title-font font-bold">MSI GAMING</h1>
+                                <h1 class="text-sm title-font font-bold uppercase">{{ product.category.name }}</h1>
                             </div>
                             <div class="flex mb-4">
                                 <span class="flex items-center">
@@ -54,8 +55,9 @@
                                             d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
                                         </path>
                                     </svg>
-                                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" class="w-4 h-4 text-orange-500" viewBox="0 0 24 24">
+                                    <svg fill="none" stroke="currentColor" stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-orange-500"
+                                        viewBox="0 0 24 24">
                                         <path
                                             d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
                                         </path>
@@ -66,7 +68,8 @@
                                     <a class="text-blue-500">
                                         <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
-                                            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                                            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z">
+                                            </path>
                                         </svg>
                                     </a>
                                     <a class="ml-2 text-blue-500">
@@ -90,16 +93,20 @@
                             <p class="leading-relaxed">Fam locavore kickstarter distillery. Mixtape chillwave tumeric
                                 sriracha
                                 taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage
-                                brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle
+                                brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin
+                                listicle
                                 pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.
                             </p>
                             <img class="w-1/2"
                                 src="https://storage-asset.msi.com/global/picture/image/feature/monitor/MEG-342C-QD-OLED/kv-icons.png"
                                 alt="image-detail-product">
                             <div class="flex h-fit mt-auto items-end justify-between">
-                                <span class="title-font font-bold text-2xl">$146.00</span>
-                                <div class="flex flex-col gap-3 text-sm w-72">
+                                <div class="flex flex-col justify-between items-center gap-2">
+                                    <span class="title-font font-bold text-2xl">${{ product.price }}.00</span>
                                     <button class="border px-5 py-2 uppercase">Add to cart</button>
+                                </div>
+                                <div class="flex flex-col gap-3 text-sm w-72">
+                                    <button class="border px-5 py-2 uppercase">Quantity</button>
                                     <button class="bg-red-600 text-sm uppercase font-bold text-white py-3 px-10">
                                         Place an order
                                     </button>
@@ -168,12 +175,24 @@
             </div>
         </div>
         <div>
-            <img src="https://storage-asset.msi.com/global/picture/image/feature/Handhelds/Claw-A1M/wifi7-v1.webp" alt="">
+            <img src="https://storage-asset.msi.com/global/picture/image/feature/Handhelds/Claw-A1M/wifi7-v1.webp"
+                alt="">
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router'
+import { Product } from '../interfaces/Product';
+import { ComputedRef, computed } from 'vue';
+
+const store = useStore();
+const route = useRoute();
+store.dispatch("product/getOneProduct", route.params.id);
+
+const product: ComputedRef<Product> = computed(() => store.state.product.product);
+
 
 </script>
 

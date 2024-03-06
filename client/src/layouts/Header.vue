@@ -26,8 +26,12 @@
             <div class="inline-block">
                 <div class="inline-flex items-center max-w-full">
                     <ul class="flex gap-8 cursor-pointer uppercase">
-                        <li><a href="/">Store</a></li>
-                        <li><a href="/product-list">Gaming world</a></li>
+                        <RouterLink to="/">
+                            <li>Store</li>
+                        </RouterLink>
+                        <RouterLink to="/product-list">
+                            <li>Gaming world</li>
+                        </RouterLink>
                         <li>Collaborations</li>
                         <li>New in </li>
                         <li>Support</li>
@@ -47,7 +51,8 @@
                             <div class="drawer-content">
                                 <!-- Page content here -->
                                 <label for="my-drawer-4" class="drawer-button cursor-pointer">
-                                    <span type="button" class="inline-block p-2 hover:bg-gray-200 rounded-full relative ">
+                                    <span type="button"
+                                        class="inline-block p-2 hover:bg-gray-200 rounded-full relative ">
                                         <div class="flex items-center">
                                             <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -114,7 +119,8 @@
                         <button @click="toggleSearchBar" type="button"
                             class="inline-block p-2 hover:bg-gray-200 rounded-full relative">
                             <div class="flex items-center">
-                                <svg class="w-7 h-7" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="w-7 h-7" viewBox="0 -0.5 25 25" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                     <g id="SVGRepo_iconCarrier">
