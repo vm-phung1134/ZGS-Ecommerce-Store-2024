@@ -31,15 +31,16 @@ public class CartController {
     CartService cartService;
 
     @PostMapping
-    public ApiResponse<String> createNewCart(@RequestBody Cart product) {
-        Cart newCart = cartService.createCart(product);
-        if (newCart.equals(null)) {
+    public ApiResponse<String> createNewCart(@RequestBody Cart cart) {
+        if (cart.equals(null)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fail items add to cart!");
+        } else {
+            cartService.createCart(cart);
+            return new ApiResponse<String>(
+                    HttpStatus.CREATED.value(),
+                    ConstantMsg.CREATED_MSG,
+                    "Create successfully");
         }
-        return new ApiResponse<String>(
-                HttpStatus.CREATED.value(),
-                ConstantMsg.CREATED_MSG,
-                "Create successfully");
     }
 
     @GetMapping(value = "/{id}")

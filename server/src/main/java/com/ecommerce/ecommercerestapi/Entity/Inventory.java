@@ -25,5 +25,5 @@ public class Inventory {
 
     private Integer total;
 
-    private Integer avaiable;
+    private Integer available;
 }

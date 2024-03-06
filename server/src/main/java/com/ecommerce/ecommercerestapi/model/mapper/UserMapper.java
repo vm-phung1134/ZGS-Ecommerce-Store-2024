@@ -6,10 +6,10 @@ import com.ecommerce.ecommercerestapi.model.dto.UserDto;
 public class UserMapper {
     public static UserDto convertUserResponse(User user) {
         return new UserDto(
-            user.getFirstName(),
-            user.getLastName(),
-            user.getEmail(),
-            user.getRole()
-        );
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getRole());
     }
 }

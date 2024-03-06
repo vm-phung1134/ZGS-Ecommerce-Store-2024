@@ -12,12 +12,13 @@ public class AuthDto extends UserDto {
     private String token;
     
     public AuthDto(
+            Integer id,
             String firstName,
             String lastName,
             String email,
             String role,
             String token) {
-        super(firstName, lastName, email, role);
+        super(id, firstName, lastName, email, role);
         this.token = token;
     }
 }

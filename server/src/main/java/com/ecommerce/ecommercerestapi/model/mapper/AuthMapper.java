@@ -7,6 +7,7 @@ import com.ecommerce.ecommercerestapi.model.dto.AuthDto;
 public class AuthMapper {
     public static AuthDto convertAuthDto(User user, Login token) {
         return new AuthDto(
+            user.getId(), 
             user.getFirstName(),
             user.getLastName(),
             user.getEmail(),
