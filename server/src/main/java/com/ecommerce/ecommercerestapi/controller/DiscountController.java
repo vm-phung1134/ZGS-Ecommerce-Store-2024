@@ -36,7 +36,7 @@ public class DiscountController {
                 discounts);
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping
     public ApiResponse<String> createNewDiscount(@RequestBody Discount discount) {
         Discount newDiscount = discountService.createDiscount(discount);
         if (newDiscount.equals(null)) {

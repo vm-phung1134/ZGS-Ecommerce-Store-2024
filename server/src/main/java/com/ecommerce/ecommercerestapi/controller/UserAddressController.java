@@ -36,7 +36,7 @@ public class UserAddressController {
                 userAddresss);
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping
     public ApiResponse<String> createNewUserAddress(@RequestBody UserAddress userAddress) {
         UserAddress newUserAddress = userAddressService.createUserAddress(userAddress);
         if (newUserAddress.equals(null)) {

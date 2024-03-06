@@ -36,7 +36,7 @@ public class CategoryController {
                 categorys);
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping
     public ApiResponse<String> createNewCategory(@RequestBody Category category) {
         Category newCategory = categoryService.createCategory(category);
         if (newCategory.equals(null)) {

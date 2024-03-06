@@ -1,5 +1,8 @@
 package com.ecommerce.ecommercerestapi.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,9 +28,8 @@ public class Cart {
     @Column(name = "id")
     private Integer id;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
+    private List<Product> products = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")

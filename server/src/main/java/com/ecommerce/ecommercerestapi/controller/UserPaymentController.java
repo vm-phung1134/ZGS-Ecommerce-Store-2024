@@ -36,7 +36,7 @@ public class UserPaymentController {
                 userPayments);
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping
     public ApiResponse<String> createNewUserPayment(@RequestBody UserPayment userPayment) {
         UserPayment newUserPayment = userPaymentService.createUserPayment(userPayment);
         if (newUserPayment.equals(null)) {

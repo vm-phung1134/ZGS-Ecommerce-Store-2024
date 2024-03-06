@@ -36,7 +36,7 @@ public class InventoryController {
                 products);
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping
     public ApiResponse<String> createNewInventory(@RequestBody Inventory product) {
         Inventory newInventory = inventoryService.createInventory(product);
         if (newInventory.equals(null)) {

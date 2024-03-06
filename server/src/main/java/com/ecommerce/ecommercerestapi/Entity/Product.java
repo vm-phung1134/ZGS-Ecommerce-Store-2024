@@ -44,4 +44,8 @@ public class Product {
     @JoinColumn(name = "discount_id")
     private Discount discount;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+
 }

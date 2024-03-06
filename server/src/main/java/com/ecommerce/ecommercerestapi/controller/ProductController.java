@@ -36,7 +36,7 @@ public class ProductController {
                 products);
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping
     public ApiResponse<String> createNewProduct(@RequestBody Product product) {
         Product newProduct = productService.createProduct(product);
         if (newProduct.equals(null)) {
