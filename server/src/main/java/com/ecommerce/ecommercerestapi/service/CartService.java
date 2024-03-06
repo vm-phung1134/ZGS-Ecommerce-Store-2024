@@ -15,16 +15,9 @@ public class CartService {
     @Autowired
     CartRepository cartRepository;
 
-    public List<Cart> getAllCart() {
-        return cartRepository.findAll();
-    }
-
-    public Cart getOneCart(Integer id) {
-        Optional<Cart> cart = cartRepository.findById(id);
-        if (cart.isPresent()) {
-            return cart.get();
-        }
-        return null;
+    public List<Cart> getOneCart(Integer userId) {
+        List<Cart> carts = cartRepository.findAll();
+        return carts;
     }
 
     public Cart createCart(Cart cart) {

@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -36,12 +37,10 @@ public class Order {
     @Column(name = "sub_quantity")
     private Integer subQuantity;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_payment_id")
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private UserPayment userPayment;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_address_id")
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private UserAddress userAddress;
 
     @Column(name = "date_order")

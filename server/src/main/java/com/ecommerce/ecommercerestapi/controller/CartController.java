@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.ecommerce.ecommercerestapi.core.ConstantMsg;
 import com.ecommerce.ecommercerestapi.entity.Cart;
 import com.ecommerce.ecommercerestapi.exception.NotFoundException;
+import com.ecommerce.ecommercerestapi.model.dto.CartDto;
+import com.ecommerce.ecommercerestapi.model.mapper.CartMapper;
 import com.ecommerce.ecommercerestapi.model.response.ApiResponse;
 import com.ecommerce.ecommercerestapi.service.CartService;
 
@@ -26,15 +29,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class CartController {
     @Autowired
     CartService cartService;
-
-    @GetMapping
-    public ApiResponse<List<Cart>> getAllCart() {
-        List<Cart> products = cartService.getAllCart();
-        return new ApiResponse<List<Cart>>(
-                HttpStatus.OK.value(),
-                ConstantMsg.SUCCESS_MSG,
-                products);
-    }
 
     @PostMapping
     public ApiResponse<String> createNewCart(@RequestBody Cart product) {
@@ -49,15 +43,16 @@ public class CartController {
     }
 
     @GetMapping(value = "/{id}")
-    public ApiResponse<Cart> getOneCart(@PathVariable Integer id) {
-        Cart product = cartService.getOneCart(id);
+    public ApiResponse<CartDto> getOneCart(@PathVariable Integer id) {
+        List<Cart> product = cartService.getOneCart(id);
         if (product.equals(null)) {
             throw new NotFoundException();
         }
-        return new ApiResponse<Cart>(
+        CartDto cartDto = CartMapper.convertToCartDtoList(product);
+        return new ApiResponse<CartDto>(
                 HttpStatus.OK.value(),
                 ConstantMsg.SUCCESS_MSG,
-                product);
+                cartDto);
     }
 
     @PutMapping(value = "/{id}")
