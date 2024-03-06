@@ -103,7 +103,8 @@
                             <div class="flex h-fit mt-auto items-end justify-between">
                                 <div class="flex flex-col justify-between gap-2">
                                     <div>
-                                        <span class="title-font font-bold text-2xl text-orange-600">${{ product?.price }}.00</span>
+                                        <span class="title-font font-bold text-2xl text-orange-600">${{ product?.price
+                                            }}.00</span>
                                         <span class="px-3 tracking-wide text-gray-500">$200.00</span>
                                     </div>
                                     <p class="text-sm">Online Exclusive</p>
@@ -146,7 +147,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button @click="addProductToCart" class="bg-red-600 text-sm uppercase font-bold text-white py-3 px-10">
+                                    <button @click="addProductToCart"
+                                        class="bg-red-600 text-sm uppercase font-bold text-white py-3 px-10">
                                         Add to cart
                                     </button>
                                 </div>
@@ -225,7 +227,6 @@ import { useStore } from 'vuex';
 import { useRoute } from 'vue-router'
 import { Product } from '../interfaces/Product';
 import { ComputedRef, computed, ref } from 'vue';
-import { AuthRes } from '../interfaces/Auth';
 import { ShoppingCartReq } from '../interfaces/ShoppingCart';
 
 // DEFINE LOGIC
@@ -237,22 +238,24 @@ store.dispatch("product/getOneProduct", route.params.id);
 
 // GET STATE FROM STORE
 const product: ComputedRef<Product> = computed(() => store.state.product.product);
-const isAddToCart: ComputedRef<boolean> = computed(() => store.state.cart.isAddToCart);
 const authData = localStorage.getItem("auth");
-const authRes = JSON.parse(authData);
+const authRes = JSON.parse(authData || "");
 
 // ADD TO CART
 const addProductToCart = () => {
-    const cartBuild: ShoppingCartReq = {
-        user: {
-            id: authRes.id
-        },
-        product: {
-            id: product.value.id
-        },
-        quantity: quantity.value
+    if (product.value.id) {
+        const cartBuild: ShoppingCartReq = {
+            user: {
+                id: authRes.id
+            },
+            product: {
+                id: product.value.id
+            },
+            quantity: quantity.value
+        }
+        store.dispatch('cart/addProductToCart', cartBuild)
     }
-    store.dispatch('cart/addProductToCart', cartBuild)
+
 }
 
 // HANDLE NUMBER INPUT QUANTITY

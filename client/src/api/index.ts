@@ -55,6 +55,6 @@ export default {
     return axiosApi.post(`shopping-cart`, cart);
   },
   getUserCart(userId: string): Promise<AxiosResponse<Object>>{
-    return axiosApi.post(`shopping-cart/${userId}`);
+    return axiosApi.get(`shopping-cart/${userId}`);
   }
 };

@@ -1,6 +1,7 @@
 import { ActionContext, ActionTree, MutationTree } from "vuex";
 import api from "../../api";
 import { ShoppingCartRes, ShoppingCartReq } from "@/interfaces/ShoppingCart";
+import { Product } from "../../interfaces/Product";
 
 export type shoppingCartState = {
   userCart: ShoppingCartRes | null;
@@ -14,7 +15,20 @@ const state: shoppingCartState = {
 };
 
 // getters
-const getters = {};
+const getters = {
+  cartTotalPrice: (state: shoppingCartState) => {
+    if (state.userCart && state.userCart.products) {
+      return state.userCart.products.reduce((total: number, product: Product) => {
+        if (product.quantity) {
+          return total + product.price * product.quantity;
+        }
+        return total;
+      }, 0);
+    }
+    return 0;
+  },
+};
+
 
 // actions
 const actions: ActionTree<shoppingCartState, any> = {
@@ -28,7 +42,7 @@ const actions: ActionTree<shoppingCartState, any> = {
         .getUserCart(userId)
         .then((response) => {
           if (response.status == 200) {
-            commit("getUserCart_success");
+            commit("getUserCart_success", response.data);
           }
           resolve(response);
         })

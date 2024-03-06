@@ -188,7 +188,7 @@
 import { ComputedRef, computed, ref } from 'vue';
 import SearchScreen from '../pages/SearchScreen.vue';
 import { useRouter } from 'vue-router';
-import ShoppingCart from '@pages/shoppingCart.vue';
+import ShoppingCart from '@pages/ShoppingCart.vue';
 import { useStore } from 'vuex';
 
 const store = useStore();

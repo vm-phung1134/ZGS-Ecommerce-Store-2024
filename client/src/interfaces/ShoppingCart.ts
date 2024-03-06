@@ -3,8 +3,12 @@ import { User } from "./User";
 
 export interface ShoppingCartReq{
     id?: number,
-    user: User,
-    product: Product,
+    user: {
+        id: number
+    },
+    product: {
+        id: number
+    },
     quantity: number;
 }
 
