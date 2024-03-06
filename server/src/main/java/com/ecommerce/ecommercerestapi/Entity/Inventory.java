@@ -21,5 +21,9 @@ public class Inventory {
     @Column(name = "id")
     private Integer id;
     
-    private Integer quantity;
+    private Integer sold;
+
+    private Integer total;
+
+    private Integer avaiable;
 }
