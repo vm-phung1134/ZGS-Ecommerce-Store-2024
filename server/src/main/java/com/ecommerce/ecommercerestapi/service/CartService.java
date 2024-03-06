@@ -22,8 +22,16 @@ public class CartService {
 
     public Cart createCart(Cart cart) {
         if (cart != null) {
-            Cart newCart = cartRepository.save(cart);
-            return newCart;
+            Optional<Cart> existingCart = cartRepository.findByProduct(cart.getProduct());
+            if (existingCart.isPresent()) {
+                Cart prevCart = existingCart.get();
+                prevCart.setQuantity(prevCart.getQuantity() + cart.getQuantity());
+                Cart updatedCart = cartRepository.save(prevCart);
+                return updatedCart;
+            } else {
+                Cart newCart = cartRepository.save(cart);
+                return newCart;
+            }
         }
         return null;
     }
