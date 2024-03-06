@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
-import { AuthReq } from "@/interfaces/Auth";
-import { UserReq } from "interfaces/User";
+import { AuthReq } from "../interfaces/Auth";
+import { UserReq } from "../interfaces/User";
+import { ShoppingCartReq } from "../interfaces/ShoppingCart";
 
 const axiosApiDefault = axios.create({
   baseURL: `http://localhost:8080/api/auth`,
@@ -25,11 +26,17 @@ export default {
   wecome(): Promise<AxiosResponse<string>> {
     return axiosApi.post(`welcome`);
   },
+  // AUTHENTICATION
   authenticated(auth: AuthReq): Promise<AxiosResponse<Object>> {
     return axiosApiDefault.post(`authenticated`, auth);
   },
   register(auth: UserReq): Promise<AxiosResponse<Object>> {
     return axiosApiDefault.post(`register`, auth);
+  },
+
+  // USER INFO
+  getOneUser(userId: string): Promise<AxiosResponse<Object>> {
+    return axiosApi.get(`user/${userId}`);
   },
   
   // PRODUCT
@@ -39,4 +46,9 @@ export default {
   getOneProduct(productId: string): Promise<AxiosResponse<Object>> {
     return axiosApi.get(`product/${productId}`);
   },
+
+  // CART
+  addToCart(cart: ShoppingCartReq):  Promise<AxiosResponse<Object>>{
+    return axios.post(`shopping-cart`, cart);
+  }
 };

@@ -1,10 +1,13 @@
+import { Category } from "./Category";
+import { Discount } from "./Discount";
+import { Inventory } from "./Inventory";
+
 export interface Product{
     id?: string,
     name: string,
     price: number,
     image: string,
-    inventory: string | any,
-    discount: string | any,
-    category: string | any,
-    cart: any
+    inventory: Inventory,
+    discount: Discount,
+    category: Category,
 }
