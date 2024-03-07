@@ -36,5 +36,6 @@ public class UserAddress {
     private String country;
 
     private String phone;
+    
     private Boolean active;
 }

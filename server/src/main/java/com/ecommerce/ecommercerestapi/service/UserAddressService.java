@@ -6,33 +6,38 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.ecommercerestapi.entity.User;
 import com.ecommerce.ecommercerestapi.entity.UserAddress;
-
 import com.ecommerce.ecommercerestapi.repository.UserAddressRepository;
+import com.ecommerce.ecommercerestapi.repository.UserRepository;
 
 @Service
 public class UserAddressService {
     @Autowired
     UserAddressRepository userAddressRepository;
 
-    public List<UserAddress> getAllUserAddress() {
-        return userAddressRepository.findAll();
-    }
+    @Autowired
+    UserRepository userRepository;
 
-    public UserAddress getOneUserAddress(Integer id) {
-        Optional<UserAddress> userAddress = userAddressRepository.findById(id);
-        if (userAddress.isPresent()) {
-            return userAddress.get();
+    public List<UserAddress> getAllUserAddress(Integer id) {
+        List<UserAddress> userAddressList = userAddressRepository.findAllByUserId(id);
+        if (userAddressList.size() > 0) {
+            return userAddressList;
         }
         return null;
     }
 
     public UserAddress createUserAddress(UserAddress userAddress) {
-        if (userAddress != null) {
-            UserAddress newUserAddress = userAddressRepository.save(userAddress);
-            return newUserAddress;
+        User user = userRepository.findById(userAddress.getUser().getId()).orElse(null);
+        userAddress.setUser(user);
+        List<UserAddress> userAddresss = userAddressRepository.findAllByUserId(userAddress.getUser().getId());
+        if (userAddresss.size() > 0) {
+            userAddress.setActive(false);
+        } else {
+            userAddress.setActive(true);
         }
-        return null;
+        UserAddress newUserPayment = userAddressRepository.save(userAddress);
+        return newUserPayment;
     }
 
     public Boolean deleteUserAddress(Integer id) {
@@ -45,9 +50,24 @@ public class UserAddressService {
     }
 
     public UserAddress updateUserAddress(UserAddress userAddress) {
-        Optional<UserAddress> findUserAddress = userAddressRepository.findById(userAddress.getId());
-        if (findUserAddress.isPresent()) {
-            UserAddress userAddressUpdated = userAddressRepository.save(userAddress);
+        List<UserAddress> findUserAddresss = userAddressRepository.findAllByUserId(userAddress.getUser().getId());
+        Optional<UserAddress> result = findUserAddresss.stream()
+                .filter(obj -> obj.getId() == userAddress.getId())
+                .findFirst();
+        User user = userRepository.findById(userAddress.getUser().getId()).orElse(null);
+
+        if (result.isPresent()) {
+            result.ifPresent(rs -> {
+                findUserAddresss.forEach(payment -> {
+                    if (payment.getId() != rs.getId()) {
+                        payment.setActive(false);
+                    }
+                });
+            });
+            UserAddress updatedUserAddress = result.get();
+            updatedUserAddress.setActive(true);
+            updatedUserAddress.setUser(user);
+            UserAddress userAddressUpdated = userAddressRepository.save(updatedUserAddress);
             return userAddressUpdated;
         }
         return null;

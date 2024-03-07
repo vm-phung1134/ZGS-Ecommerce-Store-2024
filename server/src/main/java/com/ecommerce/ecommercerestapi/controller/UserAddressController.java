@@ -27,15 +27,6 @@ public class UserAddressController {
     @Autowired
     UserAddressService userAddressService;
 
-    @GetMapping
-    public ApiResponse<List<UserAddress>> getAllUserAddress() {
-        List<UserAddress> userAddresss = userAddressService.getAllUserAddress();
-        return new ApiResponse<List<UserAddress>>(
-                HttpStatus.OK.value(),
-                ConstantMsg.SUCCESS_MSG,
-                userAddresss);
-    }
-
     @PostMapping
     public ApiResponse<String> createNewUserAddress(@RequestBody UserAddress userAddress) {
         UserAddress newUserAddress = userAddressService.createUserAddress(userAddress);
@@ -49,12 +40,12 @@ public class UserAddressController {
     }
 
     @GetMapping(value = "/{id}")
-    public ApiResponse<UserAddress> getOneUserAddress(@PathVariable Integer id) {
-        UserAddress userAddress = userAddressService.getOneUserAddress(id);
+    public ApiResponse<List<UserAddress>> getAllUserAddress(@PathVariable Integer id) {
+        List<UserAddress> userAddress = userAddressService.getAllUserAddress(id);
         if (userAddress.equals(null)) {
             throw new NotFoundException();
         }
-        return new ApiResponse<UserAddress>(
+        return new ApiResponse<List<UserAddress>>(
                 HttpStatus.OK.value(),
                 ConstantMsg.SUCCESS_MSG,
                 userAddress);
