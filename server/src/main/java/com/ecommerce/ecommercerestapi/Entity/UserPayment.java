@@ -1,14 +1,11 @@
 package com.ecommerce.ecommercerestapi.entity;
 
-import java.util.Date;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -26,17 +23,20 @@ public class UserPayment {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private User user;
 
     @Column(name = "payment_type")
     private String paymentType;
 
-    private String provider;
-
     @Column(name = "account_number")
     private String accountNumber;
 
-    private Date expire;
+    private String valid;
+
+    private String since;
+
+    private String cvv;
+
+    private Boolean active;
 }

@@ -6,33 +6,39 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.ecommercerestapi.entity.User;
 import com.ecommerce.ecommercerestapi.entity.UserPayment;
 
 import com.ecommerce.ecommercerestapi.repository.UserPaymentRepository;
+import com.ecommerce.ecommercerestapi.repository.UserRepository;
 
 @Service
 public class UserPaymentService {
     @Autowired
     UserPaymentRepository userPaymentRepository;
 
-    public List<UserPayment> getAllUserPayment() {
-        return userPaymentRepository.findAll();
-    }
+    @Autowired
+    UserRepository userRepository;
 
-    public UserPayment getOneUserPayment(Integer id) {
-        Optional<UserPayment> userPayment = userPaymentRepository.findById(id);
-        if (userPayment.isPresent()) {
-            return userPayment.get();
+    public List<UserPayment> getAllUserPayment(Integer id) {
+        List<UserPayment> findUserPayments = userPaymentRepository.findAllByUserId(id);
+        if (findUserPayments.size() != 0) {
+            return findUserPayments;
         }
         return null;
     }
 
     public UserPayment createUserPayment(UserPayment userPayment) {
-        if (userPayment != null) {
-            UserPayment newUserPayment = userPaymentRepository.save(userPayment);
-            return newUserPayment;
+        User user = userRepository.findById(userPayment.getUser().getId()).orElse(null);
+        userPayment.setUser(user);
+        List<UserPayment> userPayments = userPaymentRepository.findAllByUserId(userPayment.getUser().getId());
+        if (userPayments.size() > 0) {
+            userPayment.setActive(false);
+        } else {
+            userPayment.setActive(true);
         }
-        return null;
+        UserPayment newUserPayment = userPaymentRepository.save(userPayment);
+        return newUserPayment;
     }
 
     public Boolean deleteUserPayment(Integer id) {
@@ -44,10 +50,26 @@ public class UserPaymentService {
         return false;
     }
 
+    // UPDATE SET PAYMENT METHOD DEFAULT
     public UserPayment updateUserPayment(UserPayment userPayment) {
-        Optional<UserPayment> findUserPayment = userPaymentRepository.findById(userPayment.getId());
-        if (findUserPayment.isPresent()) {
-            UserPayment userPaymentUpdated = userPaymentRepository.save(userPayment);
+        List<UserPayment> findUserPayments = userPaymentRepository.findAllByUserId(userPayment.getUser().getId());
+        Optional<UserPayment> result = findUserPayments.stream()
+                .filter(obj -> obj.getId() == userPayment.getId())
+                .findFirst();
+        User user = userRepository.findById(userPayment.getUser().getId()).orElse(null);
+        
+        if (result.isPresent()) {
+            result.ifPresent(rs -> {
+                findUserPayments.forEach(payment -> {
+                    if (payment.getId() != rs.getId()) {
+                        payment.setActive(false);
+                    }
+                });
+            });
+            UserPayment updatedUserPayment = result.get();
+            updatedUserPayment.setActive(true);
+            updatedUserPayment.setUser(user);
+            UserPayment userPaymentUpdated = userPaymentRepository.save(updatedUserPayment);
             return userPaymentUpdated;
         }
         return null;

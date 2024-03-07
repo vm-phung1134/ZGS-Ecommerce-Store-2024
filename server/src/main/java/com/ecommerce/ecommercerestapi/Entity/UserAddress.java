@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -24,8 +23,7 @@ public class UserAddress {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private User user;
 
     private String address;
@@ -38,4 +36,5 @@ public class UserAddress {
     private String country;
 
     private String phone;
+    private Boolean active;
 }

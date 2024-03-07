@@ -27,15 +27,6 @@ public class UserPaymentController {
     @Autowired
     UserPaymentService userPaymentService;
 
-    @GetMapping
-    public ApiResponse<List<UserPayment>> getAllUserPayment() {
-        List<UserPayment> userPayments = userPaymentService.getAllUserPayment();
-        return new ApiResponse<List<UserPayment>>(
-                HttpStatus.OK.value(),
-                ConstantMsg.SUCCESS_MSG,
-                userPayments);
-    }
-
     @PostMapping
     public ApiResponse<String> createNewUserPayment(@RequestBody UserPayment userPayment) {
         UserPayment newUserPayment = userPaymentService.createUserPayment(userPayment);
@@ -49,15 +40,15 @@ public class UserPaymentController {
     }
 
     @GetMapping(value = "/{id}")
-    public ApiResponse<UserPayment> getOneUserPayment(@PathVariable Integer id) {
-        UserPayment userPayment = userPaymentService.getOneUserPayment(id);
-        if (userPayment.equals(null)) {
+    public ApiResponse<List<UserPayment>> getAllUserPayment(@PathVariable Integer id) {
+        List<UserPayment> userPayments = userPaymentService.getAllUserPayment(id);
+        if (userPayments.size() == 0) {
             throw new NotFoundException();
         }
-        return new ApiResponse<UserPayment>(
+        return new ApiResponse<List<UserPayment>>(
                 HttpStatus.OK.value(),
                 ConstantMsg.SUCCESS_MSG,
-                userPayment);
+                userPayments);
     }
 
     @PutMapping(value = "/{id}")
