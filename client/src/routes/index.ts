@@ -5,6 +5,7 @@ import ProductDetailVue from "@pages/ProductDetail.vue";
 import ProductListVue from "@pages/ProductList.vue";
 import checkoutVue from "@pages/Checkout.vue";
 import OrderSuccessVue from "@pages/OrderSuccess.vue";
+import Profile from "@pages/Profile.vue";
 
 const _routes: Array<vR.RouteRecordRaw> = [
   {
@@ -16,6 +17,11 @@ const _routes: Array<vR.RouteRecordRaw> = [
     path: "/sign-in",
     component: AuthVue,
     name: "auth.login",
+  },
+  {
+    path: "/profile-user",
+    component: Profile,
+    name: "profile.user",
   },
   {
     path: "/product-list",

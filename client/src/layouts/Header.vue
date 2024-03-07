@@ -169,7 +169,9 @@
                             </button>
                             <ul tabIndex={0}
                                 className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                                <li><a>Profile</a></li>
+                                <RouterLink to="/profile-user">
+                                    <li><a>Profile</a></li>
+                                </RouterLink>
                                 <li><a>Payment method</a></li>
                                 <li><a>Your orders</a></li>
                                 <li><a>Feedback</a></li>

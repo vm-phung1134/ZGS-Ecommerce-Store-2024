@@ -23,7 +23,7 @@
                                     <img class="w-20" :src=product?.image alt="img-product-cart">
                                 </td>
                                 <td>{{ product?.quantity }}</td>
-                                <td>{{ product?.price }}</td>
+                                <td>${{ product?.price }}.00</td>
                             </tr>
                         </tbody>
                     </table>
@@ -80,8 +80,8 @@ import { useStore } from 'vuex';
 const store = useStore();
 const userCart: ComputedRef<ShoppingCartRes> = computed(() => store.state.cart.userCart);
 const authData = localStorage.getItem("auth");
-const authRes = JSON.parse(authData || "");
-if (authRes) {
+if (authData) {
+    const authRes = JSON.parse(authData);
     store.dispatch('cart/getUserCart', authRes.id);
 }
 
