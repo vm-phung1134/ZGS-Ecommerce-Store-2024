@@ -18,8 +18,7 @@
                             </DialogTitle>
                             <span class="text-xs">Please fill form to register for the event</span>
                             <div class="my-4 items-center flex gap-10 w-full">
-                                <AddressUserForm :array-list-city="arrayListCity" :selected-value-city="selectedValueCity"
-                                    class-name="w-full" :toggle-modal="toggleModal" />
+                                <AddressUserForm class-name="w-full" :toggle-modal="toggleModal" />
                             </div>
                         </DialogPanel>
                     </TransitionChild>
@@ -40,7 +39,6 @@ import {
 } from '@headlessui/vue';
 
 import AddressUserForm from '../Form/AddressUserForm.vue';
-import { SelectType } from '../Form/SelectBoxForm.vue';
 
 const props = defineProps({
     isOpenModal: {
@@ -49,14 +47,6 @@ const props = defineProps({
     },
     toggleModal: {
         type: Function,
-        required: true
-    },
-    arrayListCity: {
-        type: Array as () => SelectType[],
-        required: true
-    },
-    selectedValueCity: {
-        type: String,
         required: true
     }
 });

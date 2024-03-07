@@ -21,7 +21,7 @@
                                 <div class="w-1/2 ">
                                     <div class="my-5">
                                         <SelectBoxForm class-name="absolute top-0 w-[25rem] z-10"
-                                            :array-value="arrayList" :selected-value="selectedValue" />
+                                            :array-value="payments" :selected-value="selectedPayment" />
                                     </div>
                                     <div class="w-full bg-red-100 rounded-xl relative text-white shadow-2xl">
                                         <img class="relative object-cover w-full h-full rounded-xl"
@@ -103,7 +103,7 @@ import {
 
 import PaymentMethodForm from '../Form/PaymentMethodForm.vue';
 import SelectBoxForm from '../Form/SelectBoxForm.vue';
-import { SelectType } from '../Form/SelectBoxForm.vue';
+import { provide, ref } from 'vue'
 
 const props = defineProps({
     isOpenModal: {
@@ -113,15 +113,15 @@ const props = defineProps({
     toggleModal: {
         type: Function,
         required: true
-    },
-    arrayList: {
-        type: Array as () => SelectType[],
-        required: true
-    },
-    selectedValue: {
-        type: String,
-        required: true
     }
 });
+
+const payments = [
+    { value: 'Visa', key: 'vs' },
+    { value: 'Master card', key: 'ms' },
+    { value: 'Paypal', key: 'pp' },
+]
+const selectedPayment = ref(payments[0].value);
+provide('selectedPayment', selectedPayment.value)
 
 </script>

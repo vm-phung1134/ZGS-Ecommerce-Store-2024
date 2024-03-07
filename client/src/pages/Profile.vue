@@ -121,8 +121,7 @@
                             <p class="text-xs italic text-gray-500">Expire: 07/30</p>
                         </div>
                     </div>
-                    <PaymentMethodModal :selected-value="selectedPayment" :array-list="payments"
-                        :is-open-modal="isOpenPaymentModal" :toggle-modal="togglePaymentModal" />
+                    <PaymentMethodModal :is-open-modal="isOpenPaymentModal" :toggle-modal="togglePaymentModal" />
                 </div>
 
                 <div class="my-10">
@@ -165,8 +164,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <AddressModal :array-list-city="cities" :selected-value-city="selectedCity"
-                            :is-open-modal="isOpenAddressUserModal" :toggle-modal="toggleAddressUserModal" />
+                        <AddressModal :is-open-modal="isOpenAddressUserModal" :toggle-modal="toggleAddressUserModal" />
                         <button @click="toggleAddressUserModal" class="text-green-700 text-sm my-5">Go to your address
                             management -></button>
                     </div>
@@ -202,29 +200,21 @@
 import AddressModal from '@components/Modal/AddressModal.vue';
 import ChangePasswordForm from '@components/Form/ChangePasswordForm.vue';
 import PaymentMethodModal from '@components/Modal/PaymentMethodModal.vue';
-import { ref } from 'vue';
+import { ref, provide } from 'vue';
+
+// DEFINE CONSTANT
+const authData = localStorage.getItem("auth");
+const authRes = authData ? JSON.parse(authData) : null;
+provide('authResId', authRes ? authRes.id : null);
 
 // PAYMENT METHOD
 const isOpenPaymentModal = ref(false);
 const togglePaymentModal = () => isOpenPaymentModal.value = !isOpenPaymentModal.value;
-const payments = [
-    { value: 'Visa', key: 'vs' },
-    { value: 'Master card', key: 'ms' },
-    { value: 'Paypal', key: 'pp' },
-]
-const selectedPayment = ref(payments[0].value);
 
 
 // ADDRESS USER
 const isOpenAddressUserModal = ref(false);
 const toggleAddressUserModal = () => isOpenAddressUserModal.value = !isOpenAddressUserModal.value;
-const cities = [
-    { value: 'Ho Chi Minh City', key: 'hcm' },
-    { value: 'Can Tho City', key: 'ct' },
-    { value: 'An Giang Provide', key: 'ag' },
-]
-
-const selectedCity = ref(cities[0].value);
 
 
 </script>

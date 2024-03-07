@@ -4,7 +4,7 @@
             <form id="login.form" @submit="submitForm" method="post">
                 <div class="flex gap-5 mb-5 justify-between items-center w-full">
                     <SelectBoxForm class-name="w-full z-10" :array-value="[]" selected-value="Vietnam" />
-                    <SelectBoxForm class-name="w-full z-10" :array-value="arrayListCity" :selected-value="selectedValueCity" />
+                    <SelectBoxForm class-name="w-full z-10" :array-value="cities" :selected-value="selectedCity" />
                 </div>
                 <TextAreaForm @form-validate="validateForm" v-model="formData.address"
                     :component-data="addressComponent" />
@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import InputFieldNormal from './InputFieldNormal.vue';
 import SelectBoxForm from './SelectBoxForm.vue';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import {
     formData,
     phoneComponent,
@@ -34,7 +34,6 @@ import {
     addressComponent,
 } from '@components/Validate/AddressValid';
 import TextAreaForm from './TextAreaForm.vue';
-import { SelectType } from './SelectBoxForm.vue';
 
 // -----------------DEFINE PROPS------------------
 const props = defineProps({
@@ -45,20 +44,22 @@ const props = defineProps({
     toggleModal: {
         type: Function,
         required: true,
-    },
-    arrayListCity: {
-        type: Array as () => SelectType[],
-        required: true
-    },
-    selectedValueCity: {
-        type: String,
-        required: true
     }
 });
 
 // -----------------DEFINE CONSTANTS------------------
 
 const checkFormValid = ref(false);
+const authResId = inject<number>('authResId');
+console.log(authResId)
+
+const cities = [
+    { value: 'Ho Chi Minh City', key: 'hcm' },
+    { value: 'Can Tho City', key: 'ct' },
+    { value: 'An Giang Provide', key: 'ag' },
+]
+
+const selectedCity = ref(cities[0].value);
 
 // -----------------DEFINE METHODS------------------
 const validateForm = (isValid: boolean) => {
@@ -67,8 +68,8 @@ const validateForm = (isValid: boolean) => {
 
 const submitForm = (event: Event) => {
     event.preventDefault();
-    // const formValue = Object.values(formData);
-    // console.log(formValue)
+    const formValue = Object.values(formData);
+    console.log(formValue)
 
 };
 

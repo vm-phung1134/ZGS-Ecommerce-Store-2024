@@ -15,8 +15,8 @@
                         :component-data="cvvComponent" />
                 </div>
                 <div class="flex justify-end">
-                    <button @click="props.toggleModal" class="px-5">Cancel</button>
-                    <button class="bg-green-700 text-white px-10 py-3">Confirm</button>
+                    <button type="button" @click="props.toggleModal" class="px-5">Cancel</button>
+                    <button type="submit" class="bg-green-700 text-white px-10 py-3">Confirm</button>
                 </div>
             </form>
         </div>
@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import InputFieldNormal from './InputFieldNormal.vue';
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
 import {
     formData,
     fullnameComponent,
@@ -34,6 +34,7 @@ import {
     numberCardComponent,
     validComponent
 } from '@components/Validate/PaymentMethodValid';
+import { UserPaymentReq } from '@/interfaces/UserPayment';
 
 // -----------------DEFINE PROPS------------------
 const props = defineProps({
@@ -48,8 +49,9 @@ const props = defineProps({
 });
 
 // -----------------DEFINE CONSTANTS------------------
-
 const checkFormValid = ref(false);
+const selectedPayment = inject<string>('selectedPayment');
+const authResId = inject<number>('authResId');
 
 // -----------------DEFINE METHODS------------------
 const validateForm = (isValid: boolean) => {
@@ -58,8 +60,18 @@ const validateForm = (isValid: boolean) => {
 
 const submitForm = (event: Event) => {
     event.preventDefault();
-    // const formValue = Object.values(formData);
-    // console.log(formValue)
+    const createPaymentMethod: UserPaymentReq = {
+        user: {
+            id: authResId || 0
+        },
+        accountNumber: formData.numberCard,
+        paymentType: selectedPayment || "",
+        cvv: formData.cvv,
+        since: formData.since,
+        valid: formData.valid
+    }
+
+    console.log(createPaymentMethod)
 
 };
 

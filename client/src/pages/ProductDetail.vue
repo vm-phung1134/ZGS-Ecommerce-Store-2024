@@ -239,7 +239,7 @@ store.dispatch("product/getOneProduct", route.params.id);
 // GET STATE FROM STORE
 const product: ComputedRef<Product> = computed(() => store.state.product.product);
 const authData = localStorage.getItem("auth");
-const authRes = JSON.parse(authData || "");
+const authRes = authData ? JSON.parse(authData) : null;
 
 // ADD TO CART
 const addProductToCart = () => {
