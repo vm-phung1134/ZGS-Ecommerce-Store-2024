@@ -89,17 +89,19 @@
                             <p class="text-sm skew-x-[30deg]">Refund</p>
                         </button>
                     </div>
-                    <span class="text-xs mt-10">Please take a see <span class="underline text-red-600">documents and policies</span> for refund product</span> 
+                    <span class="text-xs mt-10">Please take a see <span class="underline text-red-600">documents and
+                            policies</span> for refund product</span>
                 </div>
             </div>
             <div class="w-7/12 px-10 mt-10">
                 <div class="w-full">
                     <div class="flex justify-between">
                         <h1 class="uppercase text-xl font-bold">Payment methods</h1>
-                        <button class="bg-green-600 px-4 py-2 text-xs font-bold uppercase text-white">Add
-                            payment</button>
+                        <button @click="togglePaymentModal" class="text-green-700 text-sm my-5">Add new your payment
+                            method -></button>
+
                     </div>
-                    <div class="flex mt-5 gap-5">
+                    <div class="flex gap-5">
                         <div class="border-gray-600 shadow-xl p-3 w-60">
                             <img class="w-1/4" src="https://cdn-icons-png.flaticon.com/128/196/196578.png"
                                 alt="credit-card">
@@ -119,6 +121,7 @@
                             <p class="text-xs italic text-gray-500">Expire: 07/30</p>
                         </div>
                     </div>
+                    <PaymentMethodModal :is-open-modal="isOpenPaymentModal" :toggle-modal="togglePaymentModal" />
                 </div>
 
                 <div class="my-10">
@@ -143,7 +146,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="border-gray-600 w-72 border p-3 text-sm">
+                            <div class="w-72 border p-3 text-sm">
                                 <ul>
                                     <li class="flex gap-5">
                                         <p>Name</p>
@@ -186,16 +189,18 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import ChangePasswordForm from '@components/Form/ChangePasswordForm.vue';
+import PaymentMethodModal from '@components/Modal/PaymentMethodModal.vue';
+import { ref } from 'vue';
+
+const isOpenPaymentModal = ref(false);
+const togglePaymentModal = () => isOpenPaymentModal.value = !isOpenPaymentModal.value;
 
 
 </script>
