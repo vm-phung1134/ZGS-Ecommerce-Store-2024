@@ -20,7 +20,8 @@
                             <div class="my-4 relative items-center flex gap-10 w-full">
                                 <div class="w-1/2 ">
                                     <div class="my-5">
-                                        <SelectBoxForm />
+                                        <SelectBoxForm class-name="absolute top-0 w-[25rem] z-10"
+                                            :array-value="arrayList" :selected-value="selectedValue" />
                                     </div>
                                     <div class="w-full bg-red-100 rounded-xl relative text-white shadow-2xl">
                                         <img class="relative object-cover w-full h-full rounded-xl"
@@ -102,6 +103,7 @@ import {
 
 import PaymentMethodForm from '../Form/PaymentMethodForm.vue';
 import SelectBoxForm from '../Form/SelectBoxForm.vue';
+import { SelectType } from '../Form/SelectBoxForm.vue';
 
 const props = defineProps({
     isOpenModal: {
@@ -112,6 +114,14 @@ const props = defineProps({
         type: Function,
         required: true
     },
+    arrayList: {
+        type: Array as () => SelectType[],
+        required: true
+    },
+    selectedValue: {
+        type: String,
+        required: true
+    }
 });
 
 </script>

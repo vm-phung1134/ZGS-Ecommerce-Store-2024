@@ -1,14 +1,11 @@
 <template>
     <div class="relative mb-6 w-full">
-        <div class="flex gap-2 w-full items-start flex-col ">
-            <!-- Passed from parent -->
-            <label class="text-sm capitalize" :for="props.componentData.id">{{ props.componentData.label }}</label>
-            <input v-model="valueInput" @blur="validate" :type="props.componentData.type" class="peer block min-h-[auto] w-full 
-            focus:outline-none outline-none  bg-gray-100 px-3 py-[0.4rem] leading-[2.0] transition-all duration-200 placeholder:text-sm
+        <label class="text-sm capitalize" :for="props.componentData.id">{{ props.componentData.label }}</label>
+        <textarea v-model="valueInput" @blur="validate" :type="props.componentData.type" class="peer block min-h-[auto] w-full rounded 
+            border-0 bg-gray-100 px-3 py-[0.6rem] leading-[2.15] outline-none transition-all duration-200 
             ease-linear focus:placeholder:opacity-100 motion-reduce:transition-none" :id="props.componentData.id"
-                :autocomplete="props.componentData.id" :placeholder="props.componentData.placeholder" />
-        </div>
-        <span v-if="localError" class="text-[12px] text-red-600 flex mt-1 gap-1">
+            :autocomplete="props.componentData.id"></textarea>
+        <span v-if="localError" class="text-[12px] text-red-600 flex my-2 gap-1">
             <svg class="w-5" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -43,8 +40,8 @@ const props = defineProps({
         }
     }
 });
-const valueInput = defineModel('valueInput');
-// Define 1 events
+const valueInput = defineModel<string>('valueInput');
+// Define events
 const emits = defineEmits(['form-validate']);
 // Define a constant to take error massage
 const localError = ref("");
