@@ -3,15 +3,15 @@
         <div class="w-full">
             <form id="login.form" @submit="submitForm" method="post">
                 <div class="flex gap-5 mb-5 justify-between items-center w-full">
-                    <SelectBoxForm class-name="w-full z-10" :array-value="[]" selected-value="Vietnam" />
-                    <SelectBoxForm class-name="w-full z-10" :array-value="cities" :selected-value="selectedCity" />
+                    <SelectBoxForm class-name="w-full z-10" :array-value="[]" :selected-value="selectedCountry" />
+                    <SelectBoxForm @update:selectedValue="updateSelectedCity" class-name="w-full z-10" :array-value="cities" :selected-value="selectedCity" />
                 </div>
-                <TextAreaForm @form-validate="validateForm" v-model="formData.address"
+                <TextAreaForm @form-validate="validateForm" v-model:value-input="formData.address"
                     :component-data="addressComponent" />
                 <div class="flex gap-5 w-full">
-                    <InputFieldNormal @form-validate="validateForm" v-model="formData.phone"
+                    <InputFieldNormal @form-validate="validateForm" v-model:value-input="formData.phone"
                         :component-data="phoneComponent" />
-                    <InputFieldNormal @form-validate="validateForm" v-model="formData.postCode"
+                    <InputFieldNormal @form-validate="validateForm" v-model:value-input="formData.postCode"
                         :component-data="postCodeComponent" />
                 </div>
                 <div class="flex justify-end">
@@ -34,6 +34,8 @@ import {
     addressComponent,
 } from '@components/Validate/AddressValid';
 import TextAreaForm from './TextAreaForm.vue';
+import { UserAddressReq } from '../../interfaces/UserAddress';
+import { useStore } from 'vuex';
 
 // -----------------DEFINE PROPS------------------
 const props = defineProps({
@@ -46,12 +48,13 @@ const props = defineProps({
         required: true,
     }
 });
+// DEFINE STORE
+const store = useStore();
 
 // -----------------DEFINE CONSTANTS------------------
 
 const checkFormValid = ref(false);
 const authResId = inject<number>('authResId');
-console.log(authResId)
 
 const cities = [
     { value: 'Ho Chi Minh City', key: 'hcm' },
@@ -60,17 +63,46 @@ const cities = [
 ]
 
 const selectedCity = ref(cities[0].value);
+const selectedCountry = ref('Vietnam');
+const errorApi = ref('');
 
 // -----------------DEFINE METHODS------------------
 const validateForm = (isValid: boolean) => {
     return checkFormValid.value = isValid;
 };
 
+const updateSelectedCity= (newValue: string) => {
+    selectedCity.value = newValue; 
+};
+
 const submitForm = (event: Event) => {
     event.preventDefault();
     const formValue = Object.values(formData);
-    console.log(formValue)
-
+    const hasEmptyValue = formValue.some((value) => value === "");
+    const createAddressMethod: UserAddressReq = {
+        user: {
+            id: authResId || 1
+        },
+        address: formData.address,
+        city: selectedCity.value,
+        country: selectedCountry.value,
+        phone: formData.phone,
+        postCode: formData.postCode
+    }
+    if (checkFormValid && !hasEmptyValue) {
+        console.log(createAddressMethod)
+        store.dispatch("address/createAddressMethod", createAddressMethod)
+            .then(() => {
+                store.dispatch("address/getAllUserAddress", 1);
+                props.toggleModal();
+            })
+            .catch((error) => {
+                console.log(error);
+                errorApi.value = "Address is invalid!";
+            });
+    } else {
+        errorApi.value = "Address is invalid!";
+    }
 };
 
 </script>

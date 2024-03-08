@@ -80,7 +80,7 @@ export default {
 
   // USER ADDRESS
   createUserAddressMethod(
-    userAddress: UserPaymentReq
+    userAddress: UserAddressReq
   ): Promise<AxiosResponse<Object>> {
     return axiosApi.post(`user-address`, userAddress);
   },
@@ -88,10 +88,9 @@ export default {
     return axiosApi.get(`user-address/${userId}`);
   },
   updateDefaultAddress(
-    addressId: number,
     userAddress: UserAddressReq
   ): Promise<AxiosResponse<Object>> {
-    return axiosApi.put(`user-address/${addressId}`, userAddress);
+    return axiosApi.put(`user-address/${userAddress.id}`, userAddress);
   },
   deleteAddressMethod(addressId: number): Promise<AxiosResponse<Object>> {
     return axiosApi.delete(`user-address/${addressId}`);

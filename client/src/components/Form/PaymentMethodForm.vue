@@ -40,7 +40,7 @@ import {
 import { UserPaymentReq } from '../../interfaces/UserPayment';
 import { useStore } from 'vuex';
 
-// -----------------DEFINE PROPS------------------
+//DEFINE PROPS
 const props = defineProps({
     className: {
         type: String,
@@ -52,14 +52,16 @@ const props = defineProps({
     }
 });
 
-// -----------------DEFINE CONSTANTS------------------
+// DEFINE STORE
+const store = useStore();
+
+//DEFINE CONSTANTS
 const checkFormValid = ref(false);
 const selectedPayment = inject<Ref<string>>('selectedPayment');
 const authResId = inject<number>('authResId');
 const errorApi = ref('');
-const store = useStore();
 
-// -----------------DEFINE METHODS------------------
+//DEFINE METHODS
 const validateForm = (isValid: boolean) => {
     return checkFormValid.value = isValid;
 };

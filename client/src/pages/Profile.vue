@@ -126,36 +126,34 @@
                     <div class="">
                         <h4 class="text-sm italic my-2">Set default address for delivery product</h4>
                         <div class="flex gap-3">
-                            <div class="w-72 border p-3 text-sm">
-                                <ul>
+                            <div @click="toggleConfirmAddressModal(address)" v-for="address in addressList"
+                                :key="address.id"
+                                class="w-72 border p-3 text-sm relative cursor-pointer hover:bg-gray-200">
+                                <input type="checkbox" v-if="address.active" checked
+                                    className="checkbox absolute -top-1 -right-1 checkbox-success checkbox-xs" />
+                                <ul class="flex flex-col">
                                     <li class="flex gap-5">
                                         <p>Name</p>
-                                        <p class="font-bold">Vo Minh Phung</p>
+                                        <p class="font-bold capitalize text-xs">{{ address?.user?.firstName + ' ' +
+                            address?.user?.lastName }}</p>
                                     </li>
                                     <li class="flex gap-5">
                                         <p>Phone:</p>
-                                        <p>(84 +) 564392088</p>
+                                        <p>( 84+ ) {{ address?.phone }}</p>
+                                    </li>
+                                    <li class="flex gap-5">
+                                        <ol class="flex gap-3 capitalize">
+                                            <p>Country:</p>
+                                            <p>{{ address?.country }}</p>
+                                        </ol>
+                                        <ol class="flex gap-3 capitalize">
+                                            <p>City:</p>
+                                            <p>{{ address?.city }}</p>
+                                        </ol>
                                     </li>
                                     <li class="flex gap-5">
                                         <p>Address: </p>
-                                        <p class="truncate">30/4 street - Hung Loi - Ninh Kieu distric - Can Tho City
-                                        </p>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="w-72 border p-3 text-sm">
-                                <ul>
-                                    <li class="flex gap-5">
-                                        <p>Name</p>
-                                        <p class="font-bold">Vo Minh Phung</p>
-                                    </li>
-                                    <li class="flex gap-5">
-                                        <p>Phone:</p>
-                                        <p>(84 +) 564392088</p>
-                                    </li>
-                                    <li class="flex gap-5">
-                                        <p>Address: </p>
-                                        <p class="truncate">30/4 street - Hung Loi - Ninh Kieu distric - Can Tho City
+                                        <p class="truncate">{{ address?.address }}
                                         </p>
                                     </li>
                                 </ul>
@@ -199,7 +197,17 @@
                             class="px-5 py-2 rounded-sm outline-none bg-green-600 text-white">Set default</button>
                     </div>
                 </div>
-
+            </ConfirmModal>
+            <ConfirmModal :toggle-modal="toggleConfirmAddressModal" :is-open-modal="isOpenConfirmAddressModal">
+                <div class="w-full flex flex-col items-center justify-center">
+                    <p class="text-sm">What do you want with your address!</p>
+                    <div class="flex gap-5 my-10 text-white">
+                        <button @click="handleDeleteAddressMethod" class="px-5 py-2 outline-none text-red-600">Delete
+                            address</button>
+                        <button @click="handleUpdateAddressMethod"
+                            class="px-5 py-2 rounded-sm outline-none bg-green-600 text-white">Set default</button>
+                    </div>
+                </div>
             </ConfirmModal>
         </div>
     </div>
@@ -211,34 +219,30 @@ import ChangePasswordForm from '@components/Form/ChangePasswordForm.vue';
 import PaymentMethodModal from '@components/Modal/PaymentMethodModal.vue';
 import ConfirmModal from '@components/Modal/ConfirmModal.vue';
 import { ref, provide, ComputedRef, computed, reactive } from 'vue';
-import { UserPaymentReq, UserPaymentRes } from '@/interfaces/UserPayment';
+import { INITIAL_USER_PAYMENT_REQ, UserPaymentReq, UserPaymentRes } from '../interfaces/UserPayment';
 import { useStore } from 'vuex';
+import { INITIAL_USER_ADDRESS_REQ, UserAddressReq, UserAddressRes } from '../interfaces/UserAddress';
 
 // DEFINE STORE
 const store = useStore();
 
 // ACTION
 store.dispatch('payment/getAllUserPayment', 1);
+store.dispatch('address/getAllUserAddress', 1);
 
 // STATE STORE
 const payments: ComputedRef<UserPaymentRes[]> = computed(() => store.state.payment.payments);
+const addressList: ComputedRef<UserAddressRes[]> = computed(() => store.state.address.addressList);
 
 // DEFINE CONSTANT
-let paymentNeedChange = reactive<UserPaymentReq>({
-    user: {
-        id: 0
-    },
-    accountNumber: "",
-    active: true,
-    paymentType: "",
-    cvv: "",
-    since: "",
-    valid: "",
-    id: 0
-});
 const authData = localStorage.getItem("auth");
 const authRes = authData ? JSON.parse(authData) : null;
 provide('authResId', authRes ? authRes.id : null);
+
+let paymentNeedChange = reactive<UserPaymentReq>(INITIAL_USER_PAYMENT_REQ);
+let addressNeedChange = reactive<UserAddressReq>(INITIAL_USER_ADDRESS_REQ);
+
+
 
 // PAYMENT METHOD
 const isOpenPaymentModal = ref(false);
@@ -266,20 +270,58 @@ const toggleConfirmModal = (payment?: UserPaymentRes) => {
 
 const handleUpdatePaymentMethod = () => {
     store.dispatch('payment/setDefaultPayment', paymentNeedChange)
+        .then(() => {
+            store.dispatch('payment/getAllUserPayment', 1);
+        }).catch((error) => {
+            console.log(error);
+        });
     toggleConfirmModal();
 }
 const handleDeletePaymentMethod = () => {
-    store.dispatch('payment/deletePaymentMethod', paymentNeedChange.id);
+    store.dispatch('payment/deletePaymentMethod', paymentNeedChange.id)
+        .then(() => {
+            store.dispatch('payment/getAllUserPayment', 1);
+        }).catch((error) => {
+            console.log(error);
+        });
     toggleConfirmModal();
 }
 
 // ADDRESS USER
 const isOpenAddressUserModal = ref(false);
 const toggleAddressUserModal = () => isOpenAddressUserModal.value = !isOpenAddressUserModal.value;
+const isOpenConfirmAddressModal = ref(false);
+const toggleConfirmAddressModal = (address?: UserAddressRes) => {
+    isOpenConfirmAddressModal.value = !isOpenConfirmAddressModal.value;
+    if (address) {
+        addressNeedChange = {
+            user: {
+                id: 1,
+            },
+            address: address.address,
+            active: true,
+            city: address.city,
+            country: address.country,
+            phone: address.phone,
+            postCode: address.postCode,
+            id: address.id,
+        }
+    }
 
-const refreshPage = () => {
-  location.reload();
-};
+}
+
+const handleUpdateAddressMethod = () => {
+    store.dispatch('address/setDefaultAddress', addressNeedChange).then(() => {
+        store.dispatch('address/getAllUserAddress', 1);
+    }).catch((error) => {
+        console.log(error);
+    });
+    toggleConfirmAddressModal();
+}
+const handleDeleteAddressMethod = () => {
+    store.dispatch('address/deleteAddressMethod', addressNeedChange.id);
+    toggleConfirmAddressModal();
+}
 </script>
 
 <style scoped></style>

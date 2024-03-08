@@ -23,3 +23,16 @@ export interface UserAddressRes {
   phone: string;
   postCode: string;
 }
+
+export const INITIAL_USER_ADDRESS_REQ = {
+  user: {
+    id: 0,
+  },
+  address: "",
+  active: true,
+  city: "",
+  country: "",
+  phone: "",
+  postCode: "",
+  id: 0,
+};
