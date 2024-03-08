@@ -6,9 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,8 +23,7 @@ public class Cart {
     @Column(name = "id")
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Product product;
 
     @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })

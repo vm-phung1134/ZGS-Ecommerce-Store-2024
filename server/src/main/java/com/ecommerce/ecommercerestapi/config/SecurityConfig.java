@@ -55,6 +55,7 @@ public class SecurityConfig {
                                     .requestMatchers("/api/shopping-cart/**").permitAll()
                                     .requestMatchers("/api/user-payment/**").permitAll()
                                     .requestMatchers("/api/user-address/**").permitAll()
+                                    .requestMatchers("/api/user-order/**").permitAll()
                                 .anyRequest().authenticated())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 

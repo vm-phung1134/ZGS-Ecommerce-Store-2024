@@ -1,7 +1,5 @@
 package com.ecommerce.ecommercerestapi.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,23 +20,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-@RequestMapping("/api/order")
+@RequestMapping("/api/user-order")
 public class OrderController {
     @Autowired
     OrderService orderService;
 
-    @GetMapping
-    public ApiResponse<List<Order>> getAllOrder() {
-        List<Order> products = orderService.getAllOrder();
-        return new ApiResponse<List<Order>>(
-                HttpStatus.OK.value(),
-                ConstantMsg.SUCCESS_MSG,
-                products);
-    }
-
     @PostMapping
-    public ApiResponse<String> createNewOrder(@RequestBody Order product) {
-        Order newOrder = orderService.createOrder(product);
+    public ApiResponse<String> createNewOrder(@RequestBody Order order) {
+        Order newOrder = orderService.createOrder(order);
         if (newOrder.equals(null)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fail items add to order!");
         }
@@ -50,22 +39,22 @@ public class OrderController {
 
     @GetMapping(value = "/{id}")
     public ApiResponse<Order> getOneOrder(@PathVariable Integer id) {
-        Order product = orderService.getOneOrder(id);
-        if (product.equals(null)) {
+        Order order = orderService.getAllUserOrder(id);
+        if (order.equals(null)) {
             throw new NotFoundException();
         }
         return new ApiResponse<Order>(
                 HttpStatus.OK.value(),
                 ConstantMsg.SUCCESS_MSG,
-                product);
+                order);
     }
 
     @PutMapping(value = "/{id}")
-    public ApiResponse<Order> updateOrder(@PathVariable Integer id, @RequestBody Order product) {
-        product.setId(id);
-        Order updatedOrder = orderService.updateOrder(product);
+    public ApiResponse<Order> updateOrder(@PathVariable Integer id, @RequestBody Order order) {
+        order.setId(id);
+        Order updatedOrder = orderService.updateOrder(order);
         if (updatedOrder.equals(null)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fail to update product!");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fail to update order!");
         }
         return new ApiResponse<Order>(
                 HttpStatus.OK.value(),

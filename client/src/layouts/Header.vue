@@ -105,7 +105,6 @@
                                             </span>
                                         </label>
                                     </div>
-
                                     <ShoppingCart />
                                 </ul>
                             </div>
@@ -140,7 +139,7 @@
 
                 <div class="block ml-2">
                     <div class="inline relative">
-                        <button v-if="!checkAuthenticated()" @click="handleDirection"
+                        <button v-if="!isUserAuthenticated" @click="handleDirection"
                             class="bg-red-600 py-3 px-6 text-sm tracking-wider text-white">Sign In</button>
                         <div v-else className="dropdown dropdown-end">
                             <button type="button" tabIndex={0} role="button"
@@ -170,11 +169,14 @@
                             <ul tabIndex={0}
                                 className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                 <RouterLink to="/profile-user">
-                                    <li><a>Profile</a></li>
+                                    <li><a>Account</a></li>
                                 </RouterLink>
-                                <li><a>Payment method</a></li>
-                                <li><a>Your orders</a></li>
+                                <RouterLink to="/tracking-your-order">
+                                    <li><a>Track your orders</a></li>
+                                </RouterLink>
                                 <li><a>Feedback</a></li>
+                                <li><a>Settings</a></li>
+
                                 <li @click="handleLogout()" class="text-red-600"><a>Log out</a></li>
                             </ul>
                         </div>
@@ -193,31 +195,28 @@ import { useRouter } from 'vue-router';
 import ShoppingCart from '@pages/ShoppingCart.vue';
 import { useStore } from 'vuex';
 
+// DEFINE STORE
 const store = useStore();
-
-const isLogout: ComputedRef<boolean> = computed(() => store.state.auth.isLogout);
-
-
-const isOpenSearchBar = ref(false);
-const toggleSearchBar = () => isOpenSearchBar.value = !isOpenSearchBar.value;
-
 const router = useRouter();
 
-const checkAuthenticated = () => {
-    const token = localStorage.getItem("token");
-    if(token){
-        return true;
-    }
-    return false;
-}
+// USE STORE
+const isLogout: ComputedRef<boolean> = computed(() => store.state.auth.isLogout);
+const isUserAuthenticated = computed(() => store.getters['auth/isUserAuthenticated']);
 
-checkAuthenticated();
+// DEFINE CONSTANT
+const isOpenSearchBar = ref(false);
 
-const handleLogout = async () => {
-    await store.dispatch('auth/logout');
-    checkAuthenticated();
-    if(isLogout){
-        alert('Log out successfully');
+// METHODS
+const toggleSearchBar = () => isOpenSearchBar.value = !isOpenSearchBar.value;
+
+const handleLogout = () => {
+    store.dispatch('auth/logout').then(() => {
+        isUserAuthenticated
+    }).catch((error) => {
+        console.log(error);
+    });
+    if (isLogout) {
+        router.push("/sign-in");
     }
 }
 

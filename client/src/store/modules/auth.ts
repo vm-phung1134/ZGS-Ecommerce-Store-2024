@@ -20,8 +20,13 @@ const state: authState = {
 
 // getters
 const getters = {
-  isAuthenticated: (state: authState) => {
-    return state.isAuthenticated;
+  isUserAuthenticated: () => {
+    const token = localStorage.getItem("token");
+    const auth = localStorage.getItem("auth");
+    if (token && auth) {
+      return true;
+    }
+    return false;
   },
 };
 

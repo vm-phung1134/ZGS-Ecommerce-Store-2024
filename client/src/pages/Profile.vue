@@ -223,10 +223,15 @@ import { INITIAL_USER_PAYMENT_REQ, UserPaymentReq, UserPaymentRes } from '../int
 import { useStore } from 'vuex';
 import { INITIAL_USER_ADDRESS_REQ, UserAddressReq, UserAddressRes } from '../interfaces/UserAddress';
 
+// DEFINE CONSTANT
+const authData = localStorage.getItem("auth");
+const authRes = authData ? JSON.parse(authData) : null;
+provide('authResId', authRes ? authRes.id : null);
+
 // DEFINE STORE
 const store = useStore();
 
-// ACTION
+// USE STORE
 store.dispatch('payment/getAllUserPayment', 1);
 store.dispatch('address/getAllUserAddress', 1);
 
@@ -234,10 +239,7 @@ store.dispatch('address/getAllUserAddress', 1);
 const payments: ComputedRef<UserPaymentRes[]> = computed(() => store.state.payment.payments);
 const addressList: ComputedRef<UserAddressRes[]> = computed(() => store.state.address.addressList);
 
-// DEFINE CONSTANT
-const authData = localStorage.getItem("auth");
-const authRes = authData ? JSON.parse(authData) : null;
-provide('authResId', authRes ? authRes.id : null);
+
 
 let paymentNeedChange = reactive<UserPaymentReq>(INITIAL_USER_PAYMENT_REQ);
 let addressNeedChange = reactive<UserAddressReq>(INITIAL_USER_ADDRESS_REQ);
@@ -311,7 +313,8 @@ const toggleConfirmAddressModal = (address?: UserAddressRes) => {
 }
 
 const handleUpdateAddressMethod = () => {
-    store.dispatch('address/setDefaultAddress', addressNeedChange).then(() => {
+    store.dispatch('address/setDefaultAddress', addressNeedChange)
+    .then(() => {
         store.dispatch('address/getAllUserAddress', 1);
     }).catch((error) => {
         console.log(error);

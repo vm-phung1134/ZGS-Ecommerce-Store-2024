@@ -4,6 +4,7 @@ import { UserReq } from "../interfaces/User";
 import { ShoppingCartReq } from "../interfaces/ShoppingCart";
 import { UserPaymentReq } from "../interfaces/UserPayment";
 import { UserAddressReq } from "../interfaces/UserAddress";
+import { OrderReq } from "../interfaces/Order";
 
 const axiosApiDefault = axios.create({
   baseURL: `http://localhost:8080/api/auth`,
@@ -94,5 +95,16 @@ export default {
   },
   deleteAddressMethod(addressId: number): Promise<AxiosResponse<Object>> {
     return axiosApi.delete(`user-address/${addressId}`);
+  },
+
+  // ORDER
+  createOrder(OrderReq: OrderReq): Promise<AxiosResponse<Object>> {
+    return axiosApi.post(`user-order`, OrderReq);
+  },
+  cancelOrder(orderId: number): Promise<AxiosResponse<Object>> {
+    return axiosApi.delete(`user-order/${orderId}`);
+  },
+  getAllUserOrder(userId: number): Promise<AxiosResponse<Object>> {
+    return axiosApi.get(`user-order/${userId}`);
   },
 };

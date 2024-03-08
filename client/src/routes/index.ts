@@ -29,7 +29,7 @@ const _routes: Array<vR.RouteRecordRaw> = [
     name: "product.list",
   },
   {
-    path: "/checkout-order",
+    path: "/checkout-order/:id",
     component: checkoutVue,
     name: "checkout.order",
   },

@@ -14,7 +14,7 @@
                         <DialogPanel
                             class="w-full max-w-fit transform overflow-hidden rounded-md bg-white px-10 py-6 text-center align-middle shadow-xl transition-all">
                             <div @click="props.toggleModal" class="w-full flex justify-start">
-                                <button class="mb-5 outline-none">< Back to page</button>
+                                <button class="mb-5 outline-none">Back to page</button>
                             </div>
                             <DialogTitle as="h3" class="text-xl font-bold leading-6 mb-2">
                                 Notification from <span class="text-green-600">Zion Gaming Store</span>

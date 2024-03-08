@@ -6,21 +6,36 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.ecommercerestapi.entity.Cart;
 import com.ecommerce.ecommercerestapi.entity.Order;
-
+import com.ecommerce.ecommercerestapi.entity.User;
+import com.ecommerce.ecommercerestapi.entity.UserAddress;
+import com.ecommerce.ecommercerestapi.entity.UserPayment;
+import com.ecommerce.ecommercerestapi.repository.CartRepository;
 import com.ecommerce.ecommercerestapi.repository.OrderRepository;
+import com.ecommerce.ecommercerestapi.repository.UserAddressRepository;
+import com.ecommerce.ecommercerestapi.repository.UserPaymentRepository;
+import com.ecommerce.ecommercerestapi.repository.UserRepository;
 
 @Service
 public class OrderService {
     @Autowired
     OrderRepository orderRepository;
 
-    public List<Order> getAllOrder() {
-        return orderRepository.findAll();
-    }
+    @Autowired
+    UserRepository userRepository;
 
-    public Order getOneOrder(Integer id) {
-        Optional<Order> order = orderRepository.findById(id);
+    @Autowired
+    UserPaymentRepository userPaymentRepository;
+
+    @Autowired
+    UserAddressRepository userAddressRepository;
+
+    @Autowired
+    CartRepository cartRepository;
+
+    public Order getAllUserOrder(Integer id) {
+        Optional<Order> order = orderRepository.findUserById(id);
         if (order.isPresent()) {
             return order.get();
         }
@@ -28,11 +43,25 @@ public class OrderService {
     }
 
     public Order createOrder(Order order) {
-        if (order != null) {
-            Order newOrder = orderRepository.save(order);
-            return newOrder;
+        User user = userRepository.findById(order.getUser().getId()).orElse(null);
+        UserPayment userPayment = userPaymentRepository.findById(order.getUserPayment().getId()).orElse(null);
+        UserAddress userAddress = userAddressRepository.findById(order.getUserAddress().getId()).orElse(null);
+        List<Cart> listCarts = cartRepository.findAllByUserId(user.getId());
+
+        for (Cart cart : listCarts) {
+            Order newOrder = new Order();
+            newOrder.setUser(user);
+            newOrder.setUserAddress(userAddress);
+            newOrder.setUserPayment(userPayment);
+            newOrder.setActive(false);
+            newOrder.setSubTotal(order.getSubTotal());
+            newOrder.setDateOrder(order.getDateOrder());
+            newOrder.setProduct(cart.getProduct());
+            newOrder.setSubQuantity(cart.getQuantity());
+            orderRepository.save(newOrder);
+            cartRepository.deleteById(cart.getId());
         }
-        return null;
+        return order;
     }
 
     public Boolean deleteOrder(Integer id) {
@@ -53,4 +82,3 @@ public class OrderService {
         return null;
     }
 }
-

@@ -63,8 +63,15 @@
                         <p class="capitalize font-bold">Subtotal</p>
                         <p class="font-bold text-red-600 text-2xl">${{ total + 15 }}.00</p>
                     </div>
-                    <button class="py-3 px-5 w-full bg-black text-white uppercase font-bold tracking-wider">
-                        Checkout your order
+                    <label class="cursor-pointer" for="my-drawer-4" aria-label="close sidebar"></label>
+                    <button @click="handleDirectCheckout" v-if="isCheckQuantityCart(userCart)"
+                        class="py-3 px-5 w-full bg-black text-white uppercase font-bold tracking-wider">
+                        <label class="cursor-pointer" for="my-drawer-4" aria-label="close sidebar">Checkout your
+                            order</label>
+                    </button>
+                    <button disabled v-else
+                        class="py-3 px-5 w-full bg-gray-500 text-white uppercase font-bold tracking-wider">
+                        Not product to checkout
                     </button>
                 </div>
             </div>
@@ -76,17 +83,31 @@
 import { ComputedRef, computed } from 'vue';
 import { ShoppingCartRes } from '../interfaces/ShoppingCart';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
+// DEFINE STORE
 const store = useStore();
+const router = useRouter();
+
+// USE STORE
 const userCart: ComputedRef<ShoppingCartRes> = computed(() => store.state.cart.userCart);
+const total = computed(() => store.getters['cart/cartTotalPrice']);
+
+// DEFINE CONSTANT  
 const authData = localStorage.getItem("auth");
 if (authData) {
     const authRes = JSON.parse(authData);
     store.dispatch('cart/getUserCart', authRes.id);
 }
 
-const total = computed(() => store.getters['cart/cartTotalPrice'])
+// DEFINE METHODS
+const isCheckQuantityCart = (userCart: ShoppingCartRes) => {
+    return userCart?.products?.length > 0 ? true : false;
+}
 
+const handleDirectCheckout = () => {
+    router.push(`/checkout-order/${userCart.value.user.id}`);
+}
 
 </script>
 

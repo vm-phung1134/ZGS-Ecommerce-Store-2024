@@ -4,6 +4,7 @@ export interface AuthReq {
 }
 
 export interface AuthRes {
+  id: number;
   email: string;
   firstName: string;
   lastName: string;

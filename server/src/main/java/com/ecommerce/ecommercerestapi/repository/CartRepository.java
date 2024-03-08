@@ -1,5 +1,6 @@
 package com.ecommerce.ecommercerestapi.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,8 @@ import com.ecommerce.ecommercerestapi.entity.Product;
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Integer> {
     Optional<Cart> findByUserId(Integer userId);
+
+    List<Cart> findAllByUserId(Integer userId);
 
     Optional<Cart> findByProduct(Product product);
 }
