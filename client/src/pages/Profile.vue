@@ -99,26 +99,23 @@
                         <h1 class="uppercase text-xl font-bold">Payment methods</h1>
                         <button @click="togglePaymentModal" class="text-green-700 text-sm my-5">Add new your payment
                             method -></button>
-
                     </div>
-                    <div class="flex gap-5">
-                        <div class="border-gray-600 shadow-xl p-3 w-60">
-                            <img class="w-1/4" src="https://cdn-icons-png.flaticon.com/128/196/196578.png"
-                                alt="credit-card">
-                            <p>**** **** **** 8943</p>
-                            <p class="text-xs italic text-gray-500">Expire: 07/30</p>
-                        </div>
-                        <div class="border-gray-600 shadow-xl p-3 w-60">
-                            <img class="w-1/4" src="https://cdn-icons-png.flaticon.com/128/196/196565.png"
-                                alt="credit-card">
-                            <p>**** **** **** 8943</p>
-                            <p class="text-xs italic text-gray-500">Expire: 07/30</p>
-                        </div>
-                        <div class="border-gray-600 shadow-xl p-3 w-60">
+                    <div class="flex gap-3 w-full">
+                        <div @click="toggleConfirmModal(payment)" v-for="payment in payments" :key="payment?.id"
+                            class="border-gray-600 shadow-xl cursor-pointer text-white bg-[url('https://i.imgur.com/Zi6v09P.png')] hover:transform hover:duration-500 hover:ease-in-out p-3 w-full text-sm relative overflow-hidden">
+                            <p v-if="payment.active"
+                                class="px-3 py-2 text-xs w-fit absolute top-0 right-0 text-black font-bold">Default</p>
                             <img class="w-1/4" src="https://cdn-icons-png.flaticon.com/128/14881/14881313.png"
                                 alt="credit-card">
-                            <p>**** **** **** 8943</p>
-                            <p class="text-xs italic text-gray-500">Expire: 07/30</p>
+                            <p class="uppercase text-xs">{{ payment?.user?.firstName + ' ' + payment?.user?.lastName }}
+                            </p>
+                            <p class="py-2">**** **** **** {{ payment?.accountNumber.slice(-4) }}</p>
+                            <div class="flex justify-between">
+                                <p class="text-xs italic text-gray-100">Since: {{ payment?.since }}</p>
+                                <p class="text-xs italic text-gray-100">Valid: {{ payment?.valid }}</p>
+                                <p class="text-xs italic text-gray-100">CVV: {{ payment?.cvv }}</p>
+                            </div>
+
                         </div>
                     </div>
                     <PaymentMethodModal :is-open-modal="isOpenPaymentModal" :toggle-modal="togglePaymentModal" />
@@ -192,6 +189,18 @@
                     </div>
                 </div>
             </div>
+            <ConfirmModal :toggle-modal="toggleConfirmModal" :is-open-modal="isOpenConfirmModal">
+                <div class="w-full flex flex-col items-center justify-center">
+                    <p class="text-sm">What do you want with your payment method!</p>
+                    <div class="flex gap-5 my-10 text-white">
+                        <button @click="handleDeletePaymentMethod" class="px-5 py-2 outline-none text-red-600">Delete
+                            payment</button>
+                        <button @click="handleUpdatePaymentMethod"
+                            class="px-5 py-2 rounded-sm outline-none bg-green-600 text-white">Set default</button>
+                    </div>
+                </div>
+
+            </ConfirmModal>
         </div>
     </div>
 </template>
@@ -200,9 +209,33 @@
 import AddressModal from '@components/Modal/AddressModal.vue';
 import ChangePasswordForm from '@components/Form/ChangePasswordForm.vue';
 import PaymentMethodModal from '@components/Modal/PaymentMethodModal.vue';
-import { ref, provide } from 'vue';
+import ConfirmModal from '@components/Modal/ConfirmModal.vue';
+import { ref, provide, ComputedRef, computed, reactive } from 'vue';
+import { UserPaymentReq, UserPaymentRes } from '@/interfaces/UserPayment';
+import { useStore } from 'vuex';
+
+// DEFINE STORE
+const store = useStore();
+
+// ACTION
+store.dispatch('payment/getAllUserPayment', 1);
+
+// STATE STORE
+const payments: ComputedRef<UserPaymentRes[]> = computed(() => store.state.payment.payments);
 
 // DEFINE CONSTANT
+let paymentNeedChange = reactive<UserPaymentReq>({
+    user: {
+        id: 0
+    },
+    accountNumber: "",
+    active: true,
+    paymentType: "",
+    cvv: "",
+    since: "",
+    valid: "",
+    id: 0
+});
 const authData = localStorage.getItem("auth");
 const authRes = authData ? JSON.parse(authData) : null;
 provide('authResId', authRes ? authRes.id : null);
@@ -211,12 +244,45 @@ provide('authResId', authRes ? authRes.id : null);
 const isOpenPaymentModal = ref(false);
 const togglePaymentModal = () => isOpenPaymentModal.value = !isOpenPaymentModal.value;
 
+const isOpenConfirmModal = ref(false);
+const toggleConfirmModal = (payment?: UserPaymentRes) => {
+    isOpenConfirmModal.value = !isOpenConfirmModal.value;
+    if (payment) {
+        paymentNeedChange = {
+            paymentType: payment.paymentType,
+            accountNumber: payment.accountNumber,
+            active: true,
+            since: payment.since,
+            valid: payment.valid,
+            cvv: payment.cvv,
+            user: {
+                id: 1
+            },
+            id: payment.id
+        }
+    }
+
+}
+
+const handleUpdatePaymentMethod = () => {
+    store.dispatch('payment/setDefaultPayment', paymentNeedChange)
+    toggleConfirmModal();
+}
+const handleDeletePaymentMethod = () => {
+    store.dispatch('payment/deletePaymentMethod', paymentNeedChange.id);
+    toggleConfirmModal();
+}
 
 // ADDRESS USER
 const isOpenAddressUserModal = ref(false);
 const toggleAddressUserModal = () => isOpenAddressUserModal.value = !isOpenAddressUserModal.value;
 
-
+const refreshPage = () => {
+  location.reload();
+};
 </script>
 
 <style scoped></style>
+
+<!-- https://cdn-icons-png.flaticon.com/128/196/196565.png -->
+<!-- https://cdn-icons-png.flaticon.com/128/14881/14881313.png -->

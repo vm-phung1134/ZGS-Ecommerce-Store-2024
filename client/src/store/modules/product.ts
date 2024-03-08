@@ -35,7 +35,7 @@ const actions: ActionTree<productState, any> = {
         });
     });
   },
-  getOneProduct({ commit }: ActionContext<productState, any>, productId: string) {
+  getOneProduct({ commit }: ActionContext<productState, any>, productId: number) {
     return new Promise((resolve, reject) => {
       console.log("Accessing backend with successfully");
       api

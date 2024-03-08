@@ -40,7 +40,7 @@ export default {
   },
 
   // USER INFO
-  getOneUser(userId: string): Promise<AxiosResponse<Object>> {
+  getOneUser(userId: number): Promise<AxiosResponse<Object>> {
     return axiosApi.get(`user/${userId}`);
   },
 
@@ -48,7 +48,7 @@ export default {
   getAllProducts(): Promise<AxiosResponse<Object>> {
     return axiosApi.get(`product`);
   },
-  getOneProduct(productId: string): Promise<AxiosResponse<Object>> {
+  getOneProduct(productId: number): Promise<AxiosResponse<Object>> {
     return axiosApi.get(`product/${productId}`);
   },
 
@@ -56,7 +56,7 @@ export default {
   addToCart(cart: ShoppingCartReq): Promise<AxiosResponse<Object>> {
     return axiosApi.post(`shopping-cart`, cart);
   },
-  getUserCart(userId: string): Promise<AxiosResponse<Object>> {
+  getUserCart(userId: number): Promise<AxiosResponse<Object>> {
     return axiosApi.get(`shopping-cart/${userId}`);
   },
 
@@ -66,16 +66,15 @@ export default {
   ): Promise<AxiosResponse<Object>> {
     return axiosApi.post(`user-payment`, userPayment);
   },
-  getAllUserPayment(userId: string): Promise<AxiosResponse<Object>> {
+  getAllUserPayment(userId: number): Promise<AxiosResponse<Object>> {
     return axiosApi.get(`user-payment/${userId}`);
   },
   updateDefaultPayment(
-    paymentId: string,
     userPayment: UserPaymentReq
   ): Promise<AxiosResponse<Object>> {
-    return axiosApi.put(`user-payment/${paymentId}`, userPayment);
+    return axiosApi.put(`user-payment/${userPayment.id}`, userPayment);
   },
-  deletePaymentMethod(paymentId: string): Promise<AxiosResponse<Object>> {
+  deletePaymentMethod(paymentId: number): Promise<AxiosResponse<Object>> {
     return axiosApi.delete(`user-payment/${paymentId}`);
   },
 
@@ -85,16 +84,16 @@ export default {
   ): Promise<AxiosResponse<Object>> {
     return axiosApi.post(`user-address`, userAddress);
   },
-  getAllUserAddress(userId: string): Promise<AxiosResponse<Object>> {
+  getAllUserAddress(userId: number): Promise<AxiosResponse<Object>> {
     return axiosApi.get(`user-address/${userId}`);
   },
   updateDefaultAddress(
-    addressId: string,
+    addressId: number,
     userAddress: UserAddressReq
   ): Promise<AxiosResponse<Object>> {
     return axiosApi.put(`user-address/${addressId}`, userAddress);
   },
-  deleteAddressMethod(addressId: string): Promise<AxiosResponse<Object>> {
+  deleteAddressMethod(addressId: number): Promise<AxiosResponse<Object>> {
     return axiosApi.delete(`user-address/${addressId}`);
   },
 };

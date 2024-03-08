@@ -26,8 +26,8 @@ export const validComponent = reactive({
   label: "Valid date",
   errMsg: "Valid invalid!",
   pattern: "",
-  minLength: 4,
-  maxLength: 4,
+  minLength: 5,
+  maxLength: 5,
 });
 
 export const sinceComponent = reactive({
@@ -37,8 +37,8 @@ export const sinceComponent = reactive({
   label: "Since date",
   errMsg: "Since invalid!",
   pattern: "",
-  minLength: 4,
-  maxLength: 4,
+  minLength: 5,
+  maxLength: 5,
 });
 
 export const numberCardComponent = reactive({

@@ -34,7 +34,7 @@ const getters = {
 const actions: ActionTree<shoppingCartState, any> = {
   getUserCart(
     { commit }: ActionContext<shoppingCartState, any>,
-    userId: string
+    userId: number
   ) {
     return new Promise((resolve, reject) => {
       console.log("Accessing backend with successfully");

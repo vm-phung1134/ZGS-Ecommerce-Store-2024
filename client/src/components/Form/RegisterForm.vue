@@ -6,15 +6,16 @@
                     <span class="text-red-700">Ops! {{ errors }}</span>
                 </div>
                 <div class="flex w-full flex-1 gap-3">
-                    <InputFieldIcon @form-validate="validateForm" v-model="formData.firstName"
+                    <InputFieldIcon @form-validate="validateForm" v-model:valueInput="formData.firstName"
                         :component-data="firstNameComponent" />
-                    <InputFieldIcon @form-validate="validateForm" v-model="formData.lastName"
+                    <InputFieldIcon @form-validate="validateForm" v-model:valueInput="formData.lastName"
                         :component-data="lastNameComponent" />
                 </div>
-                <InputFieldIcon @form-validate="validateForm" v-model="formData.email" :component-data="emailComponent" />
-                <InputFieldIcon @form-validate="validateForm" v-model="formData.password"
+                <InputFieldIcon @form-validate="validateForm" v-model:valueInput="formData.email"
+                    :component-data="emailComponent" />
+                <InputFieldIcon @form-validate="validateForm" v-model:valueInput="formData.password"
                     :component-data="passwordComponent" />
-                <InputFieldIcon @form-validate="validateForm" v-model="formData.passwordConfirm"
+                <InputFieldIcon @form-validate="validateForm" v-model:valueInput="formData.passwordConfirm"
                     :component-data="passwordConfirmComponent" />
                 <div class="flex justify-between">
                     <p class="mb-0 mt-2 pt-1 text-sm font-semibold">
@@ -77,7 +78,7 @@ const submitForm = (event: Event) => {
         store.dispatch("auth/register", formData)
             .then(() => {
                 console.log('Register successfully !');
-                props.toggleModal(); 
+                props.toggleModal();
             })
             .catch((error) => {
                 console.log(error);

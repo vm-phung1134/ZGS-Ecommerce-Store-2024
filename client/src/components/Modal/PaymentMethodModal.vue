@@ -21,7 +21,8 @@
                                 <div class="w-1/2 ">
                                     <div class="my-5">
                                         <SelectBoxForm class-name="absolute top-0 w-[25rem] z-10"
-                                            :array-value="payments" :selected-value="selectedPayment" />
+                                            :array-value="payments" :selected-value="selectedPayment"
+                                            @update:selectedValue="updateSelectedPayment" />
                                     </div>
                                     <div class="w-full bg-red-100 rounded-xl relative text-white shadow-2xl">
                                         <img class="relative object-cover w-full h-full rounded-xl"
@@ -122,6 +123,11 @@ const payments = [
     { value: 'Paypal', key: 'pp' },
 ]
 const selectedPayment = ref(payments[0].value);
-provide('selectedPayment', selectedPayment.value)
+
+const updateSelectedPayment = (newValue: string) => {
+    selectedPayment.value = newValue; 
+};
+provide('selectedPayment', selectedPayment)
+
 
 </script>

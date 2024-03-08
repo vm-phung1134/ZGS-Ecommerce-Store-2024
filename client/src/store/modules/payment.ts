@@ -17,11 +17,6 @@ const state: paymentState = {
   isDeletePayment: false,
 };
 
-type updateDefaultState = {
-  paymentId: string;
-  paymentMethod: UserPaymentReq;
-};
-
 // getters
 const getters = {};
 
@@ -29,7 +24,7 @@ const getters = {};
 const actions: ActionTree<paymentState, any> = {
   getAllUserPayment(
     { commit }: ActionContext<paymentState, any>,
-    userId: string
+    userId: number
   ) {
     return new Promise((resolve, reject) => {
       console.log("Accessing backend with successfully");
@@ -69,15 +64,12 @@ const actions: ActionTree<paymentState, any> = {
   },
   setDefaultPayment(
     { commit }: ActionContext<paymentState, any>,
-    paymentMethodSet: updateDefaultState
+    paymentMethodSet: UserPaymentReq
   ) {
     return new Promise((resolve, reject) => {
       console.log("Accessing backend with successfully");
       api
-        .updateDefaultPayment(
-          paymentMethodSet.paymentId,
-          paymentMethodSet.paymentMethod
-        )
+        .updateDefaultPayment(paymentMethodSet)
         .then((response) => {
           if (response.status == 200) {
             commit("setDefaultPayment_success");
@@ -92,7 +84,7 @@ const actions: ActionTree<paymentState, any> = {
   },
   deletePaymentMethod(
     { commit }: ActionContext<paymentState, any>,
-    paymentId: string
+    paymentId: number
   ) {
     return new Promise((resolve, reject) => {
       console.log("Accessing backend with successfully");
