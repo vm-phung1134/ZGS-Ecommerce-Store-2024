@@ -37,7 +37,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
-            @Value("${application.frontend-default-url}") String defaultFrontendUrl) 
+            @Value("${application.frontend-default-url}") String defaultFrontendUrl)
             throws Exception {
         httpSecurity
                 .cors(cors -> cors.configurationSource(request -> {
@@ -51,11 +51,12 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers("/api/auth/**").permitAll()
-                                    .requestMatchers("/api/product/**").permitAll()
-                                    .requestMatchers("/api/shopping-cart/**").permitAll()
-                                    .requestMatchers("/api/user-payment/**").permitAll()
-                                    .requestMatchers("/api/user-address/**").permitAll()
-                                    .requestMatchers("/api/user-order/**").permitAll()
+                                .requestMatchers("/api/product/**").permitAll()
+                                .requestMatchers("/api/shopping-cart/**").permitAll()
+                                .requestMatchers("/api/user-payment/**").permitAll()
+                                .requestMatchers("/api/user-address/**").permitAll()
+                                .requestMatchers("/api/user-order/**").permitAll()
+                                .requestMatchers("/api/product-category/**").permitAll()
                                 .anyRequest().authenticated())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 

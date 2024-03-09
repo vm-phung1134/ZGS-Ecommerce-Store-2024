@@ -22,18 +22,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("/api/product-category")
 public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
     @GetMapping
     public ApiResponse<List<Category>> getAllCategory() {
-        List<Category> categorys = categoryService.getAllCategory();
+        List<Category> categories = categoryService.getAllCategory();
         return new ApiResponse<List<Category>>(
                 HttpStatus.OK.value(),
                 ConstantMsg.SUCCESS_MSG,
-                categorys);
+                categories);
     }
 
     @PostMapping
