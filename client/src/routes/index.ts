@@ -6,6 +6,7 @@ import ProductListVue from "@pages/ProductList.vue";
 import checkoutVue from "@pages/Checkout.vue";
 import OrderSuccessVue from "@pages/OrderSuccess.vue";
 import Profile from "@pages/Profile.vue";
+import TrackingOrder from "@pages/TrackingOrder.vue";
 
 const _routes: Array<vR.RouteRecordRaw> = [
   {
@@ -42,6 +43,11 @@ const _routes: Array<vR.RouteRecordRaw> = [
     path: "/payment-success",
     component: OrderSuccessVue,
     name: "order.success"
+  },
+  {
+    path: "/track-your-order/:id",
+    component: TrackingOrder,
+    name: "order.tracking"
   }
 
 ];
