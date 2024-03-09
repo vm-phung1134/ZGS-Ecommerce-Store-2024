@@ -183,9 +183,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>    <SearchScreen :toggleSearchBar="toggleSearchBar" :isOpenSearchBar="isOpenSearchBar" />
+
     </nav>
-    <SearchScreen :toggleSearchBar="toggleSearchBar" :isOpenSearchBar="isOpenSearchBar" />
 </template>
 
 <script setup lang="ts">

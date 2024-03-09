@@ -55,7 +55,7 @@
                     <div tabindex="0" class="collapse collapse-arrow">
                         <input type="checkbox" name="my-accordion-2" checked />
                         <div class="collapse-title font-medium tracking-wide">
-                            CPU devices
+                            CPU series
                         </div>
                         <div class="collapse-content cursor-pointer text-sm">
                             <ul class="flex flex-col gap-3 ml-5">
@@ -113,6 +113,60 @@
                                     <input id="titan_laptop" type="checkbox"
                                         class="checkbox rounded-none checkbox-warning checkbox-xs" />
                                     <label for="titan_laptop" class="font-thin tracking-wider">17 1080P HD</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- INTEL PLATFORM -->
+                    <div tabindex="0" class="collapse collapse-arrow ">
+                        <input type="checkbox" name="my-accordion-2" checked />
+                        <div class="collapse-title font-medium tracking-wide">
+                            Intel platform
+                        </div>
+                        <div class="collapse-content cursor-pointer text-sm">
+                            <ul class="flex flex-col gap-3 ml-5">
+                                <li class="flex gap-2 items-center">
+                                    <input id="titan_laptop" type="checkbox"
+                                        class="checkbox rounded-none checkbox-warning checkbox-xs" />
+                                    <label for="titan_laptop" class="font-thin tracking-wider">14 Gen</label>
+                                </li>
+                                <li class="flex gap-2 items-center">
+                                    <input id="titan_laptop" type="checkbox"
+                                        class="checkbox rounded-none checkbox-warning checkbox-xs" />
+                                    <label for="titan_laptop" class="font-thin tracking-wider">15 Gen</label>
+                                </li>
+                                <li class="flex gap-2 items-center">
+                                    <input id="titan_laptop" type="checkbox"
+                                        class="checkbox rounded-none checkbox-warning checkbox-xs" />
+                                    <label for="titan_laptop" class="font-thin tracking-wider">16 Gen</label>
+                                </li>
+                                <li class="flex gap-2 items-center">
+                                    <input id="titan_laptop" type="checkbox"
+                                        class="checkbox rounded-none checkbox-warning checkbox-xs" />
+                                    <label for="titan_laptop" class="font-thin tracking-wider">17 Gen</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- AMD -->
+                    <div tabindex="0" class="collapse collapse-arrow ">
+                        <input type="checkbox" name="my-accordion-2" checked />
+                        <div class="collapse-title font-medium tracking-wide">
+                            ADM Flatform
+                        </div>
+                        <div class="collapse-content cursor-pointer text-sm">
+                            <ul class="flex flex-col gap-3 ml-5">
+                                <li class="flex gap-2 items-center">
+                                    <input id="titan_laptop" type="checkbox"
+                                        class="checkbox rounded-none checkbox-warning checkbox-xs" />
+                                    <label for="titan_laptop" class="font-thin tracking-wider">RYzen 7000 Series</label>
+                                </li>
+                                <li class="flex gap-2 items-center">
+                                    <input id="titan_laptop" type="checkbox"
+                                        class="checkbox rounded-none checkbox-warning checkbox-xs" />
+                                    <label for="titan_laptop" class="font-thin tracking-wider">RYzen 5000 Series</label>
                                 </li>
                             </ul>
                         </div>

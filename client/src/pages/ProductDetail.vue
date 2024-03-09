@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="h-[130vh] relative bg-cover bg-[url('https://storage-asset.msi.com/global/picture/image/feature/monitor/MEG-342C-QD-OLED/kv-bg.jpg')] w-full">
+            class="h-[130vh] relative bg-cover bg-[url('https://storage-asset.msi.com/global/picture/image/feature/nb/2022_RPL/stealth_16_a13/msi-stealth16-13-kv-bg-white.jpg')] w-full">
             <div class="absolute top-14 -left-5 bg-white rounded-none outline-none -skew-x-[35deg]">
                 <div className="text-sm breadcrumbs px-10 skew-x-[30deg]">
                     <ul class="uppercase">
@@ -10,10 +10,34 @@
                     </ul>
                 </div>
             </div>
-            <section class="text-gray-700 body-font overflow-hidden">
+            <section class="text-gray-300 body-font overflow-hidden">
                 <div class="container px-5 py-24 mx-auto">
                     <div class="flex gap-10 mx-20">
-                        <div class="w-1/2 flex flex-col justify-center">
+                        <div class="w-1/2 flex flex-col justify-center relative">
+                            <div class="absolute bottom-0 left-0">
+                                <ul class="flex gap-10">
+                                    <li>
+                                        <p class="text-xl font-bold">24</p>
+                                        <p class="text-xs">CORE™ i9-13980HX</p>
+                                    </li>
+                                    <li>
+                                        <p class="text-xl font-bold">5.6GHz</p>
+                                        <p class="text-xs">2 P-Core</p>
+                                    </li>
+                                    <li>
+                                        <p class="text-xl font-bold">5.2GHz</p>
+                                        <p class="text-xs">All P-Core</p>
+                                    </li>
+                                    <li>
+                                        <p class="text-xl font-bold">Intel® ABT/TVB</p>
+                                        <p class="text-xs">Technology</p>
+                                    </li>
+                                    <li>
+                                        <p class="text-xl font-bold">45%</p>
+                                        <p class="text-xs">Performance</p>
+                                    </li>
+                                </ul>
+                            </div>
                             <img alt="ecommerce" class="w-full h-auto" :src=product?.image>
                         </div>
                         <div class="w-1/2 flex flex-col gap-5 p-8 bg-black/80 text-white">
@@ -147,19 +171,48 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button @click="addProductToCart"
-                                        class="bg-red-600 text-sm uppercase font-bold text-white py-3 px-10">
-                                        Add to cart
-                                    </button>
+                                    <div @click="toggleConfirm" class="w-full">
+                                        <ButtonStyle value="add to cart" />
+                                    </div>
+                                    <ConfirmModel :toggle-modal="toggleConfirm" :is-open-modal="isOpenConfirm">
+                                        <div>
+                                            <p class="text-xl uppercase my-10 font-bold">Do you want to add this product
+                                                into your cart !</p>
+                                            <div class="flex uppercase justify-center items-center gap-10">
+                                                <p @click="toggleConfirm" class="font-bold cursor-pointer">Back to view</p>
+                                                <div @click="addProductToCart"
+                                                    class="bg-green-600 py-3 px-6 w-72 -skew-x-[30deg]">
+                                                    <button
+                                                        class="skew-x-[30deg] text-white tracking-widest font-bold">CONFIRM</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ConfirmModel>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
         </div>
-        <div class="grid grid-cols-3 gap-5 m-20">
+        <div
+            class="h-[100vh] bg-cover flex w-full bg-no-repeat bg-[url('https://storage-asset.msi.com/global/picture/image/feature/nb/2022_RPL/vector-gp68-13v/msi-gp68-13th-display-bg.jpg')]">
+            <div class="w-1/2"></div>
+            <div class="w-1/2 h-full flex flex-col justify-center items-center text-white">
+                <div class="flex gap-10 mb-10">
+                    <img class="w-32"
+                        src="https://storage-asset.msi.com/global/picture/image/feature/nb/2022_RPL/vector-gp78-13v/intel-core-i9-badge.png"
+                        alt="">
+                    <h4 class="text-3xl font-bold">LAPTOP USING GEFORCE RTX 30 SERIES, PLAYING GAME TOP AND
+                        ENJOYING THE ULTIMATE POWER</h4>
+                </div>
+                <p class="tracking-wider">With Intel® Core™ i9-12900HX, Core™ i9-12900HX processor , equipped with 8
+                    high-performance cores and
+                    8 energy-saving cores, Vector GP68 12V HX delivers unprecedented performance improvements when
+                    multitasking and playing games. heavy game.</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-3 gap-5 p-20 bg-black">
             <!-- Item 1 -->
             <div class="border py-10 flex flex-col gap-5 justify-center items-center">
                 <div>
@@ -167,7 +220,7 @@
                         src="https://storage-asset.msi.com/global/picture/image/feature/nb/Thin/Thin15-B13V/images/ft-icon-windows11.png"
                         alt="">
                 </div>
-                <h3 class="text-xl text-blue-800">Windows 11 Home</h3>
+                <h3 class="text-xl text-blue-500">Windows 11 Home</h3>
             </div>
             <!-- Item 2 -->
             <div class="border py-10 flex flex-col gap-5 justify-center items-center">
@@ -176,7 +229,7 @@
                         src="https://storage-asset.msi.com/global/picture/image/feature/nb/2023_RPLS/Cyborg-15-AI-A1V/icon-core-ultra-processor-7.webp"
                         alt="">
                 </div>
-                <h3 class="text-xl text-blue-800">Intel® Core™ Ultra 7 processor 155H</h3>
+                <h3 class="text-xl text-blue-500">Intel® Core™ Ultra 7 processor 155H</h3>
             </div>
             <!-- Item 3 -->
             <div class="border py-10 flex flex-col gap-5 justify-center items-center">
@@ -185,7 +238,7 @@
                         src="https://storage-asset.msi.com/global/picture/image/feature/Handhelds/Claw-A1M/icon-Ergonomic-Design-v1.png"
                         alt="">
                 </div>
-                <h3 class="text-xl text-blue-800">Long-session Comfort Gaming</h3>
+                <h3 class="text-xl text-blue-500">Long-session Comfort Gaming</h3>
             </div>
             <!-- Item 4 -->
             <div class="border py-10 flex flex-col gap-5 justify-center items-center">
@@ -194,7 +247,7 @@
                         src="https://storage-asset.msi.com/global/picture/image/feature/Handhelds/Claw-A1M/icon-Cooler-Boost-HyperFlow-v1.png"
                         alt="">
                 </div>
-                <h3 class="text-xl text-blue-800">Keep Cooler, Game Longer</h3>
+                <h3 class="text-xl text-blue-500">Keep Cooler, Game Longer</h3>
             </div>
             <!-- Item 5 -->
             <div class="border py-10 flex flex-col gap-5 justify-center items-center">
@@ -203,7 +256,7 @@
                         src="https://storage-asset.msi.com/global/picture/image/feature/Handhelds/Claw-A1M/icon-53-WHr-Battery-Capacity-v1.png"
                         alt="">
                 </div>
-                <h3 class="text-xl text-blue-800">Design dedicated for Handheld</h3>
+                <h3 class="text-xl text-blue-500">Design dedicated for Handheld</h3>
             </div>
             <!-- Item 6 -->
             <div class="border py-10 flex flex-col gap-5 justify-center items-center">
@@ -212,12 +265,37 @@
                         src="https://storage-asset.msi.com/global/picture/image/feature/Handhelds/Claw-A1M/MSICenterM-icon.png"
                         alt="">
                 </div>
-                <h3 class="text-xl text-blue-800">Long-session Comfort Gaming</h3>
+                <h3 class="text-xl text-blue-500">Long-session Comfort Gaming</h3>
             </div>
         </div>
-        <div>
-            <img src="https://storage-asset.msi.com/global/picture/image/feature/Handhelds/Claw-A1M/wifi7-v1.webp"
+        <div class="relative">
+            <img src="https://storage-asset.msi.com/global/picture/image/feature/nb/2022_RPL/stealth_16_a13/msi-stealth16-13-intel-bg.jpg"
                 alt="">
+            <div class="flex absolute top-0 left-0 right-0 bottom-0 bg-black/60">
+                <div class="w-1/2">
+                    <img class="w-[80%]"
+                        src="https://storage-asset.msi.com/global/picture/image/feature/nb/2022_RPL/stealth_14_A13/msi-stealth14-thine-white.png"
+                        alt="">
+                    <div class="px-20 my-10 text-white">
+                        <h4 class="font-bold text-3xl my-4">ATTRACTIVE COLORS ELEGANT DESIGN</h4>
+                        <p class="tracking-wider">Stealth 14 Studio A13V is only 1.7kg light and only 19mm thin, with a
+                            body made from
+                            extremely durable Aluminum - Magnesium alloy and has two color options to express different
+                            personalities. Pure White represents the beauty of technology and the future, with its
+                            bright colors. Star Blue symbolizes the mysterious starry night sky. The device's ultra-thin
+                            and light design is like a spaceship flying through the sky, embarking on a journey to
+                            explore new limits.</p>
+                    </div>
+                </div>
+                <div class="w-1/2 flex flex-col justify-center items-center">
+                    <img class="w-[80%]"
+                        src="https://storage-asset.msi.com/global/picture/image/feature/nb/2022_RPL/stealth_14_A13/stealth-14-kv-title.png"
+                        alt="">
+                    <img class="w-1/2"
+                        src="https://storage-asset.msi.com/global/picture/image/feature/nb/2022_RPL/stealth_14_A13/msi-stealth14-13th-laptop-ultra-white.png"
+                        alt="">
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -228,20 +306,29 @@ import { useRoute } from 'vue-router'
 import { Product } from '../interfaces/Product';
 import { ComputedRef, computed, ref } from 'vue';
 import { ShoppingCartReq } from '../interfaces/ShoppingCart';
+import ButtonStyle from '@components/Element/ButtonStyle.vue';
+import ConfirmModel from "@components/Modal/ConfirmModal.vue";
 
-// DEFINE LOGIC
-const quantity = ref(1);
+// DEFINE STORE
+
 const store = useStore();
 const route = useRoute();
-// GET ID PARAMS
+
+// USE STORE
+const product: ComputedRef<Product> = computed(() => store.state.product.product);
+
+// ACTION STORE
 store.dispatch("product/getOneProduct", route.params.id);
 
-// GET STATE FROM STORE
-const product: ComputedRef<Product> = computed(() => store.state.product.product);
+// DEFINE CONSTANT
+const quantity = ref(1);
 const authData = localStorage.getItem("auth");
 const authRes = authData ? JSON.parse(authData) : null;
+const isOpenConfirm = ref(false);
 
-// ADD TO CART
+// METHODS
+const toggleConfirm = () => isOpenConfirm.value = !isOpenConfirm.value;
+
 const addProductToCart = () => {
     if (product.value.id) {
         const cartBuild: ShoppingCartReq = {
@@ -253,7 +340,12 @@ const addProductToCart = () => {
             },
             quantity: quantity.value
         }
-        store.dispatch('cart/addProductToCart', cartBuild)
+        store.dispatch('cart/addProductToCart', cartBuild).then(() => {
+            store.dispatch('cart/getUserCart', 1);
+            toggleConfirm();
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
 }
