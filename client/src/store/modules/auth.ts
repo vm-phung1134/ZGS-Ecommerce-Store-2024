@@ -28,10 +28,6 @@ const getters = {
     }
     return false;
   },
-  getInfoUser: () => {
-    const authData = localStorage.getItem("auth");
-    return authData ? JSON.parse(authData) : null;
-  },
 };
 
 // actions

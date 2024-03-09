@@ -7,6 +7,7 @@ import checkoutVue from "@pages/Checkout.vue";
 import OrderSuccessVue from "@pages/OrderSuccess.vue";
 import Profile from "@pages/Profile.vue";
 import TrackingOrder from "@pages/TrackingOrder.vue";
+import { useStore } from "vuex";
 
 const _routes: Array<vR.RouteRecordRaw> = [
   {
@@ -20,7 +21,7 @@ const _routes: Array<vR.RouteRecordRaw> = [
     name: "auth.login",
   },
   {
-    path: "/profile-user",
+    path: "/profile-user/:id",
     component: Profile,
     name: "profile.user",
   },
@@ -42,19 +43,33 @@ const _routes: Array<vR.RouteRecordRaw> = [
   {
     path: "/payment-success",
     component: OrderSuccessVue,
-    name: "order.success"
+    name: "order.success",
   },
   {
     path: "/track-your-order/:id",
     component: TrackingOrder,
-    name: "order.tracking"
-  }
-
+    name: "order.tracking",
+  },
 ];
 
 const router = vR.createRouter({
   history: vR.createWebHistory(),
   routes: _routes,
+});
+
+router.beforeEach((to, _from, next) => {
+  const store = useStore();
+  const isUserAuthenticated = store.getters['auth/isUserAuthenticated'];
+
+  if (to.name === "profile.user" || to.name === "checkout.order") {
+    if (!isUserAuthenticated) {
+      next({ name: 'auth.login' });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;

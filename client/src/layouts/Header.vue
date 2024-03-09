@@ -209,6 +209,7 @@ const subQuantityProductCart = computed(() => store.getters['cart/getQuantityCar
 // DEFINE CONSTANT
 const isOpenSearchBar = ref(false);
 const isUserAuthenticated = inject<boolean>('isUserAuthenticated');
+console.log(isUserAuthenticated)
 const emit = defineEmits(['update:isUserAuthenticated']);
 
 // METHODS

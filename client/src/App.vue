@@ -5,13 +5,18 @@ import { computed, provide, ref } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
-const existedUser = computed(() => store.state.auth.isUserAuthenticated);
-const isUserAuthenticated = ref(existedUser ? true : false);
-provide('isUserAuthenticated', isUserAuthenticated);
+const existedUser = computed(() => store.getters['auth/isUserAuthenticated']);
+const isUserAuthenticated = ref(false);
+provide('isUserAuthenticated', isUserAuthenticated.value);
 
 const handleSetIsAuthenticated = (data: boolean) => {
   isUserAuthenticated.value = data;
 }
+
+if(existedUser.value === true){
+  isUserAuthenticated.value = true;
+}
+
 
 
 </script>
