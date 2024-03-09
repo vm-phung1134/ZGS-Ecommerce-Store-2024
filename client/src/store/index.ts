@@ -5,6 +5,7 @@ import cart, { shoppingCartState } from "./modules/cart";
 import payment, { paymentState } from "./modules/payment";
 import address, { addressState } from "./modules/address";
 import order, { orderState } from "./modules/order";
+import category, { categoryState } from "./modules/category";
 
 const debug = process.env.NODE_ENV !== "production";
 
@@ -15,6 +16,7 @@ type initialStateStore = {
   payment: paymentState;
   address: addressState;
   order: orderState;
+  category: categoryState;
 };
 
 export default createStore<initialStateStore>({
@@ -25,6 +27,7 @@ export default createStore<initialStateStore>({
     payment,
     address,
     order,
+    category,
   },
   strict: debug,
   plugins: debug ? [createLogger()] : [],

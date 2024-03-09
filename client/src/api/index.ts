@@ -53,6 +53,11 @@ export default {
     return axiosApi.get(`product/${productId}`);
   },
 
+  // CATEGORY
+  getAllCategory(): Promise<AxiosResponse<Object>> {
+    return axiosApi.get(`product-category`);
+  },
+
   // CART
   addToCart(cart: ShoppingCartReq): Promise<AxiosResponse<Object>> {
     return axiosApi.post(`shopping-cart`, cart);

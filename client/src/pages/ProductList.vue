@@ -27,26 +27,13 @@
                         </div>
                         <div class="collapse-content cursor-pointer text-sm">
                             <ul class="flex flex-col gap-3 ml-5">
-                                <li class="flex gap-2 items-center">
-                                    <input id="titan_laptop" type="checkbox"
-                                        class="checkbox rounded-none checkbox-warning checkbox-xs" />
-                                    <label for="titan_laptop" class="font-thin tracking-wider">Titan GT Series</label>
-                                </li>
-                                <li class="flex gap-2 items-center">
-                                    <input id="titan_laptop" type="checkbox"
-                                        class="checkbox rounded-none checkbox-warning checkbox-xs" />
-                                    <label for="titan_laptop" class="font-thin tracking-wider">Stealth Series</label>
-                                </li>
-                                <li class="flex gap-2 items-center">
-                                    <input id="titan_laptop" type="checkbox"
-                                        class="checkbox rounded-none checkbox-warning checkbox-xs" />
-                                    <label for="titan_laptop" class="font-thin tracking-wider">Vector GE Series</label>
-                                </li>
-                                <li class="flex gap-2 items-center">
-                                    <input id="titan_laptop" type="checkbox"
-                                        class="checkbox rounded-none checkbox-warning checkbox-xs" />
-                                    <label for="titan_laptop" class="font-thin tracking-wider">Crosshair / Pulse
-                                        Series</label>
+                                <li v-for="category in categories" :key="category?.id" class="flex gap-2 items-center">
+                                    <input :id="category?.name" type="radio"
+                                        class="checkbox rounded-none checkbox-warning radio-xs"
+                                        v-model="selectedCategories" :value="category?.name" />
+                                    <label :for="category?.name" class="font-thin tracking-wider">
+                                        {{ category?.name }}
+                                    </label>
                                 </li>
                             </ul>
                         </div>
@@ -178,7 +165,7 @@
                 <div class="relative top-40">
                     <div class="grid grid-cols-3 gap-5">
                         <!-- PRODUCT LIST -->
-                        <div v-for="product in products" :key="product.id" class="border border-gray-500">
+                        <div v-for="product in filteredProducts" :key="product.id" class="border border-gray-500">
                             <div class="p-3 min-h-72 max-h-fit">
                                 <img class="w-full" :src=product.image alt="img-product-item">
                             </div>
@@ -204,16 +191,42 @@
 </template>
 
 <script setup lang="ts">
+import { Category } from '@/interfaces/Category';
 import { Product } from '../interfaces/Product';
-import { ComputedRef, computed } from 'vue';
+import { ComputedRef, computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useStore } from 'vuex';
 
+// DEFINE STORE
 const store = useStore();
+
+// ACTION STORE
 store.dispatch("product/getAllProducts");
+store.dispatch("category/getAllCategory");
 
+// USE STORE
 const products: ComputedRef<Product[]> = computed(() => store.state.product.products);
+const categories: ComputedRef<Category[]> = computed(() => store.state.category.categories);
 
+// DEFINE REACTIVE REFERENCE
+const selectedCategories = ref<string[]>([]);
+
+// COMPUTED PROPERTY FOR FILTERING
+const filteredProducts = computed(() => {
+    if (selectedCategories.value.length === 0) {
+        return products.value;
+    } else {
+        return products.value.filter(product =>
+            selectedCategories.value.includes(product.category.name));
+    }
+});
+
+// MOCKED CATEGORIES DATA
+// const categories: KeyFilter[] = [
+//     { key: 'titan_laptop', value: 'Titan GT Series' },
+//     { key: 'stealth_laptop', value: 'Stealth GS Series' },
+//     { key: 'vector_laptop', value: 'Vector GE Series' },
+//     { key: 'crosshair_laptop', value: 'Crosshair / Pulse Series' }
+// ];
 </script>
-
 <style scoped></style>
