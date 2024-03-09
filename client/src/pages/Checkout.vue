@@ -57,8 +57,8 @@
                         <h4 class="font-bold">Order summary</h4>
                     </div>
                     <div class="absolute top-10 left-10">
-                        <div v-for="product in userCart?.products" :key="product?.id"
-                            class="grid grid-cols-12 gap-3 border-b">
+                        <div v-if="userCart?.products.length > 0" v-for="product in userCart?.products"
+                            :key="product?.id" class="grid grid-cols-12 gap-3 border-b">
                             <div class="col-span-2 p-5">
                                 <img class="w-full h-full" :src=product.image alt="img-item-cart">
                             </div>
@@ -81,8 +81,11 @@
                                 </ul>
                             </div>
                         </div>
-                        
-                    </div><div class="h-72"></div>
+                        <div v-else class="pt-20">
+                            <EmptySpace />
+                        </div>
+                    </div>
+                    <div class="h-72"></div>
                 </div>
                 <!-- PAYMENT -->
                 <div class=" border-green-800 h-60 relative">
@@ -131,6 +134,7 @@
                     </div>
                 </div>
             </div>
+            <!-- SUBTOTAL -->
             <div class="w-4/12">
                 <div class="shadow-xl h-fit p-5 flex flex-col gap-5">
                     <h3 class="uppercase font-bold text-xl text-red-600">Your order summary</h3>
@@ -160,7 +164,8 @@
                         <p class="capitalize font-bold">Subtotal</p>
                         <p class="font-bold text-red-600 text-2xl">${{ subtotal }}.00</p>
                     </div>
-                    <button @click="toggleConfirmOrderModal" class="py-3 text-sm px-5 w-full bg-green-600 text-white uppercase font-bold tracking-wider">
+                    <button @click="toggleConfirmOrderModal"
+                        class="py-3 text-sm px-5 w-full bg-green-600 text-white uppercase font-bold tracking-wider">
                         Payment now
                     </button>
                 </div>
@@ -170,7 +175,8 @@
                     <p class="text-sm">Do you want to check with these product!</p>
                     <div class="flex gap-5 my-10 text-white">
                         <p class="px-5 py-2 outline-none text-red-600">Not now</p>
-                        <button @click="handleCheckoutOrder" class="px-5 py-2 rounded-sm outline-none bg-green-600 text-white">Yes, Sure!</button>
+                        <button @click="handleCheckoutOrder"
+                            class="px-5 py-2 rounded-sm outline-none bg-green-600 text-white">Yes, Sure!</button>
                     </div>
                 </div>
             </ConfirmModal>
@@ -180,6 +186,7 @@
 
 <script setup lang="ts">
 import ConfirmModal from '@components/Modal/ConfirmModal.vue';
+import EmptySpace from '@components/Element/EmptySpace.vue';
 import { OrderReq } from '@/interfaces/Order';
 import { ShoppingCartRes } from '@/interfaces/ShoppingCart';
 import { UserAddressRes } from '@/interfaces/UserAddress';

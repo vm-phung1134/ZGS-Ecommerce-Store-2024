@@ -112,4 +112,7 @@ export default {
   getAllUserOrder(userId: number): Promise<AxiosResponse<Object>> {
     return axiosApi.get(`user-order/${userId}`);
   },
+  getAllHistoryOrder(userId: number): Promise<AxiosResponse<Object>> {
+    return axiosApi.get(`user-order/history/${userId}`);
+  },
 };

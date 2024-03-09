@@ -7,7 +7,7 @@
                         <!-- head -->
                         <thead>
                             <tr class="uppercase">
-                                <th></th>
+                                <th>No.</th>
                                 <th>Product name</th>
                                 <th>Image</th>
                                 <th>Quantity</th>
@@ -18,11 +18,16 @@
                             <!-- row 1 -->
                             <tr class="bg-base-200" v-for="(product, index) in userCart?.products" :key="product?.id">
                                 <th>{{ index }}</th>
-                                <td class="font-bold">{{ product?.name }}</td>
+                                <td class="font-bold">
+                                    <div>
+                                        <div class="font-bold">{{ product?.name }}</div>
+                                        <div class="opacity-50 uppercase text-xs">{{ product?.category?.name }}</div>
+                                    </div>
+                                </td>
                                 <td>
                                     <img class="w-20" :src=product?.image alt="img-product-cart">
                                 </td>
-                                <td>{{ product?.quantity }}</td>
+                                <td>x{{ product?.quantity }}</td>
                                 <td>${{ product?.price }}.00</td>
                             </tr>
                         </tbody>
@@ -64,7 +69,7 @@
                         <p class="font-bold text-red-600 text-2xl">${{ total + 15 }}.00</p>
                     </div>
                     <label class="cursor-pointer" for="my-drawer-4" aria-label="close sidebar"></label>
-                    <button @click="handleDirectCheckout" v-if="isCheckQuantityCart(userCart)"
+                    <button @click="handleDirectCheckout()" v-if="isCheckQuantityCart(userCart)"
                         class="py-3 px-5 w-full bg-black text-white uppercase font-bold tracking-wider">
                         <label class="cursor-pointer" for="my-drawer-4" aria-label="close sidebar">Checkout your
                             order</label>
@@ -89,18 +94,18 @@ import { useRouter } from 'vue-router';
 const store = useStore();
 const router = useRouter();
 
+// ACTION STORE
+store.dispatch("cart/getUserCart", 1);
+
 // USE STORE
 const userCart: ComputedRef<ShoppingCartRes> = computed(() => store.state.cart.userCart);
 const total = computed(() => store.getters['cart/cartTotalPrice']);
 
 // DEFINE CONSTANT  
-const authData = localStorage.getItem("auth");
-if (authData) {
-    const authRes = JSON.parse(authData);
-    store.dispatch('cart/getUserCart', authRes.id);
-}
+
 
 // DEFINE METHODS
+
 const isCheckQuantityCart = (userCart: ShoppingCartRes) => {
     return userCart?.products?.length > 0 ? true : false;
 }

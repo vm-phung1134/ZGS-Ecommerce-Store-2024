@@ -163,7 +163,7 @@
             </div>
             <div class="w-8/12">
                 <div class="relative top-40">
-                    <div class="grid grid-cols-3 gap-5">
+                    <div v-if="products.length > 0" class="grid grid-cols-3 gap-5">
                         <!-- PRODUCT LIST -->
                         <div v-for="product in filteredProducts" :key="product.id" class="border border-gray-500">
                             <div class="p-3 min-h-72 max-h-fit">
@@ -184,6 +184,9 @@
                             </div>
                         </div>
                     </div>
+                    <div v-else class="p-40">
+                        <EmptySpace />
+                    </div>
                 </div>
             </div>
         </div>
@@ -192,6 +195,7 @@
 
 <script setup lang="ts">
 import { Category } from '@/interfaces/Category';
+import EmptySpace from '@components/Element/EmptySpace.vue';
 import { Product } from '../interfaces/Product';
 import { ComputedRef, computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';

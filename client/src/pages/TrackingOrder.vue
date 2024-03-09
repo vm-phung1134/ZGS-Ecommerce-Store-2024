@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full mb-96">
+    <div class="h-full mb-72">
         <div class="flex relative">
             <div class="absolute text-black top-5 -left-5 bg-white rounded-none outline-none -skew-x-[35deg]">
                 <div className="text-sm breadcrumbs px-10 skew-x-[30deg]">
@@ -57,63 +57,152 @@
         </div>
 
         <!-- TABLE ORDER -->
-        <div class="overflow-x-auto mx-40 my-10">
+        <div class="overflow-x-auto mx-40 my-10 min-h-96 max-h-fit">
             <h4 class="uppercase text-2xl font-bold ">Your orders</h4>
             <p class="text-sm font-bold uppercase text-gray-400 py-5">Order Id: #hk2420fm</p>
-            <table class="table">
+            <table v-if="orders.length > 0" class="table">
                 <!-- head -->
                 <thead class="bg-black text-white">
                     <tr>
                         <th>
-                            <label>
-                                <input type="checkbox" class="checkbox rounded-none checkbox-xs" />
-                            </label>
+                            No.
                         </th>
-                        <th>Name</th>
-                        <th>Job</th>
-                        <th>Favorite Color</th>
+                        <th>Product</th>
+                        <th>Address</th>
+                        <th>Payment</th>
+                        <th>Date</th>
+                        <th>Subtotal</th>
+                        <th>Progress</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody class="bg-gray-100">
                     <!-- row 1 -->
-                    <tr>
+                    <tr v-for="(order, index) in orders">
                         <th>
-                            <label>
-                                <input type="checkbox" class="rounded-none checkbox-xs" />
-                            </label>
+                            <div>{{ index }}</div>
                         </th>
                         <td>
                             <div class="flex items-center gap-3">
-                                <div class="avatar">
-                                    <div class="mask mask-squircle w-12 h-12">
-                                        <img src="https://daisyui.com/tailwind-css-component-profile-2@56w.png"
-                                            alt="Avatar Tailwind CSS Component" />
+                                <div class="pr-3">
+                                    <div class="w-32">
+                                        <img :src=order?.product?.image alt="Avatar Tailwind CSS Component" />
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="font-bold">Hart Hagerty</div>
-                                    <div class="text-sm opacity-50">United States</div>
+                                    <div class="font-bold">{{ order?.product?.name }}</div>
+                                    <div class="text-sm opacity-50">{{ order?.product?.category?.name }} - ( Quantity
+                                        x{{ order?.product?.quantity || 1 }})</div>
                                 </div>
                             </div>
                         </td>
-                        <td>
-                            Zemlak, Daniel and Leannon
+                        <td class="capitalize">
+                            {{ order?.userAddress?.city }} - {{ order?.userAddress?.country }}
                             <br />
-                            <span class="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                            <span class="badge badge-ghost badge-sm truncate min-w-20 max-w-32">{{
+                order?.userAddress?.address }}</span>
                         </td>
-                        <td>Purple</td>
+                        <td class="capitalize">{{ order?.userPayment?.paymentType }}</td>
+                        <td>{{ order?.dateOrder }}</td>
+                        <td>{{ order?.subTotal }}</td>
+                        <td>{{ order?.active ? 'Revieced' : 'Delivery...' }}</td>
                         <th>
-                            <button class="btn btn-ghost btn-xs">details</button>
+                            <button class="btn btn-ghost btn-xs text-green-700">details</button>
                         </th>
                     </tr>
                 </tbody>
             </table>
+            <div v-else class="p-5">
+                <EmptySpace />
+            </div>
         </div>
+
+        <!-- HISTORY ORDER -->
+        <div class="overflow-x-auto mx-40 my-10 min-h-96 max-h-fit">
+            <h4 class="uppercase text-2xl font-bold ">Your history orders</h4>
+            <p class="text-sm font-bold uppercase text-gray-400 py-5">Order Id: #hk2420fm</p>
+            <table v-if="oldOrders.length > 0" class="table w-full">
+                <!-- head -->
+                <thead class="bg-black text-white">
+                    <tr>
+                        <th>
+                            No.
+                        </th>
+                        <th>Product</th>
+                        <th>Address</th>
+                        <th>Payment</th>
+                        <th>Date</th>
+                        <th>Subtotal</th>
+                        <th>Progress</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="bg-gray-100">
+                    <!-- row 1 -->
+                    <tr v-for="(order, index) in oldOrders">
+                        <th>
+                            <div>{{ index }}</div>
+                        </th>
+                        <td>
+                            <div class="flex items-center gap-3">
+                                <div class="pr-3">
+                                    <div class="w-32">
+                                        <img :src=order?.product?.image alt="Avatar Tailwind CSS Component" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="font-bold">{{ order?.product?.name }}</div>
+                                    <div class="text-sm opacity-50">{{ order?.product?.category?.name }} - ( Quantity
+                                        x{{ order?.product?.quantity || 1 }})</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="capitalize">
+                            {{ order?.userAddress?.city }} - {{ order?.userAddress?.country }}
+                            <br />
+                            <span class="badge badge-ghost badge-sm truncate min-w-20 max-w-32">{{
+                order?.userAddress?.address }}</span>
+                        </td>
+                        <td class="capitalize">{{ order?.userPayment?.paymentType }}</td>
+                        <td>{{ order?.dateOrder }}</td>
+                        <td>{{ order?.subTotal }}</td>
+                        <td>{{ order?.active ? 'Revieced' : 'Delivery...' }}</td>
+                        <th>
+                            <button class="btn btn-ghost btn-xs text-green-700">Re-order</button>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <div v-else class="p-40">
+                <EmptySpace />
+            </div>
+        </div>
+
     </div>
 </template>
 
 <script setup lang="ts">
+import EmptySpace from '@components/Element/EmptySpace.vue';
+import { OrderRes } from '@/interfaces/Order';
+import { ComputedRef, computed } from 'vue';
+import { useStore } from 'vuex';
+
+
+// DEFINE STORE
+const store = useStore();
+
+// ACTION STORE
+store.dispatch('order/getAllUserOrder', 1);
+
+// USE STORE
+const orders: ComputedRef<OrderRes[]> = computed(() => store.state.order.orders);
+const oldOrders: ComputedRef<OrderRes[]> = computed(() => store.state.order.oldOrders);
+
+
+// DEFINE CONSTANT
+
+// METHODS
+
 
 </script>
 
