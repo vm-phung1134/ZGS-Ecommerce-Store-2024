@@ -13,7 +13,6 @@
 import LoginFrom from "@components/Form/LoginForm.vue";
 import IntroSignIn from "@components/Introduce/IntroSignIn.vue";
 
-
 </script>
 
 <style scoped></style>

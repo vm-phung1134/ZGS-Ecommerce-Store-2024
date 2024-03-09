@@ -171,12 +171,13 @@
                 </div>
             </div>
             <ConfirmModal :isOpenModal="isOpenConfirmOrderModal" :toggleModal="toggleConfirmOrderModal">
-                <div class="w-full flex flex-col items-center justify-center">
-                    <p class="text-sm">Do you want to check with these product!</p>
-                    <div class="flex gap-5 my-10 text-white">
-                        <p class="px-5 py-2 outline-none text-red-600">Not now</p>
-                        <button @click="handleCheckoutOrder"
-                            class="px-5 py-2 rounded-sm outline-none bg-green-600 text-white">Yes, Sure!</button>
+                <div>
+                    <p class="text-xl uppercase my-10 font-bold">Do you want to check with these product !</p>
+                    <div class="flex uppercase justify-center items-center gap-10">
+                        <p @click="toggleConfirmOrderModal" class="font-bold cursor-pointer">Back to view</p>
+                        <div @click="handleCheckoutOrder" class="bg-green-600 py-3 px-6 w-72 -skew-x-[30deg]">
+                            <button class="skew-x-[30deg] text-white tracking-widest font-bold">CONFIRM</button>
+                        </div>
                     </div>
                 </div>
             </ConfirmModal>

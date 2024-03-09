@@ -43,15 +43,13 @@
         <!-- login -->
         <div class="flex-initial">
             <div class="flex justify-end items-center relative">
-
                 <div class="flex items-center">
                     <div class="block relative">
                         <div class="drawer drawer-end">
                             <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
                             <div class="drawer-content">
-                                <!-- Page content here -->
                                 <label for="my-drawer-4" class="drawer-button cursor-pointer">
-                                    <span type="button"
+                                    <button type="button"
                                         class="inline-block p-2 hover:bg-gray-200 rounded-full relative ">
                                         <div class="flex items-center">
                                             <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none"
@@ -78,9 +76,12 @@
                                                 </g>
                                             </svg>
                                         </div>
-                                    </span>
+                                    </button>
                                 </label>
                             </div>
+                            <span v-if="isUserAuthenticated"
+                                class="absolute -top-4 font-bold -right-3 p-3 text-red-700">{{ subQuantityProductCart
+                                }}</span>
                             <div class="drawer-side z-10">
                                 <ul class="menu p-4 w-full min-h-full bg-white text-base-content">
                                     <div class="flex justify-between mx-10 my-5">
@@ -175,25 +176,27 @@
                                     <li><a>Track your orders</a></li>
                                 </RouterLink>
                                 <li><a>Feedback</a></li>
-                                <li><a>Settings</a></li>
+                                <li><button>Settings</button></li>
 
-                                <li @click="handleLogout()" class="text-red-600"><a>Log out</a></li>
+                                <li @click="handleLogout()" class="text-red-600"><button>Log out</button></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>    <SearchScreen :toggleSearchBar="toggleSearchBar" :isOpenSearchBar="isOpenSearchBar" />
+        </div>
+        <SearchScreen :toggleSearchBar="toggleSearchBar" :isOpenSearchBar="isOpenSearchBar" />
 
     </nav>
 </template>
 
 <script setup lang="ts">
-import { ComputedRef, computed, ref } from 'vue';
+import { ComputedRef, computed, inject, ref } from 'vue';
 import SearchScreen from '../pages/SearchScreen.vue';
 import { useRouter } from 'vue-router';
 import ShoppingCart from '@pages/ShoppingCart.vue';
 import { useStore } from 'vuex';
+import { RouterLink } from 'vue-router';
 
 // DEFINE STORE
 const store = useStore();
@@ -201,17 +204,23 @@ const router = useRouter();
 
 // USE STORE
 const isLogout: ComputedRef<boolean> = computed(() => store.state.auth.isLogout);
-const isUserAuthenticated = computed(() => store.getters['auth/isUserAuthenticated']);
+const subQuantityProductCart = computed(() => store.getters['cart/getQuantityCart']);
 
 // DEFINE CONSTANT
 const isOpenSearchBar = ref(false);
+const isUserAuthenticated = inject<boolean>('isUserAuthenticated');
+const emit = defineEmits(['update:isUserAuthenticated']);
 
 // METHODS
 const toggleSearchBar = () => isOpenSearchBar.value = !isOpenSearchBar.value;
 
+const updateIsUserAuthenticated = (newValue: boolean) => {
+    emit('update:isUserAuthenticated', newValue);
+};
+
 const handleLogout = () => {
     store.dispatch('auth/logout').then(() => {
-        isUserAuthenticated
+        updateIsUserAuthenticated(false);
     }).catch((error) => {
         console.log(error);
     });

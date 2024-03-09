@@ -27,6 +27,12 @@ const getters = {
     }
     return 0;
   },
+  getQuantityCart: (state: shoppingCartState) => {
+    if (state.userCart && state.userCart.products) {
+      return state.userCart.products.length;
+    }
+    return 0;
+  },
 };
 
 

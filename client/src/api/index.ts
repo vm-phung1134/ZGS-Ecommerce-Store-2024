@@ -39,10 +39,8 @@ export default {
   logout(): Promise<AxiosResponse<Object>> {
     return axiosApiDefault.post(`logout`);
   },
-
-  // USER INFO
   getOneUser(userId: number): Promise<AxiosResponse<Object>> {
-    return axiosApi.get(`user/${userId}`);
+    return axiosApiDefault.get(`${userId}`);
   },
 
   // PRODUCT

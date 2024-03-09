@@ -28,6 +28,10 @@ const getters = {
     }
     return false;
   },
+  getInfoUser: () => {
+    const authData = localStorage.getItem("auth");
+    return authData ? JSON.parse(authData) : null;
+  },
 };
 
 // actions
@@ -83,6 +87,23 @@ const actions: ActionTree<authState, any> = {
         });
     });
   },
+  getInfoUser({ commit }: ActionContext<authState, any>, userId: number) {
+    return new Promise((resolve, reject) => {
+      console.log("Accessing backend");
+      api
+        .getOneUser(userId)
+        .then((response) => {
+          if (response.status == 200) {
+            commit("getInfoUser_success");
+          }
+          resolve(response);
+        })
+        .catch((error) => {
+          console.log("Error: " + error);
+          reject("Invalid credentials!");
+        });
+    });
+  },
 };
 
 // mutations
@@ -98,8 +119,12 @@ const mutations: MutationTree<authState> = {
   },
   logout_success(state: authState) {
     state.isLogout = true;
+    state.isAuthenticated = false;
     localStorage.removeItem("token");
     localStorage.removeItem("auth");
+  },
+  getInfoUser_success(state: authState) {
+    state.isAuthenticated = false;
   },
 };
 
