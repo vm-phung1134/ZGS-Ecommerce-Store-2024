@@ -39,7 +39,7 @@
                 <div class="flex h-10 w-full">
                     <input placeholder="Enter your order number..." type="text"
                         class=" outline-none bg-gray-200 py-1 px-3 text-sm h-full w-full">
-                    <button class="bg-black text-sm py-2 w-40 text-white">Search order</button>
+                    <button class="bg-black text-sm py-2 w-40 text-white uppercase">Search order</button>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
             <ul class="steps steps-vertical text-sm font-bold lg:steps-horizontal w-full">
                 <li class="step step-success">Package <span class="font-normal text-red-600">( You here )</span></li>
                 <li class="step step-success">Tranfer Moment</li>
-                <li class="step">Delivery</li>
+                <li class="step step-success">Delivery</li>
                 <li class="step">Receive Product</li>
                 <li class="step">Success</li>
             </ul>

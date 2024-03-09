@@ -13,7 +13,7 @@
                         leave-to="opacity-0 scale-95">
                         <DialogPanel
                             class="w-full text-white h-fit bg-[url('https://storage-asset.msi.com/event/2023/NB/familypage/images/@Gallery-bg.jpg')] transform overflow-hidden bg-cover text-center align-middle shadow-xl transition-all">
-                            <div class="bg-black/25 py-14">
+                            <div class="bg-black/40 py-14">
                                 <DialogTitle as="h3" class="text-4xl -skew-x-12 uppercase leading-6 mb-2">
                                     Notification from <span class="text-green-600 font-bold">Zion Gaming Store</span>
                                 </DialogTitle>

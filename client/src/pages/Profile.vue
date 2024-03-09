@@ -189,23 +189,41 @@
             </div>
             <ConfirmModal :toggle-modal="toggleConfirmModal" :is-open-modal="isOpenConfirmModal">
                 <div class="w-full flex flex-col items-center justify-center">
-                    <p class="text-sm">What do you want with your payment method!</p>
-                    <div class="flex gap-5 my-10 text-white">
-                        <button @click="handleDeletePaymentMethod" class="px-5 py-2 outline-none text-red-600">Delete
-                            payment</button>
-                        <button @click="handleUpdatePaymentMethod"
-                            class="px-5 py-2 rounded-sm outline-none bg-green-600 text-white">Set default</button>
+                    <p class="text-xl uppercase my-10 font-bold">What do you want with your payment method !</p>
+                    <div class="flex gap-10 my-10 text-white items-center">
+                        <p @click="toggleConfirmModal()" class="font-bold cursor-pointer uppercase">Back to view</p>
+                        <button type="button" @click="handleDeletePaymentMethod"
+                            class="bg-white py-3 px-6 w-72 -skew-x-[30deg] outline-none">
+                            <p class="skew-x-[30deg] text-red-700 tracking-widest font-bold uppercase">
+                                delete payment
+                            </p>
+                        </button>
+                        <button type="button" @click="handleUpdatePaymentMethod"
+                            class="bg-green-600 py-3 px-6 w-72 -skew-x-[30deg] border-none outline-none">
+                            <p class="skew-x-[30deg] text-white tracking-widest font-bold uppercase">
+                                Set default
+                            </p>
+                        </button>
                     </div>
                 </div>
             </ConfirmModal>
             <ConfirmModal :toggle-modal="toggleConfirmAddressModal" :is-open-modal="isOpenConfirmAddressModal">
                 <div class="w-full flex flex-col items-center justify-center">
-                    <p class="text-sm">What do you want with your address!</p>
-                    <div class="flex gap-5 my-10 text-white">
-                        <button @click="handleDeleteAddressMethod" class="px-5 py-2 outline-none text-red-600">Delete
-                            address</button>
-                        <button @click="handleUpdateAddressMethod"
-                            class="px-5 py-2 rounded-sm outline-none bg-green-600 text-white">Set default</button>
+                    <p class="text-xl uppercase my-10 font-bold">What do you want with your address !</p>
+                    <div class="flex gap-10 my-10 text-white items-center">
+                        <p @click="toggleConfirmAddressModal()" class="font-bold cursor-pointer uppercase">Back to view</p>
+                        <button type="button" @click="handleDeleteAddressMethod"
+                            class="bg-red-600 py-3 px-6 w-72 -skew-x-[30deg] border-none outline-none">
+                            <p class="skew-x-[30deg] text-white outline-none tracking-widest font-bold uppercase">
+                                delete address
+                            </p>
+                        </button>
+                        <button type="button" @click="handleUpdateAddressMethod"
+                            class="bg-green-600 py-3 px-6 w-72 -skew-x-[30deg] border-none outline-none">
+                            <p class="skew-x-[30deg] text-white tracking-widest font-bold uppercase">
+                                Set default
+                            </p>
+                        </button>
                     </div>
                 </div>
             </ConfirmModal>
@@ -312,11 +330,11 @@ const toggleConfirmAddressModal = (address?: UserAddressRes) => {
 
 const handleUpdateAddressMethod = () => {
     store.dispatch('address/setDefaultAddress', addressNeedChange)
-    .then(() => {
-        store.dispatch('address/getAllUserAddress', 1);
-    }).catch((error) => {
-        console.log(error);
-    });
+        .then(() => {
+            store.dispatch('address/getAllUserAddress', 1);
+        }).catch((error) => {
+            console.log(error);
+        });
     toggleConfirmAddressModal();
 }
 const handleDeleteAddressMethod = () => {

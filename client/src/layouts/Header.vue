@@ -49,7 +49,7 @@
                             <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
                             <div class="drawer-content">
                                 <label for="my-drawer-4" class="drawer-button cursor-pointer">
-                                    <button type="button"
+                                    <span type="button"
                                         class="inline-block p-2 hover:bg-gray-200 rounded-full relative ">
                                         <div class="flex items-center">
                                             <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none"
@@ -76,11 +76,11 @@
                                                 </g>
                                             </svg>
                                         </div>
-                                    </button>
+                                    </span>
                                 </label>
                             </div>
-                            <span v-if="isUserAuthenticated"
-                                class="absolute -top-4 font-bold -right-3 p-3 text-red-700">{{ subQuantityProductCart
+                            <span v-if="props.isAuthenticated"
+                                class="absolute top-0 font-bold text-sm cursor-pointer right-0 text-red-700">{{ subQuantityProductCart
                                 }}</span>
                             <div class="drawer-side z-10">
                                 <ul class="menu p-4 w-full min-h-full bg-white text-base-content">
@@ -140,7 +140,7 @@
 
                 <div class="block ml-2">
                     <div class="inline relative">
-                        <button v-if="!isUserAuthenticated" @click="handleDirection"
+                        <button v-if="!props.isAuthenticated" @click="handleDirection"
                             class="bg-red-600 py-3 px-6 text-sm tracking-wider text-white">Sign In</button>
                         <div v-else className="dropdown dropdown-end">
                             <button type="button" tabIndex={0} role="button"
@@ -169,7 +169,7 @@
                             </button>
                             <ul tabIndex={0}
                                 className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                                <RouterLink to="/profile-user">
+                                <RouterLink to="/profile-user/1">
                                     <li><a>Account</a></li>
                                 </RouterLink>
                                 <RouterLink to="/track-your-order/1">
@@ -191,12 +191,19 @@
 </template>
 
 <script setup lang="ts">
-import { ComputedRef, computed, inject, ref } from 'vue';
+import { ComputedRef, computed, ref } from 'vue';
 import SearchScreen from '../pages/SearchScreen.vue';
 import { useRouter } from 'vue-router';
 import ShoppingCart from '@pages/ShoppingCart.vue';
 import { useStore } from 'vuex';
 import { RouterLink } from 'vue-router';
+// DEFINE PROPS
+const props = defineProps({
+    isAuthenticated: {
+        type: Boolean,
+        required: true,
+    }
+});
 
 // DEFINE STORE
 const store = useStore();
@@ -208,8 +215,8 @@ const subQuantityProductCart = computed(() => store.getters['cart/getQuantityCar
 
 // DEFINE CONSTANT
 const isOpenSearchBar = ref(false);
-const isUserAuthenticated = inject<boolean>('isUserAuthenticated');
-console.log(isUserAuthenticated)
+
+// EVENTS
 const emit = defineEmits(['update:isUserAuthenticated']);
 
 // METHODS
