@@ -25,7 +25,7 @@ public class CartService {
     UserRepository userRepository;
 
     public List<Cart> getOneCart(Integer userId) {
-        List<Cart> carts = cartRepository.findAll();
+        List<Cart> carts = cartRepository.findAllByUserId(userId);
         return carts;
     }
 

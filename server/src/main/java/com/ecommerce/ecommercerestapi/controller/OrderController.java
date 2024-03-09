@@ -1,5 +1,7 @@
 package com.ecommerce.ecommercerestapi.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,15 +40,27 @@ public class OrderController {
     }
 
     @GetMapping(value = "/{id}")
-    public ApiResponse<Order> getOneOrder(@PathVariable Integer id) {
-        Order order = orderService.getAllUserOrder(id);
-        if (order.equals(null)) {
+    public ApiResponse<List<Order>> getAllUserOrder(@PathVariable Integer id) {
+        List<Order> orders = orderService.getAllUserOrder(id);
+        if (orders.equals(null)) {
             throw new NotFoundException();
         }
-        return new ApiResponse<Order>(
+        return new ApiResponse<List<Order>>(
                 HttpStatus.OK.value(),
                 ConstantMsg.SUCCESS_MSG,
-                order);
+                orders);
+    }
+
+    @GetMapping(value = "/history/{id}")
+    public ApiResponse<List<Order>> getAllHistoryOrder(@PathVariable Integer id) {
+        List<Order> orders = orderService.getAllHistoryOrder(id);
+        if (orders.equals(null)) {
+            throw new NotFoundException();
+        }
+        return new ApiResponse<List<Order>>(
+                HttpStatus.OK.value(),
+                ConstantMsg.SUCCESS_MSG,
+                orders);
     }
 
     @PutMapping(value = "/{id}")

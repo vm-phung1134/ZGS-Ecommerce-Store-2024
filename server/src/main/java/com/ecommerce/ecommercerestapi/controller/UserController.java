@@ -20,6 +20,7 @@ import com.ecommerce.ecommercerestapi.config.jwt.Login;
 import com.ecommerce.ecommercerestapi.core.ConstantMsg;
 import com.ecommerce.ecommercerestapi.entity.User;
 import com.ecommerce.ecommercerestapi.exception.EmailOrPasswordInvalidException;
+import com.ecommerce.ecommercerestapi.exception.NotFoundException;
 import com.ecommerce.ecommercerestapi.model.dto.AuthDto;
 import com.ecommerce.ecommercerestapi.model.dto.UserDto;
 import com.ecommerce.ecommercerestapi.model.mapper.AuthMapper;
@@ -34,6 +35,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -131,6 +133,18 @@ public class UserController {
                 HttpStatus.OK.value(),
                 ConstantMsg.CREATED_MSG,
                 "Execute Successfully");
+    }
+
+    @GetMapping(value = "/{id}")
+    public ApiResponse<UserDto> getOneUser(@PathVariable Integer id) {
+        User user = userService.getOneUser(id);
+        if (user.equals(null)) {
+            throw new NotFoundException();
+        }
+        return new ApiResponse<UserDto>(
+                HttpStatus.OK.value(),
+                ConstantMsg.SUCCESS_MSG,
+                UserMapper.convertUserResponse(user));
     }
 
 }

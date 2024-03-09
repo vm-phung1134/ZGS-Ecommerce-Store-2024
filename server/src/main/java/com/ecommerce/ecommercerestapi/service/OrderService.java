@@ -2,6 +2,7 @@ package com.ecommerce.ecommercerestapi.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,10 +35,22 @@ public class OrderService {
     @Autowired
     CartRepository cartRepository;
 
-    public Order getAllUserOrder(Integer id) {
-        Optional<Order> order = orderRepository.findUserById(id);
-        if (order.isPresent()) {
-            return order.get();
+    public List<Order> getAllUserOrder(Integer id) {
+        List<Order> orders = orderRepository.findAllByUserId(id);
+        if (orders.size() > 0) {
+            return orders.stream()
+                    .filter(object -> !object.getActive())
+                    .collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    public List<Order> getAllHistoryOrder(Integer id) {
+        List<Order> orders = orderRepository.findAllByUserId(id);
+        if (orders.size() > 0) {
+            return orders.stream()
+                    .filter(object -> object.getActive())
+                    .collect(Collectors.toList());
         }
         return null;
     }
@@ -54,7 +67,7 @@ public class OrderService {
             newOrder.setUserAddress(userAddress);
             newOrder.setUserPayment(userPayment);
             newOrder.setActive(false);
-            newOrder.setSubTotal(order.getSubTotal());
+            newOrder.setSubTotal(order.getProduct().getPrice() * cart.getQuantity());
             newOrder.setDateOrder(order.getDateOrder());
             newOrder.setProduct(cart.getProduct());
             newOrder.setSubQuantity(cart.getQuantity());
