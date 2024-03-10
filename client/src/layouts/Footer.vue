@@ -1,6 +1,6 @@
 <template>
     <footer class="bg-white border-t">
-        <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-screen-xl px-4 py-10 sm:px-6 lg:px-8">
             <div class="lg:flex lg:items-start lg:gap-8">
                 <div class="text-red-600">
                     <svg class="h-8" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -9,7 +9,6 @@
                             fill="currentColor" />
                     </svg>
                 </div>
-
                 <div class="mt-8 grid grid-cols-2 gap-8 lg:mt-0 lg:grid-cols-5 lg:gap-y-16">
                     <div class="col-span-2">
                         <div>

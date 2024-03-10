@@ -224,13 +224,5 @@ const filteredProducts = computed(() => {
             selectedCategories.value.includes(product.category.name));
     }
 });
-
-// MOCKED CATEGORIES DATA
-// const categories: KeyFilter[] = [
-//     { key: 'titan_laptop', value: 'Titan GT Series' },
-//     { key: 'stealth_laptop', value: 'Stealth GS Series' },
-//     { key: 'vector_laptop', value: 'Vector GE Series' },
-//     { key: 'crosshair_laptop', value: 'Crosshair / Pulse Series' }
-// ];
 </script>
 <style scoped></style>

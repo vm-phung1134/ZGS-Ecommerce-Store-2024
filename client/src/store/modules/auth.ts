@@ -1,10 +1,11 @@
 import { ActionContext, ActionTree, MutationTree } from "vuex";
 import api from "../../api";
-import { AuthReq, AuthRes } from "interfaces/Auth";
-import { UserReq } from "interfaces/User";
+import { AuthReq, AuthRes, ChangePasswordReq, INITIAL_AUTH } from "../../interfaces/Auth";
+import { UserReq } from "../../interfaces/User";
 
 export type authState = {
   isAuthenticated: boolean;
+  isChangePassword: boolean;
   authRes: AuthRes | null;
   isRegister: boolean;
   isLogout: boolean;
@@ -13,6 +14,7 @@ export type authState = {
 // auth state
 const state: authState = {
   isAuthenticated: false,
+  isChangePassword: false,
   authRes: null,
   isRegister: false,
   isLogout: false,
@@ -27,6 +29,10 @@ const getters = {
       return true;
     }
     return false;
+  },
+  getInforUser: () => {
+    const authData = localStorage.getItem("auth");
+    return authData ? JSON.parse(authData) : INITIAL_AUTH;
   },
 };
 
@@ -100,12 +106,33 @@ const actions: ActionTree<authState, any> = {
         });
     });
   },
+  changePasswordUser(
+    { commit }: ActionContext<authState, any>,
+    auth: ChangePasswordReq
+  ) {
+    return new Promise((resolve, reject) => {
+      console.log("Accessing backend with successfully");
+      api
+        .changePasswordUser(auth)
+        .then((response) => {
+          if (response.status == 200) {
+            commit("changePasswordUser_success");
+          }
+          resolve(response);
+        })
+        .catch((error) => {
+          console.log("Error: " + error);
+          reject("Invalid credentials!");
+        });
+    });
+  },
 };
 
 // mutations
 const mutations: MutationTree<authState> = {
   login_success(state: authState, payload: any) {
     state.isAuthenticated = true;
+    getters.isUserAuthenticated = () => true;
     state.authRes = payload.data;
     localStorage.setItem("token", payload.data.token);
     localStorage.setItem("auth", JSON.stringify(payload.data));
@@ -121,6 +148,9 @@ const mutations: MutationTree<authState> = {
   },
   getInfoUser_success(state: authState) {
     state.isAuthenticated = false;
+  },
+  changePasswordUser_success(state: authState) {
+    state.isChangePassword = true;
   },
 };
 

@@ -48,7 +48,7 @@ export const passwordConfirmComponent = reactive({
   label: "Confirm password",
   errMsg: "Password confirm is invalid!",
   pattern: "",
-  minLength: 3,
+  minLength: 6,
   maxLength: 50,
 });
 
@@ -59,6 +59,6 @@ export const passwordComponent = reactive({
   label: "Password",
   errMsg: "Password is invalid!",
   pattern: "",
-  minLength: 3,
+  minLength: 6,
   maxLength: 50,
 });

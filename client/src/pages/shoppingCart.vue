@@ -94,15 +94,13 @@ import { useRouter } from 'vue-router';
 const store = useStore();
 const router = useRouter();
 
-// ACTION STORE
-store.dispatch("cart/getUserCart", 1);
-
 // USE STORE
 const userCart: ComputedRef<ShoppingCartRes> = computed(() => store.state.cart.userCart);
 const total = computed(() => store.getters['cart/cartTotalPrice']);
+const infoUser = computed(() => store.getters['auth/getInforUser']);
 
-// DEFINE CONSTANT  
-
+// ACTION STORE
+store.dispatch("cart/getUserCart", infoUser.value.id); 
 
 // DEFINE METHODS
 
@@ -111,7 +109,7 @@ const isCheckQuantityCart = (userCart: ShoppingCartRes) => {
 }
 
 const handleDirectCheckout = () => {
-    router.push(`/checkout-order/${userCart.value.user.id}`);
+    router.push(`/checkout-order/${infoUser.value.id}`);
 }
 
 </script>

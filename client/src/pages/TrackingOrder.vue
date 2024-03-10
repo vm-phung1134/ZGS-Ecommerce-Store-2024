@@ -184,24 +184,25 @@
 <script setup lang="ts">
 import EmptySpace from '@components/Element/EmptySpace.vue';
 import { OrderRes } from '@/interfaces/Order';
-import { ComputedRef, computed } from 'vue';
+import { ComputedRef, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 
+// LIFE CYCLE
+onMounted(() => {
+  window.scrollTo(0, 0);
+});
 
 // DEFINE STORE
 const store = useStore();
+const route = useRoute();
 
 // ACTION STORE
-store.dispatch('order/getAllUserOrder', 1);
+store.dispatch('order/getAllUserOrder', route.params.id);
 
 // USE STORE
 const orders: ComputedRef<OrderRes[]> = computed(() => store.state.order.orders);
 const oldOrders: ComputedRef<OrderRes[]> = computed(() => store.state.order.oldOrders);
-
-
-// DEFINE CONSTANT
-
-// METHODS
 
 
 </script>

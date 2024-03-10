@@ -192,11 +192,16 @@ import { OrderReq } from '@/interfaces/Order';
 import { ShoppingCartRes } from '@/interfaces/ShoppingCart';
 import { UserAddressRes } from '@/interfaces/UserAddress';
 import { UserPaymentRes } from '@/interfaces/UserPayment';
-import { ComputedRef, computed, ref } from 'vue';
+import { ComputedRef, computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
-// DEFINE CONTANT
+// LIFE CYCLE
+onMounted(() => {
+    window.scrollTo(0, 0);
+});
+
+// DEFINE CONSTANT
 const paymentPicked = ref('Credit card');
 const isOpenConfirmOrderModal = ref(false);
 const shipping = ref(15);
@@ -205,21 +210,22 @@ var today = new Date();
 // DEFINE STORE
 const store = useStore();
 const router = useRouter();
+const route = useRoute();
+
+// ACTION STORE
+store.dispatch('payment/getAllUserPayment', route.params.id);
+store.dispatch('address/getAllUserAddress', route.params.id);
+store.dispatch('cart/getUserCart', route.params.id);
 
 // USE STORE
-store.dispatch('payment/getAllUserPayment', 1);
-store.dispatch('address/getAllUserAddress', 1);
-store.dispatch('cart/getUserCart', 1);
-
-// STATE STORE
 const payments: ComputedRef<UserPaymentRes[]> = computed(() => store.state.payment.payments);
 const addressList: ComputedRef<UserAddressRes[]> = computed(() => store.state.address.addressList);
 const userCart: ComputedRef<ShoppingCartRes> = computed(() => store.state.cart.userCart);
 const total = computed(() => store.getters['cart/cartTotalPrice']);
+const infoUser = computed(() => store.getters['auth/getInforUser']);
 const subtotal = total.value + shipping.value;
 
 // METHODS
-
 const toggleConfirmOrderModal = () => isOpenConfirmOrderModal.value = !isOpenConfirmOrderModal.value;
 
 const findDefaultActive = (array: UserAddressRes[] | UserPaymentRes[]) => {
@@ -228,7 +234,7 @@ const findDefaultActive = (array: UserAddressRes[] | UserPaymentRes[]) => {
 const handleCheckoutOrder = () => {
     const orderObjective: OrderReq = {
         user: {
-            id: 1,
+            id: infoUser.value.id,
         },
         subTotal: subtotal,
         userPayment: {
@@ -242,7 +248,7 @@ const handleCheckoutOrder = () => {
     if (orderObjective) {
         store.dispatch('order/createUserOrder', orderObjective)
             .then(() => {
-                store.dispatch('order/getAllUserOrder', 1);
+                store.dispatch('order/getAllUserOrder', infoUser.value.id);
                 router.push('/payment-success');
             }).catch((error) => {
                 console.log(error);

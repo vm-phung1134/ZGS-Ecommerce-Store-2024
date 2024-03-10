@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { AuthReq } from "../interfaces/Auth";
+import { AuthReq, ChangePasswordReq } from "../interfaces/Auth";
 import { UserReq } from "../interfaces/User";
 import { ShoppingCartReq } from "../interfaces/ShoppingCart";
 import { UserPaymentReq } from "../interfaces/UserPayment";
@@ -8,7 +8,7 @@ import { OrderReq } from "../interfaces/Order";
 
 const axiosApiDefault = axios.create({
   baseURL: `http://localhost:8080/api/auth`,
-  timeout: 1000,
+  timeout: 6000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -18,10 +18,10 @@ const axiosApiDefault = axios.create({
 
 const axiosApi = axios.create({
   baseURL: `http://localhost:8080/api/`,
-  timeout: 1000,
+  timeout: 6000,
   headers: {
     "Content-Type": "application/json",
-    // Authorization: `Bearer ${token}`,
+    //Authorization: `Bearer ${token}`,
   },
 });
 
@@ -41,6 +41,11 @@ export default {
   },
   getOneUser(userId: number): Promise<AxiosResponse<Object>> {
     return axiosApiDefault.get(`${userId}`);
+  },
+  changePasswordUser(
+    changePass: ChangePasswordReq
+  ): Promise<AxiosResponse<Object>> {
+    return axiosApiDefault.post(`reset-password`, changePass);
   },
 
   // PRODUCT

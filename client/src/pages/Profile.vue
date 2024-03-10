@@ -33,9 +33,8 @@
                             <img src="https://cdn-icons-gif.flaticon.com/6172/6172532.gif" alt="">
                         </div>
                     </div>
-                    <h3 class="uppercase font-bold text-2xl tracking-wide text-orange-500">VO MINH PHUNG</h3>
-                    <span class="text-gray-300 italic font-thin text-sm">Email: vmphung1134@gmail.com</span>
-                    <span class="text-gray-300 italic font-thin text-sm">Phone: ( 84+ ) 042582697</span>
+                    <h3 class="uppercase font-bold text-2xl tracking-wide text-orange-500">{{infoUser.firstName + ' ' + infoUser.lastName}}</h3>
+                    <span class="text-gray-300 italic font-thin text-sm">Email: {{infoUser.email}}</span>
                     <div class="flex gap-5 uppercase text-sm">
                         <p class="text-gray-500">Level customer:</p>
                         <p>Silver</p>
@@ -211,7 +210,8 @@
                 <div class="w-full flex flex-col items-center justify-center">
                     <p class="text-xl uppercase my-10 font-bold">What do you want with your address !</p>
                     <div class="flex gap-10 my-10 text-white items-center">
-                        <p @click="toggleConfirmAddressModal()" class="font-bold cursor-pointer uppercase">Back to view</p>
+                        <p @click="toggleConfirmAddressModal()" class="font-bold cursor-pointer uppercase">Back to view
+                        </p>
                         <button type="button" @click="handleDeleteAddressMethod"
                             class="bg-red-600 py-3 px-6 w-72 -skew-x-[30deg] border-none outline-none">
                             <p class="skew-x-[30deg] text-white outline-none tracking-widest font-bold uppercase">
@@ -236,10 +236,15 @@ import AddressModal from '@components/Modal/AddressModal.vue';
 import ChangePasswordForm from '@components/Form/ChangePasswordForm.vue';
 import PaymentMethodModal from '@components/Modal/PaymentMethodModal.vue';
 import ConfirmModal from '@components/Modal/ConfirmModal.vue';
-import { ref, provide, ComputedRef, computed, reactive } from 'vue';
+import { ref, provide, ComputedRef, computed, reactive, onMounted } from 'vue';
 import { INITIAL_USER_PAYMENT_REQ, UserPaymentReq, UserPaymentRes } from '../interfaces/UserPayment';
 import { useStore } from 'vuex';
 import { INITIAL_USER_ADDRESS_REQ, UserAddressReq, UserAddressRes } from '../interfaces/UserAddress';
+
+// LIFE CYCLE
+onMounted(() => {
+  window.scrollTo(0, 0);
+});
 
 // DEFINE STORE
 const store = useStore();
@@ -251,11 +256,10 @@ store.dispatch('address/getAllUserAddress', 1);
 // STATE STORE
 const payments: ComputedRef<UserPaymentRes[]> = computed(() => store.state.payment.payments);
 const addressList: ComputedRef<UserAddressRes[]> = computed(() => store.state.address.addressList);
+const infoUser = computed(() => store.getters['auth/getInforUser']);
 
 // DEFINE CONSTANT
-const authData = localStorage.getItem("auth");
-const authRes = authData ? JSON.parse(authData) : null;
-provide('authResId', authRes ? authRes.id : null);
+provide('authResId', infoUser.value ? infoUser.value.id : null);
 
 let paymentNeedChange = reactive<UserPaymentReq>(INITIAL_USER_PAYMENT_REQ);
 let addressNeedChange = reactive<UserAddressReq>(INITIAL_USER_ADDRESS_REQ);

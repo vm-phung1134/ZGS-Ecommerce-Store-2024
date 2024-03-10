@@ -11,3 +11,18 @@ export interface AuthRes {
   role: string;
   token: string;
 }
+
+export interface ChangePasswordReq {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+}
+
+export const INITIAL_AUTH: AuthRes = {
+  id: 0,
+  email: "",
+  firstName: "",
+  lastName: "",
+  role: "",
+  token: "",
+};

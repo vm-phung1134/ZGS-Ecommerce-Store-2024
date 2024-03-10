@@ -33,10 +33,17 @@ import CategoryProduct from "../components/Introduce/CategoryProduct.vue";
 import LatestProduct from "../components/Introduce/LatestProduct.vue";
 import AboutStore from '../components/Introduce/AboutStore.vue';
 import LoadingScreen from '../components/Introduce/LoadingScreen.vue';
-import { Suspense, ref } from 'vue';
+import { Suspense, onMounted, ref } from 'vue';
 
+// LIFE CYCLE
+onMounted(() => {
+  window.scrollTo(0, 0);
+});
+
+// DEFINE CONSTANT
 const isLoading = ref(true);
 
+// METHODS
 setTimeout(() => {
     isLoading.value = false;
 }, 1200)

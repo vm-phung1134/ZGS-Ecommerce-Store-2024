@@ -80,8 +80,9 @@
                                 </label>
                             </div>
                             <span v-if="props.isAuthenticated"
-                                class="absolute top-0 font-bold text-sm cursor-pointer right-0 text-red-700">{{ subQuantityProductCart
-                                }}</span>
+                                class="absolute top-0 font-bold text-sm cursor-pointer right-0 text-red-700">{{
+                                subQuantityProductCart
+                            }}</span>
                             <div class="drawer-side z-10">
                                 <ul class="menu p-4 w-full min-h-full bg-white text-base-content">
                                     <div class="flex justify-between mx-10 my-5">
@@ -140,7 +141,7 @@
 
                 <div class="block ml-2">
                     <div class="inline relative">
-                        <button v-if="!props.isAuthenticated" @click="handleDirection"
+                        <button v-if="!(isAuthenticated ? isAuthenticated : props.isAuthenticated)" @click="handleDirection"
                             class="bg-red-600 py-3 px-6 text-sm tracking-wider text-white">Sign In</button>
                         <div v-else className="dropdown dropdown-end">
                             <button type="button" tabIndex={0} role="button"
@@ -169,10 +170,10 @@
                             </button>
                             <ul tabIndex={0}
                                 className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                                <RouterLink to="/profile-user/1">
+                                <RouterLink :to="{ name: 'profile.user', params: { id: infoUser.id } }">
                                     <li><a>Account</a></li>
                                 </RouterLink>
-                                <RouterLink to="/track-your-order/1">
+                                <RouterLink :to="{ name: 'order.tracking', params: { id: infoUser.id } }">
                                     <li><a>Track your orders</a></li>
                                 </RouterLink>
                                 <li><a>Feedback</a></li>
@@ -197,6 +198,7 @@ import { useRouter } from 'vue-router';
 import ShoppingCart from '@pages/ShoppingCart.vue';
 import { useStore } from 'vuex';
 import { RouterLink } from 'vue-router';
+
 // DEFINE PROPS
 const props = defineProps({
     isAuthenticated: {
@@ -212,6 +214,8 @@ const router = useRouter();
 // USE STORE
 const isLogout: ComputedRef<boolean> = computed(() => store.state.auth.isLogout);
 const subQuantityProductCart = computed(() => store.getters['cart/getQuantityCart']);
+const infoUser = computed(() => store.getters['auth/getInforUser']);
+const isAuthenticated: ComputedRef<boolean> = computed(() => store.state.auth.isAuthenticated);
 
 // DEFINE CONSTANT
 const isOpenSearchBar = ref(false);

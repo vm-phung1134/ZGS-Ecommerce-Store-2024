@@ -91,7 +91,7 @@ store.dispatch("product/getAllProducts");
 
 // DEFINE CONSTANT
 const searchValue = ref('');
-const debouncedSearchValue = useDebouncedRef(searchValue.value, 500, false);
+const debouncedSearchValue = useDebouncedRef(searchValue.value, 1000, false);
 
 // COMPUTED PROPERTY
 const filteredProducts = computed(() => {

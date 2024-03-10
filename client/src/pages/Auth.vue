@@ -12,6 +12,12 @@
 <script setup lang="ts">
 import LoginFrom from "@components/Form/LoginForm.vue";
 import IntroSignIn from "@components/Introduce/IntroSignIn.vue";
+import { onMounted } from "vue";
+
+// LIFE CYCLE
+onMounted(() => {
+    window.scrollTo(0, 0);
+});
 
 </script>
 

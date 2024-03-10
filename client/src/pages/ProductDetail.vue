@@ -179,7 +179,8 @@
                                             <p class="text-xl uppercase my-10 font-bold">Do you want to add this product
                                                 into your cart !</p>
                                             <div class="flex uppercase justify-center items-center gap-10">
-                                                <p @click="toggleConfirm" class="font-bold cursor-pointer">Back to view</p>
+                                                <p @click="toggleConfirm" class="font-bold cursor-pointer">Back to view
+                                                </p>
                                                 <div @click="addProductToCart"
                                                     class="bg-green-600 py-3 px-6 w-72 -skew-x-[30deg]">
                                                     <button
@@ -304,26 +305,29 @@
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router'
 import { Product } from '../interfaces/Product';
-import { ComputedRef, computed, ref } from 'vue';
+import { ComputedRef, computed, onMounted, ref } from 'vue';
 import { ShoppingCartReq } from '../interfaces/ShoppingCart';
 import ButtonStyle from '@components/Element/ButtonStyle.vue';
 import ConfirmModel from "@components/Modal/ConfirmModal.vue";
 
-// DEFINE STORE
+// LIFE CYCLE
+onMounted(() => {
+  window.scrollTo(0, 0);
+});
 
+// DEFINE STORE
 const store = useStore();
 const route = useRoute();
 
 // USE STORE
 const product: ComputedRef<Product> = computed(() => store.state.product.product);
+const infoUser = computed(() => store.getters['auth/getInforUser']);
 
 // ACTION STORE
 store.dispatch("product/getOneProduct", route.params.id);
 
 // DEFINE CONSTANT
 const quantity = ref(1);
-const authData = localStorage.getItem("auth");
-const authRes = authData ? JSON.parse(authData) : null;
 const isOpenConfirm = ref(false);
 
 // METHODS
@@ -333,7 +337,7 @@ const addProductToCart = () => {
     if (product.value.id) {
         const cartBuild: ShoppingCartReq = {
             user: {
-                id: authRes.id
+                id: infoUser.value.id
             },
             product: {
                 id: product.value.id
@@ -341,7 +345,7 @@ const addProductToCart = () => {
             quantity: quantity.value
         }
         store.dispatch('cart/addProductToCart', cartBuild).then(() => {
-            store.dispatch('cart/getUserCart', 1);
+            store.dispatch('cart/getUserCart', infoUser.value.id);
             toggleConfirm();
         }).catch((error) => {
             console.log(error);

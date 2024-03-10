@@ -14,6 +14,8 @@ const handleSetIsAuthenticated = (data: boolean) => {
 
 if (existedUser.value === true) {
   isUserAuthenticated.value = true;
+} else {
+  isUserAuthenticated.value = false;
 }
 
 </script>
