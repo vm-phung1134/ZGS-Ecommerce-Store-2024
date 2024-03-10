@@ -6,13 +6,22 @@
             <div class="h-full w-[1px] bg-gray-200"></div>
             <LoginFrom className="w-1/2 p-5" />
         </div>
+        <ToastifyMessage v-if="isChangePassword" message="Password has been changed successfully, You can sign in now !" />
     </div>
 </template>
 
 <script setup lang="ts">
 import LoginFrom from "@components/Form/LoginForm.vue";
 import IntroSignIn from "@components/Introduce/IntroSignIn.vue";
-import { onMounted } from "vue";
+import { ComputedRef, computed, onMounted } from "vue";
+import ToastifyMessage from "@components/Element/ToastifyMessage.vue"
+import { useStore } from "vuex";
+
+// DEFINE STORE
+const store = useStore();
+
+// USE STORE
+const isChangePassword: ComputedRef<boolean> = computed(() => store.state.auth.isChangePassword);
 
 // LIFE CYCLE
 onMounted(() => {
