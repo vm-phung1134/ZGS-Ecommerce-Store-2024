@@ -7,23 +7,34 @@ import { UserAddressReq } from "../interfaces/UserAddress";
 import { OrderReq } from "../interfaces/Order";
 
 const axiosApiDefault = axios.create({
-  baseURL: `http://localhost:8080/api/auth`,
+  baseURL: `http://localhost:8080/api/auth/`,
   timeout: 6000,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// const token = localStorage.getItem("token");
+const token = localStorage.getItem("token");
 
 const axiosApi = axios.create({
   baseURL: `http://localhost:8080/api/`,
   timeout: 6000,
   headers: {
     "Content-Type": "application/json",
-    //Authorization: `Bearer ${token}`,
+    // Authorization: `Bearer ${token}`,
   },
 });
+
+const axiosApiToken = axios.create({
+  baseURL: `http://localhost:8080/api/`,
+  timeout: 6000,
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`,
+  },
+});
+
+console.log(axiosApiToken)
 
 export default {
   wecome(): Promise<AxiosResponse<string>> {
@@ -63,59 +74,59 @@ export default {
 
   // CART
   addToCart(cart: ShoppingCartReq): Promise<AxiosResponse<Object>> {
-    return axiosApi.post(`shopping-cart`, cart);
+    return axiosApiToken.post(`shopping-cart`, cart);
   },
   getUserCart(userId: number): Promise<AxiosResponse<Object>> {
-    return axiosApi.get(`shopping-cart/${userId}`);
+    return axiosApiToken.get(`shopping-cart/${userId}`);
   },
 
   // USER PAYMENT
   createUserPaymentMethod(
     userPayment: UserPaymentReq
   ): Promise<AxiosResponse<Object>> {
-    return axiosApi.post(`user-payment`, userPayment);
+    return axiosApiToken.post(`user-payment`, userPayment);
   },
   getAllUserPayment(userId: number): Promise<AxiosResponse<Object>> {
-    return axiosApi.get(`user-payment/${userId}`);
+    return axiosApiToken.get(`user-payment/${userId}`);
   },
   updateDefaultPayment(
     userPayment: UserPaymentReq
   ): Promise<AxiosResponse<Object>> {
-    return axiosApi.put(`user-payment/${userPayment.id}`, userPayment);
+    return axiosApiToken.put(`user-payment/${userPayment.id}`, userPayment);
   },
   deletePaymentMethod(paymentId: number): Promise<AxiosResponse<Object>> {
-    return axiosApi.delete(`user-payment/${paymentId}`);
+    return axiosApiToken.delete(`user-payment/${paymentId}`);
   },
 
   // USER ADDRESS
   createUserAddressMethod(
     userAddress: UserAddressReq
   ): Promise<AxiosResponse<Object>> {
-    return axiosApi.post(`user-address`, userAddress);
+    return axiosApiToken.post(`user-address`, userAddress);
   },
   getAllUserAddress(userId: number): Promise<AxiosResponse<Object>> {
-    return axiosApi.get(`user-address/${userId}`);
+    return axiosApiToken.get(`user-address/${userId}`);
   },
   updateDefaultAddress(
     userAddress: UserAddressReq
   ): Promise<AxiosResponse<Object>> {
-    return axiosApi.put(`user-address/${userAddress.id}`, userAddress);
+    return axiosApiToken.put(`user-address/${userAddress.id}`, userAddress);
   },
   deleteAddressMethod(addressId: number): Promise<AxiosResponse<Object>> {
-    return axiosApi.delete(`user-address/${addressId}`);
+    return axiosApiToken.delete(`user-address/${addressId}`);
   },
 
   // ORDER
   createOrder(OrderReq: OrderReq): Promise<AxiosResponse<Object>> {
-    return axiosApi.post(`user-order`, OrderReq);
+    return axiosApiToken.post(`user-order`, OrderReq);
   },
   cancelOrder(orderId: number): Promise<AxiosResponse<Object>> {
-    return axiosApi.delete(`user-order/${orderId}`);
+    return axiosApiToken.delete(`user-order/${orderId}`);
   },
   getAllUserOrder(userId: number): Promise<AxiosResponse<Object>> {
-    return axiosApi.get(`user-order/${userId}`);
+    return axiosApiToken.get(`user-order/${userId}`);
   },
   getAllHistoryOrder(userId: number): Promise<AxiosResponse<Object>> {
-    return axiosApi.get(`user-order/history/${userId}`);
+    return axiosApiToken.get(`user-order/history/${userId}`);
   },
 };

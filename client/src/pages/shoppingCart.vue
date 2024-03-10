@@ -5,7 +5,7 @@
                 <div class="overflow-x-auto">
                     <table class="table">
                         <!-- head -->
-                        <thead>
+                        <thead class="bg-black text-white">
                             <tr class="uppercase">
                                 <th>No.</th>
                                 <th>Product name</th>
@@ -16,7 +16,7 @@
                         </thead>
                         <tbody>
                             <!-- row 1 -->
-                            <tr class="bg-base-200" v-for="(product, index) in userCart?.products" :key="product?.id">
+                            <tr class="border-b" v-for="(product, index) in userCart?.products" :key="product?.id">
                                 <th>{{ index }}</th>
                                 <td class="font-bold">
                                     <div>
@@ -52,7 +52,7 @@
                         <div class="flex justify-between items-center">
                             <p class="font-bold text-[15px]">Your address</p>
                             <div class="flex items-end flex-col">
-                                <p class="text-sm">Ninh Kieu / Can Tho</p>
+                                <p class="text-sm">{{ defaultAddress?.city }} / {{ defaultAddress?.country }}</p>
                                 <button class="text-green-700">Address management</button>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                     </div>
                     <label class="cursor-pointer" for="my-drawer-4" aria-label="close sidebar"></label>
                     <button @click="handleDirectCheckout()" v-if="isCheckQuantityCart(userCart)"
-                        class="py-3 px-5 w-full bg-black text-white uppercase font-bold tracking-wider">
+                        class="py-3 px-5 w-full bg-green-700 text-white uppercase font-bold tracking-wider">
                         <label class="cursor-pointer" for="my-drawer-4" aria-label="close sidebar">Checkout your
                             order</label>
                     </button>
@@ -89,6 +89,7 @@ import { ComputedRef, computed } from 'vue';
 import { ShoppingCartRes } from '../interfaces/ShoppingCart';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { UserAddressRes } from '../interfaces/UserAddress';
 
 // DEFINE STORE
 const store = useStore();
@@ -98,12 +99,13 @@ const router = useRouter();
 const userCart: ComputedRef<ShoppingCartRes> = computed(() => store.state.cart.userCart);
 const total = computed(() => store.getters['cart/cartTotalPrice']);
 const infoUser = computed(() => store.getters['auth/getInforUser']);
+const defaultAddress: ComputedRef<UserAddressRes> = computed(() => store.getters['address/getDefaultAddress']);
 
 // ACTION STORE
-store.dispatch("cart/getUserCart", infoUser.value.id); 
+store.dispatch("cart/getUserCart", infoUser.value.id);
+store.dispatch("address/getAllUserAddress", infoUser.value.id);
 
-// DEFINE METHODS
-
+// METHODS
 const isCheckQuantityCart = (userCart: ShoppingCartRes) => {
     return userCart?.products?.length > 0 ? true : false;
 }

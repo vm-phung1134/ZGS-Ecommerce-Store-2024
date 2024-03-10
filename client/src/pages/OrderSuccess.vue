@@ -6,8 +6,12 @@
                 <h1 class="uppercase text-[3rem] -skew-x-[20deg] font-bold">Congratuations! Your order has been placed
                     successfully</h1>
                 <div class="flex gap-5 mt-5">
-                    <button class="hover:text-red-500">Shopping continue</button>
-                    <button class="hover:text-green-500">Tracking your orer</button>
+                    <RouterLink to="/">
+                        <button class="hover:text-red-500">Shopping continue</button>
+                    </RouterLink>
+                    <RouterLink :to="{ name: 'order.tracking', params: { id: infoUser.id } }">
+                        <button class="hover:text-green-500">Tracking your orer</button>
+                    </RouterLink>
                 </div>
             </div>
         </div>
@@ -15,12 +19,20 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
+import { RouterLink } from 'vue-router';
+import { useStore } from 'vuex';
 
 // LIFE CYCLE
 onMounted(() => {
     window.scrollTo(0, 0);
 });
+
+// DEFINE STORE
+const store = useStore();
+
+// USE STORE
+const infoUser = computed(() => store.getters['auth/getInforUser']);
 
 </script>
 

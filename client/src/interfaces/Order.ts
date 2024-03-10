@@ -8,7 +8,6 @@ export interface OrderReq {
   user: {
     id: number;
   };
-  subTotal: number;
   userPayment: {
     id: number;
   };

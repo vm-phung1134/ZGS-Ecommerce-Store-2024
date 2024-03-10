@@ -57,7 +57,7 @@
         </div>
 
         <!-- TABLE ORDER -->
-        <div class="overflow-x-auto mx-40 my-10 min-h-96 max-h-fit">
+        <div class="overflow-x-auto mx-20 my-10 min-h-96 max-h-fit">
             <h4 class="uppercase text-2xl font-bold ">Your orders</h4>
             <p class="text-sm font-bold uppercase text-gray-400 py-5">Order Id: #hk2420fm</p>
             <table v-if="orders.length > 0" class="table">
@@ -70,7 +70,7 @@
                         <th>Product</th>
                         <th>Address</th>
                         <th>Payment</th>
-                        <th>Date</th>
+                        <th>Date order</th>
                         <th>Subtotal</th>
                         <th>Progress</th>
                         <th></th>
@@ -96,16 +96,17 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="capitalize">
+                        <td class="capitalize truncate">
                             {{ order?.userAddress?.city }} - {{ order?.userAddress?.country }}
                             <br />
-                            <span class="badge badge-ghost badge-sm truncate min-w-20 max-w-32">{{
-                order?.userAddress?.address }}</span>
+                            <span class="truncate">
+                                {{ order?.userAddress?.address }}
+                            </span>
                         </td>
                         <td class="capitalize">{{ order?.userPayment?.paymentType }}</td>
                         <td>{{ order?.dateOrder }}</td>
-                        <td>{{ order?.subTotal }}</td>
-                        <td>{{ order?.active ? 'Revieced' : 'Delivery...' }}</td>
+                        <td>${{ order?.subTotal }}.00</td>
+                        <td>{{ order?.active ? 'Revieced' : 'Delivery' }}</td>
                         <th>
                             <button class="btn btn-ghost btn-xs text-green-700">details</button>
                         </th>
@@ -118,7 +119,7 @@
         </div>
 
         <!-- HISTORY ORDER -->
-        <div class="overflow-x-auto mx-40 my-10 min-h-96 max-h-fit">
+        <div class="overflow-x-auto mx-20 my-10 min-h-96 max-h-fit">
             <h4 class="uppercase text-2xl font-bold ">Your history orders</h4>
             <p class="text-sm font-bold uppercase text-gray-400 py-5">Order Id: #hk2420fm</p>
             <table v-if="oldOrders.length > 0" class="table w-full">
@@ -131,7 +132,7 @@
                         <th>Product</th>
                         <th>Address</th>
                         <th>Payment</th>
-                        <th>Date</th>
+                        <th>Date order</th>
                         <th>Subtotal</th>
                         <th>Progress</th>
                         <th></th>
@@ -165,8 +166,8 @@
                         </td>
                         <td class="capitalize">{{ order?.userPayment?.paymentType }}</td>
                         <td>{{ order?.dateOrder }}</td>
-                        <td>{{ order?.subTotal }}</td>
-                        <td>{{ order?.active ? 'Revieced' : 'Delivery...' }}</td>
+                        <td>${{ order?.subTotal }}.00</td>
+                        <td>Done</td>
                         <th>
                             <button class="btn btn-ghost btn-xs text-green-700">Re-order</button>
                         </th>
@@ -190,7 +191,7 @@ import { useRoute } from 'vue-router';
 
 // LIFE CYCLE
 onMounted(() => {
-  window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
 });
 
 // DEFINE STORE

@@ -23,12 +23,13 @@
                 </div>
             </form>
         </div>
+        <ToastifyMessage v-if="isCreatePayment" message="A new payment method added successfully !" />
     </div>
 </template>
 
 <script setup lang="ts">
 import InputFieldNormal from './InputFieldNormal.vue';
-import { ref, inject, Ref } from 'vue';
+import { ref, inject, Ref, ComputedRef, computed } from 'vue';
 import {
     formData,
     fullnameComponent,
@@ -39,6 +40,7 @@ import {
 } from '@components/Validate/PaymentMethodValid';
 import { UserPaymentReq } from '../../interfaces/UserPayment';
 import { useStore } from 'vuex';
+import ToastifyMessage from '../Element/ToastifyMessage.vue';
 
 //DEFINE PROPS
 const props = defineProps({
@@ -54,6 +56,9 @@ const props = defineProps({
 
 // DEFINE STORE
 const store = useStore();
+
+// USE STORE
+const isCreatePayment: ComputedRef<boolean> = computed(() => store.state.payment.isCreatePayment);
 
 //DEFINE CONSTANTS
 const checkFormValid = ref(false);
@@ -81,10 +86,9 @@ const submitForm = (event: Event) => {
         valid: formData.valid
     }
     if (checkFormValid && !hasEmptyValue) {
-        console.log(createPaymentMethod)
         store.dispatch("payment/createPaymentMethod", createPaymentMethod)
             .then(() => {
-                store.dispatch("payment/getAllUserPayment", 1);
+                store.dispatch("payment/getAllUserPayment", authResId);
                 props.toggleModal();
             })
             .catch((error) => {

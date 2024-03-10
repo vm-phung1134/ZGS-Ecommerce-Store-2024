@@ -18,7 +18,14 @@ const state: addressState = {
 };
 
 // getters
-const getters = {};
+const getters = {
+  getDefaultAddress: (state: addressState) => {
+    if (state.addressList) {
+      return state.addressList.find((item) => item.active === true);
+    }
+    return {};
+  },
+};
 
 // actions
 const actions: ActionTree<addressState, any> = {

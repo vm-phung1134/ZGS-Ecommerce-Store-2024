@@ -67,7 +67,7 @@ public class OrderService {
             newOrder.setUserAddress(userAddress);
             newOrder.setUserPayment(userPayment);
             newOrder.setActive(false);
-            newOrder.setSubTotal(order.getProduct().getPrice() * cart.getQuantity());
+            newOrder.setSubTotal(cart.getProduct().getPrice() * cart.getQuantity());
             newOrder.setDateOrder(order.getDateOrder());
             newOrder.setProduct(cart.getProduct());
             newOrder.setSubQuantity(cart.getQuantity());

@@ -1,6 +1,6 @@
 <template>
     <div className="h-full w-full shadow-lg">
-        <div className="relative h-full w-full">
+        <div className="relative h-full w-full p-3 cursor-pointer">
             <div class="flex justify-center">
                 <img className="w-72 h-auto bg-cover" :src=props?.product?.image alt="img-product-item"></img>
             </div>
@@ -14,11 +14,12 @@
                     </button>
                 </RouterLink>
             </div>
+            <div className="text-sm mt-2 lg:text-[15px]">
+                <p className="uppercase">{{ props?.product?.name }}</p>
+                <p className="text-gray-500 font-thin uppercase">{{ props?.product?.category?.name }}</p>
+            </div>
         </div>
-        <div className="text-sm mt-2 lg:text-[15px]">
-            <p className="uppercase">{{ props?.product?.name }}</p>
-            <p className="text-gray-500 font-thin uppercase">{{ props?.product?.category?.name }}</p>
-        </div>
+
     </div>
 </template>
 

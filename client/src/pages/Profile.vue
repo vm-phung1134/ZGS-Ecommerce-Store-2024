@@ -1,8 +1,8 @@
 <template>
-    <div class="h-[110vh]">
+    <div class="h-[125vh] max-h-full">
         <div class="flex h-full">
             <div
-                class="w-5/12 bg-[url('https://storage-asset.msi.com/global/picture/image/feature/nb/GE/Raider-GE78-HX-13V/display-bg.jpg')] h-full text-white relative">
+                class="w-5/12 h-full bg-[url('https://storage-asset.msi.com/global/picture/image/feature/nb/GE/Raider-GE78-HX-13V/display-bg.jpg')] text-white relative">
                 <div class="absolute text-black top-10 -left-5 bg-white rounded-none outline-none -skew-x-[35deg]">
                     <div className="text-sm breadcrumbs px-10 skew-x-[30deg]">
                         <ul class="uppercase">
@@ -93,15 +93,15 @@
                 </div>
             </div>
             <div class="w-7/12 px-10 mt-10">
-                <div class="w-full">
+                <div class="w-full min-h-60 max-h-full">
                     <div class="flex justify-between">
                         <h1 class="uppercase text-xl font-bold">Payment methods</h1>
                         <button @click="togglePaymentModal" class="text-green-700 text-sm my-5">Add new your payment
                             method -></button>
                     </div>
-                    <div class="flex gap-3 w-full">
+                    <div class="flex gap-3 w-full flex-wrap">
                         <div @click="toggleConfirmModal(payment)" v-for="payment in payments" :key="payment?.id"
-                            class="border-gray-600 shadow-xl cursor-pointer text-white bg-[url('https://i.imgur.com/Zi6v09P.png')] hover:transform hover:duration-500 hover:ease-in-out p-3 w-full text-sm relative overflow-hidden">
+                            class="border-gray-600  shadow-xl cursor-pointer text-white bg-[url('https://i.imgur.com/Zi6v09P.png')] hover:transform hover:duration-500 hover:ease-in-out p-3 w-72 text-sm relative overflow-hidden">
                             <p v-if="payment.active"
                                 class="px-3 py-2 text-xs w-fit absolute top-0 right-0 text-black font-bold">Default</p>
                             <img class="w-1/4" src="https://cdn-icons-png.flaticon.com/128/14881/14881313.png"
@@ -120,20 +120,20 @@
                     <PaymentMethodModal :is-open-modal="isOpenPaymentModal" :toggle-modal="togglePaymentModal" />
                 </div>
 
-                <div class="my-10">
+                <div class="my-10 min-h-60 max-h-full">
                     <h1 class="uppercase text-xl font-bold">Management your address</h1>
                     <div class="">
                         <h4 class="text-sm italic my-2">Set default address for delivery product</h4>
                         <div class="flex gap-3">
                             <div @click="toggleConfirmAddressModal(address)" v-for="address in addressList"
                                 :key="address.id"
-                                class="w-72 border p-3 text-sm relative cursor-pointer hover:bg-gray-200">
+                                class="w-96 border p-3 text-sm relative cursor-pointer hover:bg-gray-200">
                                 <input type="checkbox" v-if="address.active" checked
                                     className="checkbox absolute -top-1 -right-1 checkbox-success checkbox-xs" />
                                 <ul class="flex flex-col">
                                     <li class="flex gap-5">
                                         <p>Name</p>
-                                        <p class="font-bold capitalize text-xs">{{ address?.user?.firstName + ' ' +
+                                        <p class="font-bold capitalize">{{ address?.user?.firstName + ' ' +
                             address?.user?.lastName }}</p>
                                     </li>
                                     <li class="flex gap-5">
@@ -248,18 +248,18 @@ onMounted(() => {
 
 // DEFINE STORE
 const store = useStore();
-
-// USE STORE
-store.dispatch('payment/getAllUserPayment', 1);
-store.dispatch('address/getAllUserAddress', 1);
-
 // STATE STORE
 const payments: ComputedRef<UserPaymentRes[]> = computed(() => store.state.payment.payments);
 const addressList: ComputedRef<UserAddressRes[]> = computed(() => store.state.address.addressList);
 const infoUser = computed(() => store.getters['auth/getInforUser']);
 
+// USE STORE
+store.dispatch('payment/getAllUserPayment', infoUser.value.id);
+store.dispatch('address/getAllUserAddress', infoUser.value.id);
+
+
 // DEFINE CONSTANT
-provide('authResId', infoUser.value ? infoUser.value.id : null);
+provide('authResId', infoUser.value ? infoUser.value.id : 0);
 
 let paymentNeedChange = reactive<UserPaymentReq>(INITIAL_USER_PAYMENT_REQ);
 let addressNeedChange = reactive<UserAddressReq>(INITIAL_USER_ADDRESS_REQ);
@@ -282,7 +282,7 @@ const toggleConfirmModal = (payment?: UserPaymentRes) => {
             valid: payment.valid,
             cvv: payment.cvv,
             user: {
-                id: 1
+                id: infoUser.value.id
             },
             id: payment.id
         }
@@ -318,7 +318,7 @@ const toggleConfirmAddressModal = (address?: UserAddressRes) => {
     if (address) {
         addressNeedChange = {
             user: {
-                id: 1,
+                id: infoUser.value.id,
             },
             address: address.address,
             active: true,
@@ -335,7 +335,7 @@ const toggleConfirmAddressModal = (address?: UserAddressRes) => {
 const handleUpdateAddressMethod = () => {
     store.dispatch('address/setDefaultAddress', addressNeedChange)
         .then(() => {
-            store.dispatch('address/getAllUserAddress', 1);
+            store.dispatch('address/getAllUserAddress', infoUser.value.id);
         }).catch((error) => {
             console.log(error);
         });

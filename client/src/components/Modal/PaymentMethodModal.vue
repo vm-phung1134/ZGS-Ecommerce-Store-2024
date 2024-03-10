@@ -13,7 +13,7 @@
                         leave-to="opacity-0 scale-95">
                         <DialogPanel
                             class="w-full max-w-4xl transform overflow-hidden rounded-md bg-white p-6 text-left align-middle shadow-xl transition-all">
-                            <DialogTitle as="h3" class="text-xl font-bold leading-6 mb-2">
+                            <DialogTitle as="h3" class="text-xl font-bold leading-6 uppercase mb-2">
                                 Payment method
                             </DialogTitle>
                             <span class="text-xs">Please fill form to register for the event</span>
@@ -35,7 +35,7 @@
                                                         Name
                                                     </p>
                                                     <p class="font-bold tracking-widest">
-                                                        VO MINH PHUNG
+                                                        FIST AND LAST NAME
                                                     </p>
                                                 </div>
                                                 <img class="w-14 h-14" src="https://i.imgur.com/bbPHJVe.png" />

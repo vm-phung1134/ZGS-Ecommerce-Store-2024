@@ -18,7 +18,7 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtils {
     public static final String SECRET_KEY = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
-    public static final int ACCESS_TOKEN_VALIDIY = 60 * 60;
+    public static final int ACCESS_TOKEN_VALIDIY = 60 * 60 * 24 * 1000;
     public static final int REFRESH_TOKEN_VALIDIY = 7 * 24 * 60 * 60 * 1000;
 
     private Key getSignKey() {

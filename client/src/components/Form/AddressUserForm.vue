@@ -20,13 +20,14 @@
                 </div>
             </form>
         </div>
+        <ToastifyMessage v-if="isCreateAddress" message="A new address added successfully !" />
     </div>
 </template>
 
 <script setup lang="ts">
 import InputFieldNormal from './InputFieldNormal.vue';
 import SelectBoxForm from './SelectBoxForm.vue';
-import { inject, ref } from 'vue';
+import { ComputedRef, computed, inject, ref } from 'vue';
 import {
     formData,
     phoneComponent,
@@ -36,8 +37,9 @@ import {
 import TextAreaForm from './TextAreaForm.vue';
 import { UserAddressReq } from '../../interfaces/UserAddress';
 import { useStore } from 'vuex';
+import ToastifyMessage from '../Element/ToastifyMessage.vue';
 
-// -----------------DEFINE PROPS------------------
+// DEFINE PROPS
 const props = defineProps({
     className: {
         type: String,
@@ -48,11 +50,14 @@ const props = defineProps({
         required: true,
     }
 });
+
 // DEFINE STORE
 const store = useStore();
 
-// -----------------DEFINE CONSTANTS------------------
+// USE STORE
+const isCreateAddress: ComputedRef<boolean> = computed(() => store.state.payment.isCreateAddress);
 
+// DEFINE CONSTANT
 const checkFormValid = ref(false);
 const authResId = inject<number>('authResId');
 
@@ -66,7 +71,7 @@ const selectedCity = ref(cities[0].value);
 const selectedCountry = ref('Vietnam');
 const errorApi = ref('');
 
-// -----------------DEFINE METHODS------------------
+// METHODS
 const validateForm = (isValid: boolean) => {
     return checkFormValid.value = isValid;
 };
@@ -81,7 +86,7 @@ const submitForm = (event: Event) => {
     const hasEmptyValue = formValue.some((value) => value === "");
     const createAddressMethod: UserAddressReq = {
         user: {
-            id: authResId || 1
+            id: authResId || 0
         },
         address: formData.address,
         city: selectedCity.value,
@@ -93,7 +98,7 @@ const submitForm = (event: Event) => {
         console.log(createAddressMethod)
         store.dispatch("address/createAddressMethod", createAddressMethod)
             .then(() => {
-                store.dispatch("address/getAllUserAddress", 1);
+                store.dispatch("address/getAllUserAddress", authResId);
                 props.toggleModal();
             })
             .catch((error) => {

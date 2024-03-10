@@ -26,19 +26,23 @@
                         </a>
                     </p>
                     <div class="flex gap-3 text-sm items-center">
-                        <p @click="props.toggleModal" class="px-5 cursor-pointer">Back</p>
-                        <button type="submit" class="w-full rounded-md bg-red-600 text-gray-100 px-10 py-3">
-                            Sign up
+                        <p @click="props.toggleModal" class="px-5 cursor-pointer uppercase font-bold">Back</p>
+                        <button type="submit"
+                            class="bg-red-600 py-3 px-6 w-40 -skew-x-[30deg] border-none outline-none">
+                            <p class="skew-x-[30deg] text-white tracking-widest text-xs font-bold uppercase">
+                                Sign up
+                            </p>
                         </button>
                     </div>
                 </div>
             </form>
         </div>
+        <ToastifyMessage v-if="isRegister" message="Register successfully, You can sign in now !" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ComputedRef, computed, ref } from 'vue';
 import InputFieldIcon from './InputFieldIcon.vue';
 import {
     formData,
@@ -49,8 +53,9 @@ import {
     firstNameComponent
 } from '@components/Validate/RegisterValid';
 import { useStore } from 'vuex';
+import ToastifyMessage from '../Element/ToastifyMessage.vue';
 
-// ----------------DEFINE PROPS-----------------
+// DEFINE PROP
 const props = defineProps({
     toggleModal: {
         type: Function,
@@ -58,32 +63,43 @@ const props = defineProps({
     }
 })
 
-// ----------------DEFINE CONSTANTS-----------------
-const checkFormValid = ref(false);
-const errors = ref('');
+// DEFINE STORE
 const store = useStore();
 
-// ----------------DEFINE MOTHODS-----------------
+// USE STORE
+const isRegister: ComputedRef<boolean> = computed(() => store.state.auth.isRegister);
+
+// DEFINE CONSTANT
+const checkFormValid = ref(false);
+const errors = ref('');
+
+// METHODS
 const validateForm = (isValid: boolean) => {
     return checkFormValid.value = isValid;
 }
 
 const submitForm = (event: Event) => {
     event.preventDefault();
-    if (formData.password != formData.passwordConfirm) {
-        errors.value = "Password is not match";
+    const formValue = Object.values(formData);
+    const hasEmptyValue = formValue.some((value) => value === "");
+    if (checkFormValid && !hasEmptyValue) {
+        if (formData.password != formData.passwordConfirm) {
+            errors.value = "Password is not match";
+        } else {
+            errors.value = "";
+            store.dispatch("auth/register", formData)
+                .then(() => {
+                    console.log('Register successfully !');
+                    props.toggleModal();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
     } else {
-        errors.value = "";
-        console.log(formData);
-        store.dispatch("auth/register", formData)
-            .then(() => {
-                console.log('Register successfully !');
-                props.toggleModal();
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        errors.value = "Fail to create account, please check again";
     }
+
 };
 
 </script>
