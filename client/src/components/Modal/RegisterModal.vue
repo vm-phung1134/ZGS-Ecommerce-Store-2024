@@ -39,6 +39,7 @@ import {
 } from '@headlessui/vue';
 import RegisterForm from '../Form/RegisterForm.vue';
 
+// DEFINE PROPS
 const props = defineProps({
     isOpenModal: {
         type: Boolean,

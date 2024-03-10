@@ -127,31 +127,31 @@
                         <div class="flex gap-3">
                             <div @click="toggleConfirmAddressModal(address)" v-for="address in addressList"
                                 :key="address.id"
-                                class="w-96 border p-3 text-sm relative cursor-pointer hover:bg-gray-200">
+                                class="w-96 border p-3 text-sm relative cursor-pointer bg-gray-200 hover:bg-gray-300">
                                 <input type="checkbox" v-if="address.active" checked
                                     className="checkbox absolute -top-1 -right-1 checkbox-success checkbox-xs" />
                                 <ul class="flex flex-col">
                                     <li class="flex gap-5">
-                                        <p>Name</p>
-                                        <p class="font-bold capitalize">{{ address?.user?.firstName + ' ' +
+                                        <p class="font-bold">Name</p>
+                                        <p class="uppercase">{{ address?.user?.firstName + ' ' +
                             address?.user?.lastName }}</p>
                                     </li>
                                     <li class="flex gap-5">
-                                        <p>Phone:</p>
+                                        <p class="font-bold">Phone:</p>
                                         <p>( 84+ ) {{ address?.phone }}</p>
                                     </li>
                                     <li class="flex gap-5">
                                         <ol class="flex gap-3 capitalize">
-                                            <p>Country:</p>
+                                            <p class="font-bold">Country:</p>
                                             <p>{{ address?.country }}</p>
                                         </ol>
                                         <ol class="flex gap-3 capitalize">
-                                            <p>City:</p>
+                                            <p class="font-bold">City:</p>
                                             <p>{{ address?.city }}</p>
                                         </ol>
                                     </li>
                                     <li class="flex gap-5">
-                                        <p>Address: </p>
+                                        <p class="font-bold">Address: </p>
                                         <p class="truncate">{{ address?.address }}
                                         </p>
                                     </li>
@@ -176,7 +176,7 @@
                         </p>
                         <div className="ml-7">
                             <ul className="list-disc">
-                                <li>Minimum of 8 characters</li>
+                                <li>Minimum of 6 characters</li>
                                 <li>At least one speacial character</li>
                                 <li>At least one number</li>
                                 <li>Cannot be the same as previous password</li>
@@ -213,8 +213,8 @@
                         <p @click="toggleConfirmAddressModal()" class="font-bold cursor-pointer uppercase">Back to view
                         </p>
                         <button type="button" @click="handleDeleteAddressMethod"
-                            class="bg-red-600 py-3 px-6 w-72 -skew-x-[30deg] border-none outline-none">
-                            <p class="skew-x-[30deg] text-white outline-none tracking-widest font-bold uppercase">
+                            class="bg-white py-3 px-6 w-72 -skew-x-[30deg] border-none outline-none">
+                            <p class="skew-x-[30deg] text-red-700 outline-none tracking-widest font-bold uppercase">
                                 delete address
                             </p>
                         </button>
@@ -264,9 +264,7 @@ provide('authResId', infoUser.value ? infoUser.value.id : 0);
 let paymentNeedChange = reactive<UserPaymentReq>(INITIAL_USER_PAYMENT_REQ);
 let addressNeedChange = reactive<UserAddressReq>(INITIAL_USER_ADDRESS_REQ);
 
-
-
-// PAYMENT METHOD
+// [METHOD] PAYMENT METHOD
 const isOpenPaymentModal = ref(false);
 const togglePaymentModal = () => isOpenPaymentModal.value = !isOpenPaymentModal.value;
 
@@ -309,7 +307,7 @@ const handleDeletePaymentMethod = () => {
     toggleConfirmModal();
 }
 
-// ADDRESS USER
+// [METHOD] ADDRESS USER
 const isOpenAddressUserModal = ref(false);
 const toggleAddressUserModal = () => isOpenAddressUserModal.value = !isOpenAddressUserModal.value;
 const isOpenConfirmAddressModal = ref(false);

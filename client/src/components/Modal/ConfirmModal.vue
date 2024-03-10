@@ -38,6 +38,7 @@ import {
     DialogTitle,
 } from '@headlessui/vue';
 
+// DEFINE PROPS
 const props = defineProps({
     isOpenModal: {
         type: Boolean,

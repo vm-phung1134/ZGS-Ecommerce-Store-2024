@@ -47,7 +47,7 @@
                         </div>
                         <div class="flex justify-between text-[15px] items-center">
                             <p class="capitalize font-bold">Shipping</p>
-                            <p class="font-bold">$15.00</p>
+                            <p class="font-bold">${{ total * shippingCost }}.00</p>
                         </div>
                         <div class="flex justify-between items-center">
                             <p class="font-bold text-[15px]">Your address</p>
@@ -66,7 +66,7 @@
                     <div class="w-1/3 h-[1.5px] bg-gray-600"></div>
                     <div class="flex justify-between text-lg items-center">
                         <p class="capitalize font-bold">Subtotal</p>
-                        <p class="font-bold text-red-600 text-2xl">${{ total + 15 }}.00</p>
+                        <p class="font-bold text-red-600 text-2xl">${{ total + (total * shippingCost) }}.00</p>
                     </div>
                     <label class="cursor-pointer" for="my-drawer-4" aria-label="close sidebar"></label>
                     <button @click="handleDirectCheckout()" v-if="isCheckQuantityCart(userCart)"
@@ -85,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-import { ComputedRef, computed } from 'vue';
+import { ComputedRef, computed, ref } from 'vue';
 import { ShoppingCartRes } from '../interfaces/ShoppingCart';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -104,6 +104,9 @@ const defaultAddress: ComputedRef<UserAddressRes> = computed(() => store.getters
 // ACTION STORE
 store.dispatch("cart/getUserCart", infoUser.value.id);
 store.dispatch("address/getAllUserAddress", infoUser.value.id);
+
+// DEFINE CONSTANT
+const shippingCost = ref(0.05);
 
 // METHODS
 const isCheckQuantityCart = (userCart: ShoppingCartRes) => {

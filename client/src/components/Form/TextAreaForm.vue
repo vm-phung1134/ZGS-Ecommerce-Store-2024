@@ -22,7 +22,8 @@
 
 <script setup lang="ts">
 import { defineEmits, defineProps, ref } from 'vue';
-// Define props are recieved from parent component
+
+// DEFINE PROPS
 const props = defineProps({
     componentData: {
         type: Object,
@@ -40,12 +41,15 @@ const props = defineProps({
         }
     }
 });
+
+// DEFINE CONSTANT
 const valueInput = defineModel<string>('valueInput');
-// Define events
-const emits = defineEmits(['form-validate']);
-// Define a constant to take error massage
 const localError = ref("");
-// Event handle validate form field
+
+// EVENTS
+const emits = defineEmits(['form-validate']);
+
+// METHODS
 const validate = (e: Event) => {
     const target = e.target as HTMLInputElement;
     const pattern = new RegExp(props.componentData.pattern, "i");

@@ -29,13 +29,13 @@ import {
     ListboxOption,
 } from '@headlessui/vue'
 
-const emit = defineEmits(['update:selectedValue']);
-
+// DEFINE TYPE
 export type SelectType = {
     key: string,
     value: string,
 }
 
+// DEFINE PROPS
 const props = defineProps({
     arrayValue: {
         type: Array as () => SelectType[],
@@ -49,8 +49,12 @@ const props = defineProps({
         type: String,
         required: false
     }
-})
+});
 
+// DEFINE EVENT
+const emit = defineEmits(['update:selectedValue']);
+
+// METHODS
 const updateSelectedValue = (newValue: string) => {
     emit('update:selectedValue', newValue);
 };

@@ -70,6 +70,7 @@ const actions: ActionTree<orderState, any> = {
         .then((response) => {
           if (response.status == 200) {
             commit("createUserOrder_success", response.data);
+            commit("getUserCart_success", userOrder.user.id);
           }
           resolve(response);
         })
@@ -104,7 +105,7 @@ const mutations: MutationTree<orderState> = {
     state.orders = payload.data;
   },
   getAllHistoryOrder_success(state: orderState, payload) {
-    state.orders = payload.data;
+    state.oldOrders = payload.data;
   },
   cancelOrder_success(state: orderState) {
     state.isCancelOrder = true;

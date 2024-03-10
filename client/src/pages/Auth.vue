@@ -6,7 +6,8 @@
             <div class="h-full w-[1px] bg-gray-200"></div>
             <LoginFrom className="w-1/2 p-5" />
         </div>
-        <ToastifyMessage v-if="isChangePassword" message="Password has been changed successfully, You can sign in now !" />
+        <ToastifyMessage v-if="isChangePassword"
+            message="Password has been changed successfully, You can sign in now !" />
     </div>
 </template>
 
@@ -17,16 +18,16 @@ import { ComputedRef, computed, onMounted } from "vue";
 import ToastifyMessage from "@components/Element/ToastifyMessage.vue"
 import { useStore } from "vuex";
 
+// LIFE CYCLE
+onMounted(() => {
+    window.scrollTo(0, 0);
+});
+
 // DEFINE STORE
 const store = useStore();
 
 // USE STORE
 const isChangePassword: ComputedRef<boolean> = computed(() => store.state.auth.isChangePassword);
-
-// LIFE CYCLE
-onMounted(() => {
-    window.scrollTo(0, 0);
-});
 
 </script>
 

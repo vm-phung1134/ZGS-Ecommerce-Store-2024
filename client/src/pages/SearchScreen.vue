@@ -93,7 +93,7 @@ store.dispatch("product/getAllProducts");
 const searchValue = ref('');
 const debouncedSearchValue = useDebouncedRef(searchValue.value, 1000, false);
 
-// COMPUTED PROPERTY
+// METHOD
 const filteredProducts = computed(() => {
     const keyword = debouncedSearchValue.value.toLowerCase();
     return products.value.filter((product) =>

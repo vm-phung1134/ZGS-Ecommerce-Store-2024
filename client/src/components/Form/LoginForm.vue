@@ -71,7 +71,7 @@ import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router'
 
-// -----------------DEFINE PROPS------------------
+// DEFINE PROPS
 const props = defineProps({
     className: {
         type: String,
@@ -79,14 +79,15 @@ const props = defineProps({
     }
 });
 
-// -----------------DEFINE CONSTANTS------------------
+// DEFINE STORE
 const store = useStore();
 const router = useRouter();
 
+// DEFINE CONSTANT
 const checkFormValid = ref(false);
 const errorApi = ref('');
 
-// -----------------DEFINE METHODS------------------
+// METHODS
 const validateForm = (isValid: boolean) => {
     return checkFormValid.value = isValid;
 };

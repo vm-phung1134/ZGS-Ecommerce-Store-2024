@@ -106,6 +106,7 @@ import PaymentMethodForm from '../Form/PaymentMethodForm.vue';
 import SelectBoxForm from '../Form/SelectBoxForm.vue';
 import { provide, ref } from 'vue'
 
+// DEFINE PROPS
 const props = defineProps({
     isOpenModal: {
         type: Boolean,
@@ -117,17 +118,20 @@ const props = defineProps({
     }
 });
 
+// DEFINE CONSTANT
 const payments = [
     { value: 'Visa', key: 'vs' },
     { value: 'Master card', key: 'ms' },
     { value: 'Paypal', key: 'pp' },
 ]
 const selectedPayment = ref(payments[0].value);
+provide('selectedPayment', selectedPayment);
 
+// METHOD
 const updateSelectedPayment = (newValue: string) => {
-    selectedPayment.value = newValue; 
+    selectedPayment.value = newValue;
 };
-provide('selectedPayment', selectedPayment)
+
 
 
 </script>

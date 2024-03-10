@@ -129,7 +129,7 @@
                                     <div>
                                         <span class="title-font font-bold text-2xl text-orange-600">${{ product?.price
                                             }}.00</span>
-                                        <span class="px-3 tracking-wide text-gray-500">$200.00</span>
+                                        <span class="px-3 tracking-wide text-gray-500 line-through">$200.00</span>
                                     </div>
                                     <p class="text-sm">Online Exclusive</p>
                                 </div>

@@ -43,15 +43,20 @@
 import { ref } from 'vue'
 import RegisterModal from '../Modal/RegisterModal.vue';
 
-const isOpenRegisterModal = ref(false);
-const toggleRegisterModal = () => isOpenRegisterModal.value = !isOpenRegisterModal.value;
-
+// DEFINE PROPS
 const props = defineProps({
     className: {
         type: String,
         required: true,
     }
-})
+});
+
+// DEFINE CONSTANT
+const isOpenRegisterModal = ref(false);
+
+// METHOD
+const toggleRegisterModal = () => isOpenRegisterModal.value = !isOpenRegisterModal.value;
+
 </script>
 
 <style scoped></style>

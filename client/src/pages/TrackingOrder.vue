@@ -158,11 +158,12 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="capitalize">
+                        <td class="capitalize truncate">
                             {{ order?.userAddress?.city }} - {{ order?.userAddress?.country }}
                             <br />
-                            <span class="badge badge-ghost badge-sm truncate min-w-20 max-w-32">{{
-                order?.userAddress?.address }}</span>
+                            <span class="truncate">
+                                {{ order?.userAddress?.address }}
+                            </span>
                         </td>
                         <td class="capitalize">{{ order?.userPayment?.paymentType }}</td>
                         <td>{{ order?.dateOrder }}</td>
@@ -200,6 +201,7 @@ const route = useRoute();
 
 // ACTION STORE
 store.dispatch('order/getAllUserOrder', route.params.id);
+store.dispatch('order/getAllHistoryOrder', route.params.id);
 
 // USE STORE
 const orders: ComputedRef<OrderRes[]> = computed(() => store.state.order.orders);

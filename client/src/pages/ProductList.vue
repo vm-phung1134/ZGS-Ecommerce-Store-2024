@@ -217,10 +217,10 @@ store.dispatch("category/getAllCategory");
 const products: ComputedRef<Product[]> = computed(() => store.state.product.products);
 const categories: ComputedRef<Category[]> = computed(() => store.state.category.categories);
 
-// DEFINE REACTIVE REFERENCE
+// DEFINE CONSTANT
 const selectedCategories = ref<string[]>([]);
 
-// COMPUTED PROPERTY FOR FILTERING
+// METHODS
 const filteredProducts = computed(() => {
     if (selectedCategories.value.length === 0) {
         return products.value;

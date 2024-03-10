@@ -27,12 +27,12 @@
 </template>
 
 <script setup lang="ts">
-import NewProduction from '../components/Introduce/NewProduction.vue';
-import Carousel from '../components/Element/Carousel.vue';
-import CategoryProduct from "../components/Introduce/CategoryProduct.vue";
-import LatestProduct from "../components/Introduce/LatestProduct.vue";
-import AboutStore from '../components/Introduce/AboutStore.vue';
-import LoadingScreen from '../components/Introduce/LoadingScreen.vue';
+import NewProduction from '@components/Introduce/NewProduction.vue';
+import Carousel from '@components/Element/Carousel.vue';
+import CategoryProduct from "@components/Introduce/CategoryProduct.vue";
+import LatestProduct from "@components/Introduce/LatestProduct.vue";
+import AboutStore from '@components/Introduce/AboutStore.vue';
+import LoadingScreen from '@components/Element/LoadingScreen.vue';
 import { Suspense, onMounted, ref } from 'vue';
 
 // LIFE CYCLE
