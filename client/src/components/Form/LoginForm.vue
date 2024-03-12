@@ -67,7 +67,7 @@
 import GroupSocialLogin from '@components/Element/GroupSocialLogin.vue';
 import InputField from './InputField.vue';
 import { formData, emailComponent, passwordComponent } from '@components/Validate/SignInValid';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router'
 
@@ -86,6 +86,7 @@ const router = useRouter();
 // DEFINE CONSTANT
 const checkFormValid = ref(false);
 const errorApi = ref('');
+const toggleAuthentication = inject<() => boolean>('toggleAuthentication');
 
 // METHODS
 const validateForm = (isValid: boolean) => {
@@ -100,6 +101,7 @@ const submitForm = (event: Event) => {
         store.dispatch("auth/login", formData)
             .then(() => {
                 router.push("/");
+                toggleAuthentication?.();
             })
             .catch((error) => {
                 console.log(error);

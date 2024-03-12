@@ -1,28 +1,20 @@
 <script setup lang="ts">
 import Header from './layouts/Header.vue';
 import Footer from './layouts/Footer.vue';
-import { computed, ref } from 'vue';
-import { useStore } from 'vuex';
+import { provide, ref } from 'vue';
 
-const store = useStore();
-const existedUser = computed(() => store.getters['auth/isUserAuthenticated']);
+// HANDLE CHECK AUTHENTICATION
 const isUserAuthenticated = ref(false);
+const toggleAuthentication = () => isUserAuthenticated.value = !isUserAuthenticated.value;
 
-const handleSetIsAuthenticated = (data: boolean) => {
-  isUserAuthenticated.value = data;
-}
-
-if (existedUser.value === true) {
-  isUserAuthenticated.value = true;
-} else {
-  isUserAuthenticated.value = false;
-}
+provide('isUserAuthenticated', isUserAuthenticated);
+provide('toggleAuthentication', toggleAuthentication);
 
 </script>
 
 <template>
   <div class="relative">
-    <Header :is-authenticated="isUserAuthenticated" @update:is-user-authenticated="handleSetIsAuthenticated">
+    <Header>
     </Header>
     <router-view></router-view>
     <Footer></Footer>

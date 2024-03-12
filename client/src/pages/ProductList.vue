@@ -167,7 +167,7 @@
                         <!-- PRODUCT LIST -->
                         <div v-for="(product, index) in filteredProducts" :key="product.id"
                             >
-                            <div v-if="index < 9" class="border border-gray-500">
+                            <div v-if="index < 9" class="border border-gray-500 h-full">
                                 <div class="p-3 min-h-72 max-h-fit">
                                     <img class="w-full" :src=product.image alt="img-product-item">
                                 </div>

@@ -90,7 +90,7 @@
                                     </span>
                                 </label>
                             </div>
-                            <span v-if="props.isAuthenticated"
+                            <span v-if="isUserAuthenticated"
                                 class="absolute top-0 font-bold text-sm cursor-pointer right-0 text-red-700">{{
                                 subQuantityProductCart
                             }}</span>
@@ -152,8 +152,8 @@
 
                 <div class="block ml-2">
                     <div class="inline relative">
-                        <button v-if="!(isAuthenticated ? isAuthenticated : props.isAuthenticated)"
-                            @click="handleDirection" class="bg-red-600 py-3 px-6 text-sm tracking-wider text-white">Sign
+                        <button v-if="!isUserAuthenticated" @click="handleDirection"
+                            class="bg-red-600 py-3 px-6 text-sm tracking-wider text-white">Sign
                             In</button>
                         <div v-else className="dropdown dropdown-end">
                             <button type="button" tabIndex={0} role="button"
@@ -204,20 +204,12 @@
 </template>
 
 <script setup lang="ts">
-import { ComputedRef, computed, ref } from 'vue';
+import { ComputedRef, Ref, computed, inject, ref } from 'vue';
 import SearchScreen from '../pages/SearchScreen.vue';
 import { useRouter } from 'vue-router';
 import ShoppingCart from '@pages/ShoppingCart.vue';
 import { useStore } from 'vuex';
 import { RouterLink } from 'vue-router';
-
-// DEFINE PROPS
-const props = defineProps({
-    isAuthenticated: {
-        type: Boolean,
-        required: true,
-    }
-});
 
 // DEFINE STORE
 const store = useStore();
@@ -227,10 +219,11 @@ const router = useRouter();
 const isLogout: ComputedRef<boolean> = computed(() => store.state.auth.isLogout);
 const subQuantityProductCart = computed(() => store.getters['cart/getQuantityCart']);
 const infoUser = computed(() => store.getters['auth/getInforUser']);
-const isAuthenticated: ComputedRef<boolean> = computed(() => store.state.auth.isAuthenticated);
 
 // DEFINE CONSTANT
 const isOpenSearchBar = ref(false);
+const isUserAuthenticated = inject<Ref<boolean>>('isUserAuthenticated');
+const toggleAuthentication = inject<() => boolean>('toggleAuthentication');
 
 // EVENTS
 const emit = defineEmits(['update:isUserAuthenticated']);
@@ -238,13 +231,9 @@ const emit = defineEmits(['update:isUserAuthenticated']);
 // METHODS
 const toggleSearchBar = () => isOpenSearchBar.value = !isOpenSearchBar.value;
 
-const updateIsUserAuthenticated = (newValue: boolean) => {
-    emit('update:isUserAuthenticated', newValue);
-};
-
 const handleLogout = () => {
     store.dispatch('auth/logout').then(() => {
-        updateIsUserAuthenticated(false);
+        toggleAuthentication?.();
     }).catch((error) => {
         console.log(error);
     });
