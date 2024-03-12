@@ -21,7 +21,7 @@
                     </button>
                     <input
                         class="p-0 w-6 text-[14px] bg-transparent border-0 font-bold focus:outline-none text-gray-800 text-center"
-                        type="text" v-model="quantityValue">
+                        type="text" v-model="props.quantityValue">
                     <button @click="increaseNumberInput" type="button"
                         class="size-6 inline-flex justify-center items-center gap-x-4 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                         <svg class="flex-shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -38,20 +38,22 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, inject } from 'vue';
 
+const props = defineProps({
+    quantityValue: {
+        type: Number,
+        required: true
+    }
+})
 const emit = defineEmits(['update:changeInputNumber']);
-const quantityValue = inject<Ref<number>>('quantityValue');
 
 const increaseNumberInput = () => {
-    if (quantityValue) {
-        emit('update:changeInputNumber', quantityValue.value + 1);
-    }
+    emit('update:changeInputNumber', props.quantityValue + 1);
 }
 
 const decreaseNumberInput = () => {
-    if (quantityValue && quantityValue.value > 1) {
-        emit('update:changeInputNumber', quantityValue.value - 1);
+    if (props.quantityValue > 1) {
+        emit('update:changeInputNumber', props.quantityValue - 1);
     }
 }
 </script>

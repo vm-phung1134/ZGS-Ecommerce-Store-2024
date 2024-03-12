@@ -270,7 +270,7 @@
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router'
 import { Product } from '../interfaces/Product';
-import { ComputedRef, computed, inject, onMounted, provide, ref } from 'vue';
+import { ComputedRef, computed, inject, onMounted, ref } from 'vue';
 import { ShoppingCartReq } from '../interfaces/ShoppingCart';
 import ButtonStyle from '@components/Element/ButtonStyle.vue';
 import ConfirmModel from "@components/Modal/ConfirmModal.vue";
@@ -296,7 +296,6 @@ store.dispatch("product/getOneProduct", route.params.id);
 // DEFINE CONSTANT
 const quantity = ref(1);
 const isOpenConfirm = ref(false);
-provide('quantityValue', quantity);
 const isUserAuthenticated = inject<boolean>('isUserAuthenticated')
 
 // METHODS
