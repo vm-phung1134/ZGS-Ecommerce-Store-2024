@@ -11,11 +11,12 @@
 ### Front End
 - TypeScript (Vue 3 / Composition API)
 - VueX
-- Vue router, tailwindCSS, HeadlessUI, DaisyUI
+- Vue router 
+- TailwindCSS, HeadlessUI, DaisyUI
 
 ### Back End
 - Java
-- Spring boot (JPA, Spring boot, Spring security, Hibernate, JDBC)
+- Spring Boot Framework (JPA, Spring boot, Spring security, Hibernate, JDBC)
 
 ### Database
 - SQL (MySQL)
@@ -48,7 +49,7 @@ $ npm run dev
 ![image](https://github.com/vm-phung1134/ZGS-Ecommerce-Store-2024/assets/106596859/08a93fb7-2ec5-4eb1-9c64-edf3f70dd336)
 ![image](https://github.com/vm-phung1134/ZGS-Ecommerce-Store-2024/assets/106596859/d6cb955a-34a6-47fa-9b59-497bbb605dd0)
 ![image](https://github.com/vm-phung1134/ZGS-Ecommerce-Store-2024/assets/106596859/352d2b8c-1b66-4811-8151-e1813911388e)
-![image](https://github.com/vm-phung1134/ZGS-Ecommerce-Store-2024/assets/106596859/9f6c96e1-5e04-491a-8533-d41f661c89d9)
+![image](https://github.com/vm-phung1134/ZGS-Ecommerce-Store-2024/assets/106596859/12753a78-312b-4305-bb10-4075772e2d59)
 ![image](https://github.com/vm-phung1134/ZGS-Ecommerce-Store-2024/assets/106596859/dd5075ea-9643-4e49-b205-175743d23491)
 ![image](https://github.com/vm-phung1134/ZGS-Ecommerce-Store-2024/assets/106596859/b4519cf6-04a2-4dda-8584-fab6ac271888)
 ![image](https://github.com/vm-phung1134/ZGS-Ecommerce-Store-2024/assets/106596859/d6172649-f1bd-4658-bc24-5f28aba92f5a)
