@@ -140,16 +140,18 @@
                                         <ButtonStyle value="add to cart" />
                                     </div>
                                     <ConfirmModel :toggle-modal="toggleConfirm" :is-open-modal="isOpenConfirm">
-                                        <div>
-                                            <p class="text-xl uppercase my-10 font-bold">Do you want to add this product
+                                        <div class="text-black">
+                                            <p class="uppercase my-10 font-bold">Do you want to add this product
                                                 into your cart !</p>
                                             <div class="flex uppercase justify-center items-center gap-10">
-                                                <p @click="toggleConfirm" class="font-bold cursor-pointer">Back to view
+                                                <p @click="toggleConfirm" class="cursor-pointer">Back to view
                                                 </p>
                                                 <div @click="addProductToCart"
-                                                    class="bg-green-600 py-3 px-6 w-72 -skew-x-[30deg]">
+                                                    class="bg-green-600 py-3 cursor-pointer px-6 w-60 -skew-x-[30deg]">
                                                     <button
-                                                        class="skew-x-[30deg] text-white tracking-widest font-bold">CONFIRM</button>
+                                                        class="skew-x-[30deg] text-white tracking-wider">
+                                                        CONFIRM
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>

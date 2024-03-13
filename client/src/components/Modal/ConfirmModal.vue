@@ -12,14 +12,13 @@
                         enter-to="opacity-100 scale-100" leave="duration-200 ease-in" leave-from="opacity-100 scale-100"
                         leave-to="opacity-0 scale-95">
                         <DialogPanel
-                            class="w-full text-white h-fit bg-[url('https://storage-asset.msi.com/event/2023/NB/familypage/images/@Gallery-bg.jpg')] transform overflow-hidden bg-cover text-center align-middle shadow-xl transition-all">
-                            <div class="bg-black/40 py-14">
-                                <DialogTitle as="h3" class="text-4xl -skew-x-12 uppercase leading-6 mb-2">
+                            class="w-3xl text-white h-fit bg-white transform overflow-hidden bg-cover text-center align-middle shadow-xl transition-all">
+                            <div class="p-10">
+                                <DialogTitle as="h3" class="text-2xl -skew-x-12 uppercase leading-6 mb-2 text-black">
                                     Notification from <span class="text-green-600 font-bold">Zion Gaming Store</span>
                                 </DialogTitle>
                                 <slot></slot>
                             </div>
-
                         </DialogPanel>
                     </TransitionChild>
                 </div>

@@ -187,19 +187,19 @@
                 </div>
             </div>
             <ConfirmModal :toggle-modal="toggleConfirmModal" :is-open-modal="isOpenConfirmModal">
-                <div class="w-full flex flex-col items-center justify-center">
-                    <p class="text-xl uppercase my-10 font-bold">What do you want with your payment method !</p>
-                    <div class="flex gap-10 my-10 text-white items-center">
-                        <p @click="toggleConfirmModal()" class="font-bold cursor-pointer uppercase">Back to view</p>
+                <div class="w-full flex flex-col items-center justify-center text-black">
+                    <p class="uppercase my-10 font-bold">What do you want with your payment method !</p>
+                    <div class="flex my-5 items-center">
+                        <p @click="toggleConfirmModal()" class="cursor-pointer uppercase">Back to view</p>
                         <button type="button" @click="handleDeletePaymentMethod"
-                            class="bg-white py-3 px-6 w-72 -skew-x-[30deg] outline-none">
-                            <p class="skew-x-[30deg] text-red-700 tracking-widest font-bold uppercase">
+                            class="py-3 px-6 w-60 -skew-x-[30deg] outline-none">
+                            <p class="skew-x-[30deg] font-bold text-red-700 tracking-wider uppercase">
                                 delete payment
                             </p>
                         </button>
                         <button type="button" @click="handleUpdatePaymentMethod"
-                            class="bg-green-600 py-3 px-6 w-72 -skew-x-[30deg] border-none outline-none">
-                            <p class="skew-x-[30deg] text-white tracking-widest font-bold uppercase">
+                            class="bg-green-600 py-3 px-6 w-60 -skew-x-[30deg] border-none outline-none">
+                            <p class="skew-x-[30deg] text-white tracking-wider uppercase">
                                 Set default
                             </p>
                         </button>
@@ -207,20 +207,20 @@
                 </div>
             </ConfirmModal>
             <ConfirmModal :toggle-modal="toggleConfirmAddressModal" :is-open-modal="isOpenConfirmAddressModal">
-                <div class="w-full flex flex-col items-center justify-center">
-                    <p class="text-xl uppercase my-10 font-bold">What do you want with your address !</p>
-                    <div class="flex gap-10 my-10 text-white items-center">
-                        <p @click="toggleConfirmAddressModal()" class="font-bold cursor-pointer uppercase">Back to view
+                <div class="w-full flex flex-col items-center justify-center text-black">
+                    <p class="uppercase my-10 font-bold">What do you want with your address !</p>
+                    <div class="flex my-5 items-center">
+                        <p @click="toggleConfirmAddressModal()" class="cursor-pointer uppercase">Back to view
                         </p>
                         <button type="button" @click="handleDeleteAddressMethod"
-                            class="bg-white py-3 px-6 w-72 -skew-x-[30deg] border-none outline-none">
-                            <p class="skew-x-[30deg] text-red-700 outline-none tracking-widest font-bold uppercase">
+                            class="bg-white py-3 px-6 w-60 -skew-x-[30deg] border-none outline-none">
+                            <p class="skew-x-[30deg] font-bold text-red-700 outline-none tracking-wider uppercase">
                                 delete address
                             </p>
                         </button>
                         <button type="button" @click="handleUpdateAddressMethod"
-                            class="bg-green-600 py-3 px-6 w-72 -skew-x-[30deg] border-none outline-none">
-                            <p class="skew-x-[30deg] text-white tracking-widest font-bold uppercase">
+                            class="bg-green-600 py-3 px-6 w-60 -skew-x-[30deg] border-none outline-none">
+                            <p class="skew-x-[30deg] text-white tracking-wider uppercase">
                                 Set default
                             </p>
                         </button>
