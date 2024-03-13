@@ -1,17 +1,18 @@
 import { ActionContext, ActionTree, MutationTree } from "vuex";
 import api from "../../api";
 import { Product } from "../../interfaces/Product";
+import { reactive } from "vue";
 
 export type productState = {
-  products: Product[],
-  product: Product | null,
+  products: Product[];
+  product: Product | null;
 };
 
 // auth state
-const state: productState = {
+const state: productState = reactive({
   products: [],
-  product: null
-};
+  product: null,
+});
 
 // getters
 const getters = {};
@@ -35,7 +36,10 @@ const actions: ActionTree<productState, any> = {
         });
     });
   },
-  getOneProduct({ commit }: ActionContext<productState, any>, productId: number) {
+  getOneProduct(
+    { commit }: ActionContext<productState, any>,
+    productId: number
+  ) {
     return new Promise((resolve, reject) => {
       console.log("Accessing backend with successfully");
       api
@@ -57,10 +61,10 @@ const actions: ActionTree<productState, any> = {
 // mutations
 const mutations: MutationTree<productState> = {
   getAll_success(state: productState, payload: any) {
-    state.products = payload.data
+    state.products = payload.data;
   },
   getOne_success(state: productState, payload) {
-    state.product = payload.data
+    state.product = payload.data;
   },
 };
 

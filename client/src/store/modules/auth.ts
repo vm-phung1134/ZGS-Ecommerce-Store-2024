@@ -1,7 +1,13 @@
 import { ActionContext, ActionTree, MutationTree } from "vuex";
 import api from "../../api";
-import { AuthReq, AuthRes, ChangePasswordReq, INITIAL_AUTH } from "../../interfaces/Auth";
+import {
+  AuthReq,
+  AuthRes,
+  ChangePasswordReq,
+  INITIAL_AUTH,
+} from "../../interfaces/Auth";
 import { UserReq } from "../../interfaces/User";
+import { reactive } from "vue";
 
 export type authState = {
   isAuthenticated: boolean;
@@ -12,13 +18,13 @@ export type authState = {
 };
 
 // auth state
-const state: authState = {
+const state: authState = reactive({
   isAuthenticated: false,
   isChangePassword: false,
   authRes: null,
   isRegister: false,
   isLogout: false,
-};
+});
 
 // getters
 const getters = {

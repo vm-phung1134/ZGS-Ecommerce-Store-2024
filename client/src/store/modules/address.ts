@@ -1,6 +1,7 @@
 import { ActionContext, ActionTree, MutationTree } from "vuex";
 import api from "../../api";
 import { UserAddressRes, UserAddressReq } from "../../interfaces/UserAddress";
+import { reactive } from "vue";
 
 export type addressState = {
   addressList: UserAddressRes[];
@@ -10,12 +11,12 @@ export type addressState = {
 };
 
 // auth state
-const state: addressState = {
+const state: addressState = reactive({
   addressList: [],
   isSetDefault: false,
   isCreateAddress: false,
   isDeleteAddress: false,
-};
+});
 
 // getters
 const getters = {

@@ -2,6 +2,7 @@ import { ActionContext, ActionTree, MutationTree } from "vuex";
 import api from "../../api";
 import { ShoppingCartRes, ShoppingCartReq } from "@/interfaces/ShoppingCart";
 import { Product } from "../../interfaces/Product";
+import { reactive } from "vue";
 
 export type shoppingCartState = {
   userCart: ShoppingCartRes | null;
@@ -10,11 +11,11 @@ export type shoppingCartState = {
 };
 
 // auth state
-const state: shoppingCartState = {
+const state: shoppingCartState = reactive({
   userCart: null,
   isAddToCart: false,
   isDeleteItem: false,
-};
+});
 
 // getters
 const getters = {
@@ -105,6 +106,46 @@ const actions: ActionTree<shoppingCartState, any> = {
         });
     });
   },
+  increaseProductQuantity(
+    { commit }: ActionContext<shoppingCartState, any>,
+    params: { productId: number; userId: number }
+  ) {
+    return new Promise((resolve, reject) => {
+      console.log("Accessing backend successfully");
+      api
+        .increaseProductQuantity(params.productId, params.userId)
+        .then((response) => {
+          if (response.status === 200) {
+            commit("increaseProductQuantity_success");
+          }
+          resolve(response);
+        })
+        .catch((error) => {
+          console.log("Error: " + error);
+          reject("Invalid credentials!");
+        });
+    });
+  },
+  decreaseProductQuantity(
+    { commit }: ActionContext<shoppingCartState, any>,
+    params: { productId: number; userId: number }
+  ) {
+    return new Promise((resolve, reject) => {
+      console.log("Accessing backend successfully");
+      api
+        .decreaseProductQuantity(params.productId, params.userId)
+        .then((response) => {
+          if (response.status === 200) {
+            commit("decreaseProductQuantity_success");
+          }
+          resolve(response);
+        })
+        .catch((error) => {
+          console.log("Error: " + error);
+          reject("Invalid credentials!");
+        });
+    });
+  },
 };
 
 // mutations
@@ -117,6 +158,22 @@ const mutations: MutationTree<shoppingCartState> = {
   },
   undoItemCart_success(state: shoppingCartState) {
     state.isDeleteItem = true;
+  },
+  increaseProductQuantity_success(state: shoppingCartState, productId: number) {
+    if (state.userCart && state.userCart.products) {
+      const product = state.userCart.products.find((p) => p.id === productId);
+      if (product?.quantity) {
+        product.quantity++;
+      }
+    }
+  },
+  decreaseProductQuantity_success(state: shoppingCartState, productId: number) {
+    if (state.userCart && state.userCart.products) {
+      const product = state.userCart.products.find((p) => p.id === productId);
+      if (product?.quantity && product.quantity > 1) {
+        product.quantity--;
+      }
+    }
   },
 };
 

@@ -1,15 +1,16 @@
 import { ActionContext, ActionTree, MutationTree } from "vuex";
 import api from "../../api";
 import { Category } from "@/interfaces/Category";
+import { reactive } from "vue";
 
 export type categoryState = {
   categories: Category[];
 };
 
 // auth state
-const state: categoryState = {
+const state: categoryState = reactive({
   categories: [],
-};
+});
 
 // getters
 const getters = {};

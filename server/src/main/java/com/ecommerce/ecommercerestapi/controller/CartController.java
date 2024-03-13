@@ -80,4 +80,28 @@ public class CartController {
                 ConstantMsg.DELETED_MSG,
                 "Delete successfully");
     }
+
+    @PutMapping(value = "/increase/{productId}/{userId}")
+    public ApiResponse<String> increaseQuantityProduct(@PathVariable Integer productId, @PathVariable Integer userId) {
+        Boolean isCartUpdated = cartService.increaseQuantityProduct(productId, userId);
+        if (!isCartUpdated) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fail to delete cart!");
+        }
+        return new ApiResponse<String>(
+                HttpStatus.OK.value(),
+                ConstantMsg.DELETED_MSG,
+                "Update Quantity successfully");
+    }
+
+    @PutMapping(value = "/decrease/{productId}/{userId}")
+    public ApiResponse<String> decreaseQuantityProduct(@PathVariable Integer productId, @PathVariable Integer userId) {
+        Boolean isCartUpdated = cartService.decreaseQuantityProduct(productId, userId);
+        if (!isCartUpdated) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fail to delete cart!");
+        }
+        return new ApiResponse<String>(
+                HttpStatus.OK.value(),
+                ConstantMsg.DELETED_MSG,
+                "Update Quantity successfully");
+    }
 }

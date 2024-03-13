@@ -1,6 +1,7 @@
 import { ActionContext, ActionTree, MutationTree } from "vuex";
 import api from "../../api";
 import { UserPaymentRes, UserPaymentReq } from "../../interfaces/UserPayment";
+import { reactive } from "vue";
 
 export type paymentState = {
   payments: UserPaymentRes[];
@@ -10,12 +11,12 @@ export type paymentState = {
 };
 
 // auth state
-const state: paymentState = {
+const state: paymentState = reactive({
   payments: [],
   isSetDefault: false,
   isCreatePayment: false,
   isDeletePayment: false,
-};
+});
 
 // getters
 const getters = {};

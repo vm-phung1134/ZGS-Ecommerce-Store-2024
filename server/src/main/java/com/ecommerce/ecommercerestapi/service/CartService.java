@@ -69,4 +69,30 @@ public class CartService {
         }
         return null;
     }
+
+    public Boolean increaseQuantityProduct(Integer productId, Integer userId) {
+        List<Cart> cartItems = cartRepository.findAllByUserId(userId);
+        for (Cart cart : cartItems) {
+            if (cart.getProduct().getId().equals(productId)) {
+                cart.setQuantity(cart.getQuantity() + 1);
+                cartRepository.save(cart);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Boolean decreaseQuantityProduct(Integer productId, Integer userId) {
+        List<Cart> cartItems = cartRepository.findAllByUserId(userId);
+        for (Cart cart : cartItems) {
+            if (cart.getProduct().getId().equals(productId)) {
+                cart.setQuantity(cart.getQuantity() - 1);
+                cartRepository.save(cart);
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

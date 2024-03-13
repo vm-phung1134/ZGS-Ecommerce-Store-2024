@@ -77,8 +77,27 @@ export default {
   getUserCart(userId: number): Promise<AxiosResponse<Object>> {
     return axiosApiToken.get(`shopping-cart/${userId}`);
   },
-  undoItemCart(productId: number, userId: number): Promise<AxiosResponse<Object>> {
+  undoItemCart(
+    productId: number,
+    userId: number
+  ): Promise<AxiosResponse<Object>> {
     return axiosApiToken.delete(`shopping-cart/${productId}/${userId}`);
+  },
+  increaseProductQuantity(
+    productId: number,
+    userId: number
+  ): Promise<AxiosResponse<Object>> {
+    return axiosApiToken.put(
+      `shopping-cart/increase/${productId}/${userId}`
+    );
+  },
+  decreaseProductQuantity(
+    productId: number,
+    userId: number
+  ): Promise<AxiosResponse<Object>> {
+    return axiosApiToken.put(
+      `shopping-cart/decrease/${productId}/${userId}`
+    );
   },
 
   // USER PAYMENT

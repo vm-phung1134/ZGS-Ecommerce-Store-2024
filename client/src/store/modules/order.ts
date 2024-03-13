@@ -1,6 +1,7 @@
 import { ActionContext, ActionTree, MutationTree } from "vuex";
 import api from "../../api";
 import { OrderRes, OrderReq } from "../../interfaces/Order";
+import { reactive } from "vue";
 
 export type orderState = {
   orders: OrderRes[];
@@ -10,12 +11,12 @@ export type orderState = {
 };
 
 // auth state
-const state: orderState = {
+const state: orderState = reactive({
   orders: [],
   oldOrders: [],
   isCreateOrder: false,
   isCancelOrder: false,
-};
+});
 
 // getters
 const getters = {};

@@ -18,7 +18,7 @@
                         <tbody>
                             <!-- row 1 -->
                             <tr class="border-b" v-for="(product, index) in userCart?.products" :key="product?.id">
-                                <th>{{ index }}</th>
+                                <th>{{ index + 1 }}</th>
                                 <td class="font-bold">
                                     <div>
                                         <div class="font-bold">{{ product?.name }}</div>
@@ -28,7 +28,13 @@
                                 <td>
                                     <img class="w-20" :src=product?.image alt="img-product-cart">
                                 </td>
-                                <td>x{{ product?.quantity }}</td>
+                                <td>
+                                    <button @click="decreaseItemInCart(product.id)"
+                                        class="bg-gray-400 w-8 px-3 py-1 text-white">-</button>
+                                    <span class="mx-3">{{ product?.quantity }}</span>
+                                    <button @click="increaseItemInCart(product.id)"
+                                        class="bg-gray-400 w-8 px-3 py-1 text-white">+</button>
+                                </td>
                                 <td>${{ product?.price }}.00</td>
                                 <td @click="handleUndoItem(product.id)" class="text-red-600 text-sm cursor-pointer">
                                     Undo</td>
@@ -123,6 +129,28 @@ const isCheckQuantityCart = (userCart: ShoppingCartRes) => {
 const handleUndoItem = (productId: number | undefined) => {
     if (productId && infoUser.value.id) {
         store.dispatch('cart/undoItemCart', { productId: productId, userId: infoUser.value.id })
+            .then(() => {
+                store.dispatch("cart/getUserCart", infoUser.value.id);
+            }).catch((error) => {
+                console.log(error);
+            });
+    }
+}
+
+const increaseItemInCart = (productId: number | undefined) => {
+    if (productId && infoUser.value.id) {
+        store.dispatch('cart/increaseProductQuantity', { productId: productId, userId: infoUser.value.id })
+            .then(() => {
+                store.dispatch("cart/getUserCart", infoUser.value.id);
+            }).catch((error) => {
+                console.log(error);
+            });
+    }
+}
+
+const decreaseItemInCart = (productId: number | undefined) => {
+    if (productId && infoUser.value.id) {
+        store.dispatch('cart/decreaseProductQuantity', { productId: productId, userId: infoUser.value.id })
             .then(() => {
                 store.dispatch("cart/getUserCart", infoUser.value.id);
             }).catch((error) => {
