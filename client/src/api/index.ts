@@ -30,11 +30,9 @@ const axiosApiToken = axios.create({
   timeout: 6000,
   headers: {
     "Content-Type": "application/json",
-    "Authorization": `Bearer ${token}`,
+    Authorization: `Bearer ${token}`,
   },
 });
-
-console.log(axiosApiToken)
 
 export default {
   wecome(): Promise<AxiosResponse<string>> {
@@ -78,6 +76,9 @@ export default {
   },
   getUserCart(userId: number): Promise<AxiosResponse<Object>> {
     return axiosApiToken.get(`shopping-cart/${userId}`);
+  },
+  undoItemCart(productId: number, userId: number): Promise<AxiosResponse<Object>> {
+    return axiosApiToken.delete(`shopping-cart/${productId}/${userId}`);
   },
 
   // USER PAYMENT

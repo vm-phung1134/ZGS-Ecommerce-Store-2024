@@ -49,12 +49,15 @@ public class CartService {
 
     }
 
-    public Boolean deleteCart(Integer id) {
-        cartRepository.deleteById(id);
-        boolean isCartDeleted = !cartRepository.existsById(id);
-        if (isCartDeleted) {
-            return true;
+    public Boolean deleteCart(Integer productId, Integer userId) {
+        List<Cart> cartItems = cartRepository.findAllByUserId(userId);
+        for (Cart cart : cartItems) {
+            if (cart.getProduct().getId().equals(productId)) {
+                cartRepository.delete(cart);
+                return true;
+            }
         }
+
         return false;
     }
 

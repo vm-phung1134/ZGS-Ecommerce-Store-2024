@@ -69,12 +69,11 @@ public class CartController {
                 updatedCart);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ApiResponse<String> deleteCart(@PathVariable Integer id) {
-        Boolean isCartDeleted = cartService.deleteCart(id);
+    @DeleteMapping(value = "/{productId}/{userId}")
+    public ApiResponse<String> deleteCart(@PathVariable Integer productId, @PathVariable Integer userId) {
+        Boolean isCartDeleted = cartService.deleteCart(productId, userId);
         if (!isCartDeleted) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fail to delete cart!");
-
         }
         return new ApiResponse<String>(
                 HttpStatus.OK.value(),

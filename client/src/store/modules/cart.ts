@@ -6,24 +6,29 @@ import { Product } from "../../interfaces/Product";
 export type shoppingCartState = {
   userCart: ShoppingCartRes | null;
   isAddToCart: boolean;
+  isDeleteItem: boolean;
 };
 
 // auth state
 const state: shoppingCartState = {
   userCart: null,
   isAddToCart: false,
+  isDeleteItem: false,
 };
 
 // getters
 const getters = {
   cartTotalPrice: (state: shoppingCartState) => {
     if (state.userCart && state.userCart.products) {
-      return state.userCart.products.reduce((total: number, product: Product) => {
-        if (product.quantity) {
-          return total + product.price * product.quantity;
-        }
-        return total;
-      }, 0);
+      return state.userCart.products.reduce(
+        (total: number, product: Product) => {
+          if (product.quantity) {
+            return total + product.price * product.quantity;
+          }
+          return total;
+        },
+        0
+      );
     }
     return 0;
   },
@@ -34,7 +39,6 @@ const getters = {
     return 0;
   },
 };
-
 
 // actions
 const actions: ActionTree<shoppingCartState, any> = {
@@ -78,6 +82,29 @@ const actions: ActionTree<shoppingCartState, any> = {
         });
     });
   },
+  undoItemCart(
+    { commit }: ActionContext<shoppingCartState, any>,
+    params: {
+      productId: number;
+      userId: number;
+    }
+  ) {
+    return new Promise((resolve, reject) => {
+      console.log("Accessing backend with successfully");
+      api
+        .undoItemCart(params.productId, params.userId)
+        .then((response) => {
+          if (response.status == 200) {
+            commit("undoItemCart_success");
+          }
+          resolve(response);
+        })
+        .catch((error) => {
+          console.log("Error: " + error);
+          reject("Invalid credentials!");
+        });
+    });
+  },
 };
 
 // mutations
@@ -87,6 +114,9 @@ const mutations: MutationTree<shoppingCartState> = {
   },
   getUserCart_success(state: shoppingCartState, payload: any) {
     state.userCart = payload.data;
+  },
+  undoItemCart_success(state: shoppingCartState) {
+    state.isDeleteItem = true;
   },
 };
 

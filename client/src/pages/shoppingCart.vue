@@ -3,7 +3,7 @@
         <div class="flex gap-10 mx-20">
             <div class="w-8/12">
                 <div class="overflow-x-auto">
-                    <table class="table">
+                    <table v-if="userCart" class="table">
                         <!-- head -->
                         <thead class="bg-black text-white">
                             <tr class="uppercase">
@@ -12,6 +12,7 @@
                                 <th>Image</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,9 +30,14 @@
                                 </td>
                                 <td>x{{ product?.quantity }}</td>
                                 <td>${{ product?.price }}.00</td>
+                                <td @click="handleUndoItem(product.id)" class="text-red-600 text-sm cursor-pointer">
+                                    Undo</td>
                             </tr>
                         </tbody>
                     </table>
+                    <div v-else class="p-5">
+                        <EmptySpace />
+                    </div>
                 </div>
             </div>
             <div class="w-4/12">
@@ -47,7 +53,7 @@
                         </div>
                         <div class="flex justify-between text-[15px] items-center">
                             <p class="capitalize font-bold">Shipping</p>
-                            <p class="font-bold">${{ total * shippingCost }}.00</p>
+                            <p class="font-bold">${{ total * shippingCost }}</p>
                         </div>
                         <div class="flex justify-between items-center">
                             <p class="font-bold text-[15px]">Your address</p>
@@ -66,7 +72,7 @@
                     <div class="w-1/3 h-[1.5px] bg-gray-600"></div>
                     <div class="flex justify-between text-lg items-center">
                         <p class="capitalize font-bold">Subtotal</p>
-                        <p class="font-bold text-red-600 text-2xl">${{ total + (total * shippingCost) }}.00</p>
+                        <p class="font-bold text-red-600 text-2xl">${{ total + (total * shippingCost) }}</p>
                     </div>
                     <label class="cursor-pointer" for="my-drawer-4" aria-label="close sidebar"></label>
                     <button @click="handleDirectCheckout()" v-if="isCheckQuantityCart(userCart)"
@@ -90,6 +96,7 @@ import { ShoppingCartRes } from '../interfaces/ShoppingCart';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { UserAddressRes } from '../interfaces/UserAddress';
+import EmptySpace from '@components/Element/EmptySpace.vue';
 
 // DEFINE STORE
 const store = useStore();
@@ -111,6 +118,17 @@ const shippingCost = ref(0.05);
 // METHODS
 const isCheckQuantityCart = (userCart: ShoppingCartRes) => {
     return userCart?.products?.length > 0 ? true : false;
+}
+
+const handleUndoItem = (productId: number | undefined) => {
+    if (productId && infoUser.value.id) {
+        store.dispatch('cart/undoItemCart', { productId: productId, userId: infoUser.value.id })
+            .then(() => {
+                store.dispatch("cart/getUserCart", infoUser.value.id);
+            }).catch((error) => {
+                console.log(error);
+            });
+    }
 }
 
 const handleDirectCheckout = () => {
