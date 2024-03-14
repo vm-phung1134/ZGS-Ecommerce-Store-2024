@@ -11,9 +11,11 @@
         <div class="absolute top-20 left-10 right-10">
             <div class="flex justify-between">
                 <h4 class="font-bold text-4xl text-white">Welcome to Gamming World</h4>
-                <div>
-                    <p class="uppercase text-sm">Sort by popular</p>
+                <div v-if="selectedCategories.length != 0" class="z-10 text-black">
+                    <SelectBoxForm class-name="w-52 cursor-pointer" :array-value="sortListType"
+                        :selected-value="selectedFilter" @update:selectedValue="updateFilterSelected" />
                 </div>
+                <p v-else class="uppercase text-sm">Sort by popular</p>
             </div>
         </div>
         <div class="flex h-full mx-10 gap-10">
@@ -165,14 +167,16 @@
                 <div class="relative top-40">
                     <div v-if="products.length > 0" class="grid grid-cols-3 gap-5">
                         <!-- PRODUCT LIST -->
-                        <div v-for="(product, index) in filteredProducts" :key="product.id"
-                            >
-                            <div v-if="index < 9" class="border border-gray-500 h-full">
+                        <div v-for="(product, index) in filteredProducts" :key="product.id">
+                            <div v-if="index < 9" class="border border-gray-500 h-full relative overflow-hidden">
+                                <div v-if="product.discount.active"
+                                    class="bg-red-600 text-white rounded-full p-7 absolute -top-5 -right-5">
+                                    <p class="text-sm">New</p>
+                                </div>
                                 <div class="p-3 min-h-72 max-h-fit">
                                     <img class="w-full" :src=product.image alt="img-product-item">
                                 </div>
                                 <div class="flex justify-center items-center my-3">
-
                                 </div>
                                 <div class="h-[1px] mx-20 bg-gray-200"></div>
                                 <div class="flex justify-center items-center">
@@ -181,6 +185,7 @@
                                             Detail</button>
                                     </RouterLink>
                                 </div>
+                                <p class="w-full text-center tracking-widest">${{ product.price }}.00</p>
                                 <div class="p-5 text-center">
                                     <h4 class="font-bold text-lg my-2">{{ product.name }}</h4>
                                     <p class="text-sm">Vi xử lý Intel Core Thế hệ 13 / card đồ họa GeForce RTX 40 series
@@ -205,6 +210,8 @@ import { Product } from '../interfaces/Product';
 import { ComputedRef, computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useStore } from 'vuex';
+import { FILTER_PRODUCT_ITEM, sortListType } from '../utils/constant';
+import SelectBoxForm from '@components/Form/SelectBoxForm.vue';
 
 // DEFINE STORE
 const store = useStore();
@@ -219,15 +226,37 @@ const categories: ComputedRef<Category[]> = computed(() => store.state.category.
 
 // DEFINE CONSTANT
 const selectedCategories = ref<string[]>([]);
+const selectedFilter = ref(sortListType[0].value);
 
 // METHODS
 const filteredProducts = computed(() => {
     if (selectedCategories.value.length === 0) {
         return products.value;
     } else {
-        return products.value.filter(product =>
+        const filtered = products.value.filter(product =>
             selectedCategories.value.includes(product.category.name));
+        switch (selectedFilter.value) {
+            case FILTER_PRODUCT_ITEM.FILTER_A_Z:
+                filtered.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case FILTER_PRODUCT_ITEM.FILTER_Z_A:
+                filtered.sort((a, b) => b.name.localeCompare(a.name));
+                break;
+            case FILTER_PRODUCT_ITEM.FILTER_LOW_PRICE:
+                filtered.sort((a, b) => a.price - b.price);
+                break;
+            case FILTER_PRODUCT_ITEM.FILTER_HIGH_PRICE:
+                filtered.sort((a, b) => b.price - a.price);
+                break;
+            default:
+                break;
+        }
+        return filtered;
     }
 });
+
+const updateFilterSelected = (newValue: string) => {
+    selectedFilter.value = newValue;
+};
 </script>
 <style scoped></style>

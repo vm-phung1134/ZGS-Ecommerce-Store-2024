@@ -72,7 +72,7 @@ import { ComputedRef, computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import useDebouncedRef from '../hook/useDebouncedRef';
 import SelectBoxForm from '@components/Form/SelectBoxForm.vue';
-import { FILTER_PRODUCT_ITEM } from '../utils/constant';
+import { FILTER_PRODUCT_ITEM, sortListType } from '../utils/constant';
 
 // DEFINE PROPS
 const props = defineProps({
@@ -98,24 +98,6 @@ store.dispatch("product/getAllProducts");
 // DEFINE CONSTANT
 const searchValue = ref('');
 const debouncedSearchValue = useDebouncedRef(searchValue.value, 1000, false);
-const sortListType = [
-    {
-        key: "1",
-        value: FILTER_PRODUCT_ITEM.FILTER_A_Z
-    },
-    {
-        key: "2",
-        value: FILTER_PRODUCT_ITEM.FILTER_Z_A
-    },
-    {
-        key: "3",
-        value: FILTER_PRODUCT_ITEM.FILTER_LOW_PRICE
-    },
-    {
-        key: "4",
-        value: FILTER_PRODUCT_ITEM.FILTER_HIGH_PRICE
-    },
-];
 const selectedFilter = ref(sortListType[0].value);
 
 // METHOD
