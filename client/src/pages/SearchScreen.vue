@@ -39,8 +39,12 @@
                                     type="text">
                                 <button class="uppercase">Search</button>
                             </div>
-                            <div>
+                            <div class="flex justify-between items-center">
                                 <h4 class="font-bold text-lg uppercase">Here is your result based on your keywork</h4>
+                                <div class="z-10">
+                                    <SelectBoxForm class-name="w-52 cursor-pointer" :array-value="sortListType"
+                                        :selected-value="selectedFilter" @update:selectedValue="updateFilterSelected" />
+                                </div>
                             </div>
                             <div v-if="debouncedSearchValue != ''" class="grid grid-cols-3 gap-5">
                                 <div v-for="product in filteredProducts" :key="product?.id">
@@ -67,6 +71,8 @@ import {
 import { ComputedRef, computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import useDebouncedRef from '../hook/useDebouncedRef';
+import SelectBoxForm from '@components/Form/SelectBoxForm.vue';
+import { FILTER_PRODUCT_ITEM } from '../utils/constant';
 
 // DEFINE PROPS
 const props = defineProps({
@@ -92,13 +98,55 @@ store.dispatch("product/getAllProducts");
 // DEFINE CONSTANT
 const searchValue = ref('');
 const debouncedSearchValue = useDebouncedRef(searchValue.value, 1000, false);
+const sortListType = [
+    {
+        key: "1",
+        value: FILTER_PRODUCT_ITEM.FILTER_A_Z
+    },
+    {
+        key: "2",
+        value: FILTER_PRODUCT_ITEM.FILTER_Z_A
+    },
+    {
+        key: "3",
+        value: FILTER_PRODUCT_ITEM.FILTER_LOW_PRICE
+    },
+    {
+        key: "4",
+        value: FILTER_PRODUCT_ITEM.FILTER_HIGH_PRICE
+    },
+];
+const selectedFilter = ref(sortListType[0].value);
 
 // METHOD
+const updateFilterSelected = (newValue: string) => {
+    selectedFilter.value = newValue;
+};
+
 const filteredProducts = computed(() => {
     const keyword = debouncedSearchValue.value.toLowerCase();
-    return products.value.filter((product) =>
+    let filtered = products.value.filter((product) =>
         product.name.toLowerCase().includes(keyword)
     );
+
+    switch (selectedFilter.value) {
+        case FILTER_PRODUCT_ITEM.FILTER_A_Z:
+            filtered.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+        case FILTER_PRODUCT_ITEM.FILTER_Z_A:
+            filtered.sort((a, b) => b.name.localeCompare(a.name));
+            break;
+        case FILTER_PRODUCT_ITEM.FILTER_LOW_PRICE:
+            filtered.sort((a, b) => a.price - b.price);
+            break;
+        case FILTER_PRODUCT_ITEM.FILTER_HIGH_PRICE:
+            filtered.sort((a, b) => b.price - a.price);
+            break;
+        default:
+            break;
+    }
+
+    return filtered;
 });
 
 </script>
