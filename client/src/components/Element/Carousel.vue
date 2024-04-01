@@ -20,15 +20,15 @@
         </div>
     </div>
 </template>
-  
+
 <script setup lang="ts">
 
 const slides = [
     {
-        image: 'https://storage-asset.msi.com/global/picture/banner/banner_170445142354207818e5028f0c1f969f8e17c9fbac.jpeg',
+        image: 'https://storage-asset.msi.com/global/picture/banner/banner_17060671188a63a155004390a4cf523feff7a6eca6.jpeg',
     },
     {
-        image: 'https://storage-asset.msi.com/global/picture/banner/banner_17060671188a63a155004390a4cf523feff7a6eca6.jpeg',
+        image: 'https://storage-asset.msi.com/global/picture/banner/banner_170445142354207818e5028f0c1f969f8e17c9fbac.jpeg'
     },
     {
         image: 'https://storage-asset.msi.com/global/picture/banner/banner_1704425013843a4d42330d97624d785c0f6e5c085e.jpeg',
@@ -44,6 +44,5 @@ const clickPrevSlide = () => {
 
 };
 </script>
-  
+
 <style scoped></style>
-  

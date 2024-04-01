@@ -53,6 +53,8 @@ public class SecurityConfig {
                         auth -> auth.requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers("/api/product/**").permitAll()
                                 .requestMatchers("/api/product-category/**").permitAll()
+                                .requestMatchers("/api/user-comment/getAllComment/**").permitAll()
+                                .requestMatchers("/api/user-comment/get-star/**").permitAll()
                                 .anyRequest().authenticated())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 
