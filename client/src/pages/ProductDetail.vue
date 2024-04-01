@@ -148,8 +148,7 @@
                                                 </p>
                                                 <div @click="addProductToCart"
                                                     class="bg-green-600 py-3 cursor-pointer px-6 w-60 -skew-x-[30deg]">
-                                                    <button
-                                                        class="skew-x-[30deg] text-white tracking-wider">
+                                                    <button class="skew-x-[30deg] text-white tracking-wider">
                                                         CONFIRM
                                                     </button>
                                                 </div>
@@ -265,6 +264,38 @@
                 </div>
             </div>
         </div>
+
+        <!-- COMMENT SECTION -->
+        <div class="flex flex-col justify-start px-20 bg-black h-[50vh] w-full">
+            <div class="grid grid-cols-12 gap-5 w-1/2">
+                <div class="col-span-3">
+                    <h4 class="text-white tracking-wider mb-2 text-sm">Reviews and rating</h4>
+                    <RatingStar className="rating rating-sm" />
+                </div>
+                <div class="col-span-9">
+                    <div class="flex text-sm tracking-wider">
+                        <input type="text" placeholder="Enter your message"
+                            class="placeholder:text-sm text-white px-3 py-2 focus:outline-none w-full bg-transparent border-b border-gray-600">
+                        <button
+                            class="px-10 py-2 bg-orange-600 text-white text-xs tracking-wider uppercase">Send</button>
+                    </div>
+                </div>
+            </div>
+            <h1 class="mt-10 mb-3 uppercase text-white tracking-wider">Reviews <span class="font-thin text-sm">( 51 )</span></h1>
+            <div class="flex flex-wrap gap-4 text-xs text-gray-300">
+                <div class="bg-transparent border-gray-600 border p-3 w-96">
+                    <div class="flex justify-between">
+                        <h2 class="font-bold">John Thompson</h2>
+                        <p>14 Jun, 2024</p>
+                    </div>
+                    <div class="my-1">
+                        <RatingStar className="rating rating-xs" />
+                    </div>
+                    <p>Multiplying by 10, rounding to the nearest integer, and then dividing by 10 achieves the rounding
+                        to one decimal place.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -277,6 +308,7 @@ import { ShoppingCartReq } from '../interfaces/ShoppingCart';
 import ButtonStyle from '@components/Element/ButtonStyle.vue';
 import ConfirmModel from "@components/Modal/ConfirmModal.vue";
 import QuantityInput from '@components/Element/QuantityInput.vue';
+import RatingStar from "@components/Element/RatingStar.vue";
 
 // LIFE CYCLE
 onMounted(() => {

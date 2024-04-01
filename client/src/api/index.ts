@@ -5,6 +5,7 @@ import { ShoppingCartReq } from "../interfaces/ShoppingCart";
 import { UserPaymentReq } from "../interfaces/UserPayment";
 import { UserAddressReq } from "../interfaces/UserAddress";
 import { OrderReq } from "../interfaces/Order";
+import { CommentReq } from "../interfaces/Comment";
 
 const axiosApiDefault = axios.create({
   baseURL: `http://localhost:8080/api/auth/`,
@@ -21,7 +22,6 @@ const axiosApi = axios.create({
   timeout: 6000,
   headers: {
     "Content-Type": "application/json",
-    // Authorization: `Bearer ${token}`,
   },
 });
 
@@ -87,17 +87,13 @@ export default {
     productId: number,
     userId: number
   ): Promise<AxiosResponse<Object>> {
-    return axiosApiToken.put(
-      `shopping-cart/increase/${productId}/${userId}`
-    );
+    return axiosApiToken.put(`shopping-cart/increase/${productId}/${userId}`);
   },
   decreaseProductQuantity(
     productId: number,
     userId: number
   ): Promise<AxiosResponse<Object>> {
-    return axiosApiToken.put(
-      `shopping-cart/decrease/${productId}/${userId}`
-    );
+    return axiosApiToken.put(`shopping-cart/decrease/${productId}/${userId}`);
   },
 
   // USER PAYMENT
@@ -137,8 +133,8 @@ export default {
   },
 
   // ORDER
-  createOrder(OrderReq: OrderReq): Promise<AxiosResponse<Object>> {
-    return axiosApiToken.post(`user-order`, OrderReq);
+  createOrder(orderReq: OrderReq): Promise<AxiosResponse<Object>> {
+    return axiosApiToken.post(`user-order`, orderReq);
   },
   cancelOrder(orderId: number): Promise<AxiosResponse<Object>> {
     return axiosApiToken.delete(`user-order/${orderId}`);
@@ -148,5 +144,16 @@ export default {
   },
   getAllHistoryOrder(userId: number): Promise<AxiosResponse<Object>> {
     return axiosApiToken.get(`user-order/history/${userId}`);
+  },
+
+  // COMMENT
+  createComment(commentReq: CommentReq): Promise<AxiosResponse<Object>> {
+    return axiosApiToken.post(`user-comment`, commentReq);
+  },
+  getAllComment(productId: number): Promise<AxiosResponse<Object>>{
+    return axiosApi.get(`user-comment/getAllComment/${productId}`);
+  },
+  getAvgStar(productId: number): Promise<AxiosResponse<Object>>{
+    return axiosApi.get(`user-comment/get-star/${productId}`);
   },
 };
