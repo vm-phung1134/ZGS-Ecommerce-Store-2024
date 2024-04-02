@@ -1,5 +1,6 @@
 package com.ecommerce.ecommercerestapi.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.ecommercerestapi.entity.Category;
+import com.ecommerce.ecommercerestapi.entity.Comment;
 import com.ecommerce.ecommercerestapi.entity.Discount;
 import com.ecommerce.ecommercerestapi.entity.Inventory;
 import com.ecommerce.ecommercerestapi.entity.Product;
+import com.ecommerce.ecommercerestapi.model.dto.ProductRatingDto;
+import com.ecommerce.ecommercerestapi.model.mapper.ProductRatingMapper;
 import com.ecommerce.ecommercerestapi.repository.CategoryRepository;
+import com.ecommerce.ecommercerestapi.repository.CommentRepository;
 import com.ecommerce.ecommercerestapi.repository.DiscountRepository;
 import com.ecommerce.ecommercerestapi.repository.InventoryRepository;
 import com.ecommerce.ecommercerestapi.repository.ProductRepository;
@@ -29,8 +34,21 @@ public class ProductService {
     @Autowired
     InventoryRepository inventoryRepository;
 
-    public List<Product> getAllProduct() {
-        return productRepository.findAll();
+    @Autowired
+    CommentRepository commentRepository;
+
+    public List<ProductRatingDto> getAllProduct() {
+        List<ProductRatingDto> productRatingDtoList = new ArrayList<>();
+        List<Product> products = productRepository.findAll();
+        for (Product product : products) {
+            List<Comment> comments = commentRepository.findByProductId(product.getId());
+            Double averageStar = comments.stream()
+                    .mapToDouble(Comment::getQuantityStar)
+                    .average()
+                    .orElse(0.0);
+            productRatingDtoList.add(ProductRatingMapper.convertToProductRatingDto(product, averageStar));
+        }
+        return productRatingDtoList;
     }
 
     public Product getOneProduct(Integer id) {

@@ -51,7 +51,7 @@ public class CommentService {
 
     public Double getAverageStar(Integer productId) {
         List<Comment> comments = commentRepository.findByProductId(productId);
-        double averageStar = comments.stream()
+        Double averageStar = comments.stream()
                 .mapToDouble(Comment::getQuantityStar)
                 .average()
                 .orElse(0.0);

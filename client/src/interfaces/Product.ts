@@ -11,4 +11,5 @@ export interface Product{
     discount: Discount,
     category: Category,
     quantity?: number,
+    rating?: number,
 }

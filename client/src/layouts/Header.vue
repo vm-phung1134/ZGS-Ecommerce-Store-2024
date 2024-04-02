@@ -153,8 +153,7 @@
                 <div class="block ml-2">
                     <div class="inline relative">
                         <button v-if="!isUserAuthenticated" @click="handleDirection"
-                            class="bg-red-600 py-3 px-6 text-sm tracking-wider text-white">Sign
-                            In</button>
+                            class="bg-red-600 py-3 px-6 text-sm tracking-wider text-white">Sign In</button>
                         <div v-else className="dropdown dropdown-end">
                             <button type="button" tabIndex={0} role="button"
                                 class="inline-flex items-center relative px-2 border rounded-full hover:shadow-lg">

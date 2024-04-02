@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.ecommerce.ecommercerestapi.core.ConstantMsg;
 import com.ecommerce.ecommercerestapi.entity.Product;
 import com.ecommerce.ecommercerestapi.exception.NotFoundException;
+import com.ecommerce.ecommercerestapi.model.dto.ProductRatingDto;
 import com.ecommerce.ecommercerestapi.model.response.ApiResponse;
 import com.ecommerce.ecommercerestapi.service.ProductService;
 
@@ -30,9 +31,9 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping
-    public ApiResponse<List<Product>> getAllProduct() {
-        List<Product> products = productService.getAllProduct();
-        return new ApiResponse<List<Product>>(
+    public ApiResponse<List<ProductRatingDto>> getAllProduct() {
+        List<ProductRatingDto> products = productService.getAllProduct();
+        return new ApiResponse<List<ProductRatingDto>>(
                 HttpStatus.OK.value(),
                 ConstantMsg.SUCCESS_MSG,
                 products);

@@ -1,5 +1,5 @@
 <template>
-    <div class="h-[250vh] relative bg-black text-white">
+    <div class="h-[260vh] relative bg-black text-white">
         <div class="absolute text-black top-5 -left-5 bg-white rounded-none outline-none -skew-x-[35deg]">
             <div className="text-sm breadcrumbs px-10 skew-x-[30deg]">
                 <ul class="uppercase">
@@ -171,7 +171,7 @@
                             <div v-if="index < 9" class="border border-gray-500 h-full relative overflow-hidden">
                                 <div v-if="product.discount.active"
                                     class="bg-red-600 text-white rounded-full p-7 absolute -top-5 -right-5">
-                                    <p class="text-sm">New</p>
+                                    <p class="text-sm tracking-wider">{{ product.discount.discountPercent * 100 }} %</p>
                                 </div>
                                 <div class="p-3 min-h-72 max-h-fit">
                                     <img class="w-full" :src=product.image alt="img-product-item">
@@ -186,6 +186,10 @@
                                     </RouterLink>
                                 </div>
                                 <p class="w-full text-center tracking-widest">${{ product.price }}.00</p>
+                                <div class="flex justify-center items-center text-xs gap-2">
+                                  <RatingStar className="rating rating-xs" />
+                                  <p>( {{ product.rating }} )</p>  
+                                </div>
                                 <div class="p-5 text-center">
                                     <h4 class="font-bold text-lg my-2">{{ product.name }}</h4>
                                     <p class="text-sm">Vi xử lý Intel Core Thế hệ 13 / card đồ họa GeForce RTX 40 series
@@ -212,6 +216,7 @@ import { RouterLink } from 'vue-router';
 import { useStore } from 'vuex';
 import { FILTER_PRODUCT_ITEM, sortListType } from '../utils/constant';
 import SelectBoxForm from '@components/Form/SelectBoxForm.vue';
+import RatingStar from '@components/Element/RatingStar.vue';
 
 // DEFINE STORE
 const store = useStore();

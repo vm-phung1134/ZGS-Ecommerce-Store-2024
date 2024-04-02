@@ -51,42 +51,8 @@
                             </div>
                             <div class="flex mb-4">
                                 <span class="flex items-center">
-                                    <svg fill="currentColor" stroke="currentColor" stroke-linecap="round"
-                                        stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-orange-500"
-                                        viewBox="0 0 24 24">
-                                        <path
-                                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
-                                        </path>
-                                    </svg>
-                                    <svg fill="currentColor" stroke="currentColor" stroke-linecap="round"
-                                        stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-orange-500"
-                                        viewBox="0 0 24 24">
-                                        <path
-                                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
-                                        </path>
-                                    </svg>
-                                    <svg fill="currentColor" stroke="currentColor" stroke-linecap="round"
-                                        stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-orange-500"
-                                        viewBox="0 0 24 24">
-                                        <path
-                                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
-                                        </path>
-                                    </svg>
-                                    <svg fill="currentColor" stroke="currentColor" stroke-linecap="round"
-                                        stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-orange-500"
-                                        viewBox="0 0 24 24">
-                                        <path
-                                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
-                                        </path>
-                                    </svg>
-                                    <svg fill="none" stroke="currentColor" stroke-linecap="round"
-                                        stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-orange-500"
-                                        viewBox="0 0 24 24">
-                                        <path
-                                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
-                                        </path>
-                                    </svg>
-                                    <span class="text-orange-500 ml-3">4 Reviews</span>
+                                    <RatingStar :rating-count="5" className="rating rating-sm" />
+                                    <span class="text-orange-500 ml-3">{{comments.length}} Reviews</span>
                                 </span>
                                 <span class="flex ml-3 pl-3 border-l-2 border-gray-100">
                                     <a class="text-blue-500">
@@ -267,32 +233,18 @@
 
         <!-- COMMENT SECTION -->
         <div class="flex flex-col justify-start px-20 bg-black h-[50vh] w-full">
-            <div class="grid grid-cols-12 gap-5 w-1/2">
-                <div class="col-span-3">
-                    <h4 class="text-white tracking-wider mb-2 text-sm">Reviews and rating</h4>
-                    <RatingStar className="rating rating-sm" />
-                </div>
-                <div class="col-span-9">
-                    <div class="flex text-sm tracking-wider">
-                        <input type="text" placeholder="Enter your message"
-                            class="placeholder:text-sm text-white px-3 py-2 focus:outline-none w-full bg-transparent border-b border-gray-600">
-                        <button
-                            class="px-10 py-2 bg-orange-600 text-white text-xs tracking-wider uppercase">Send</button>
-                    </div>
-                </div>
-            </div>
-            <h1 class="mt-10 mb-3 uppercase text-white tracking-wider">Reviews <span class="font-thin text-sm">( 51 )</span></h1>
-            <div class="flex flex-wrap gap-4 text-xs text-gray-300">
-                <div class="bg-transparent border-gray-600 border p-3 w-96">
+            <CommentForm />
+            <h1 class="mt-10 mb-3 uppercase text-white tracking-wider">Reviews <span class="font-thin text-sm">( {{comments.length}} )</span></h1>
+            <div class="flex flex-wrap gap-4 text-xs text-gray-300 tracking-wider">
+                <div v-for="comment in comments" :key="comment?.id" class="bg-transparent border-gray-600 border p-3 w-96">
                     <div class="flex justify-between">
-                        <h2 class="font-bold">John Thompson</h2>
+                        <h2 >{{comment?.user?.firstName + " " + comment?.user?.lastName}}</h2>
                         <p>14 Jun, 2024</p>
                     </div>
                     <div class="my-1">
-                        <RatingStar className="rating rating-xs" />
+                        <RatingStar :rating-count="comment.quantityStar" className="rating rating-xs" />
                     </div>
-                    <p>Multiplying by 10, rounding to the nearest integer, and then dividing by 10 achieves the rounding
-                        to one decimal place.</p>
+                    <p>{{ comment?.message }}</p>
                 </div>
             </div>
         </div>
@@ -309,6 +261,8 @@ import ButtonStyle from '@components/Element/ButtonStyle.vue';
 import ConfirmModel from "@components/Modal/ConfirmModal.vue";
 import QuantityInput from '@components/Element/QuantityInput.vue';
 import RatingStar from "@components/Element/RatingStar.vue";
+import { CommentRes } from '../interfaces/Comment';
+import CommentForm from '@components/Form/CommentForm.vue';
 
 // LIFE CYCLE
 onMounted(() => {
@@ -323,9 +277,11 @@ const router = useRouter();
 // USE STORE
 const product: ComputedRef<Product> = computed(() => store.state.product.product);
 const infoUser = computed(() => store.getters['auth/getInforUser']);
+const comments: ComputedRef<CommentRes[]> = computed(() => store.state.comment.comments);
 
 // ACTION STORE
 store.dispatch("product/getOneProduct", route.params.id);
+store.dispatch("comment/getAllComment", route.params.id);
 
 // DEFINE CONSTANT
 const quantity = ref(1);
