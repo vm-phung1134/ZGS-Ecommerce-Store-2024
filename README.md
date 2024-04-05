@@ -1,11 +1,12 @@
-# [Mini_project] Website E-commerce Gaming Store 2024
+# [Personal_project] Website E-commerce Gaming Store 2024
 
 ## Main functions
 - Authentication, authorization with Spring security
 - Place an order, review order history, cancel order.
-- Search with debounced, filter profuct list with multi filter
+- Search with debounced, filter profuct list with multi filter.
 - Create, set default, delete payment method, address.
 - Change password, tracking order.
+- Product reviews and ratings
 
 ## Programming languages and frameworks in project
 ### Front End
