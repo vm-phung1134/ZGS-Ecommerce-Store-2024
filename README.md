@@ -22,6 +22,9 @@
 ### Database
 - SQL (MySQL)
 
+### Database scope
+![image](https://github.com/vm-phung1134/ZGS-Ecommerce-Store-2024/assets/106596859/be2b905b-5e1a-4184-a884-278f5c6552a8)
+
 ## Run Locally
 
 ### 1. Clone repo
