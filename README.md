@@ -1,4 +1,4 @@
-# [Personal_project] Website E-commerce Gaming Store 2024
+# [Freelance_project] Website E-commerce Gaming Store 2024
 
 ## Main functions
 - Authentication, authorization with Spring security
